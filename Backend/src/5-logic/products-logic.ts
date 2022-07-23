@@ -8,7 +8,6 @@ async function getAllProducts(): Promise<IProductModel[]> {
 
 async function getOneProduct(_id: string): Promise<IProductModel> {
     const product = await ProductModel.findById(_id).exec();
-    console.log(product);
     
     if(!product){
         throw new ResourceNotFoundError(_id);
@@ -29,11 +28,11 @@ async function updateProduct(product: IProductModel): Promise<IProductModel>{
     if (errors) {
         throw new ValidationError(errors.message);
     }
-    const updateProduct = await ProductModel.findByIdAndUpdate(product._id, product, {returnOriginal: false});
-    if(!updateProduct){
+    const updatedProduct = await ProductModel.findByIdAndUpdate(product._id, product, {returnOriginal: false});
+    if(!updatedProduct){
         throw new ResourceNotFoundError(product._id);
     }
-    return updateProduct;
+    return updatedProduct;
 }
 
 

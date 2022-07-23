@@ -14,7 +14,6 @@ export const ProductInCartSchema = new mongoose.Schema<IProductInCartModel>({
     productId: {
         type: String,
         required: [true, "Missing product _id in cart"],
-        unique: true
     },
     amount: {
         type: Number,
@@ -29,7 +28,6 @@ export const ProductInCartSchema = new mongoose.Schema<IProductInCartModel>({
     cartId: {
         type: mongoose.Schema.Types.ObjectId,
         required: [true, "Missing cart _id"],
-        unique: true
     }
 
 }, {

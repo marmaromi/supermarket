@@ -42,7 +42,7 @@ router.put("/products/:_id", async (request: Request, response: Response, next: 
         const product = new ProductModel(request.body);
         product._id = _id;
         const updatedProduct = await productsLogic.updateProduct(product);
-        response.status(201).json(updatedProduct);
+        response.json(updatedProduct);
     }
     catch (err: any) {
         next(err);

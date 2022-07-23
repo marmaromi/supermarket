@@ -1,11 +1,21 @@
-import mongoose from "mongoose";
 import { CartModel, ICartModel } from "../4-models/cart-model";
 import { ResourceNotFoundError, ValidationError } from "../4-models/error-models";
+import { IProductInCartModel, ProductInCartModel } from "../4-models/product-in-cart-model";
 import { UserModel } from "../4-models/user-model";
+import productsLogic from "./products-logic";
 
+
+async function getCartByUser(userId: string): Promise<ICartModel> {
+    const cart = await CartModel.findOne({ userId: userId }).exec();
+
+    if (!cart) {
+        throw new ResourceNotFoundError(userId);
+    }
+    return cart;
+}
 
 async function createCart(userIdString: string): Promise<ICartModel> {
-    const userId = await (await UserModel.findById(userIdString).exec())._id;
+    const userId = (await UserModel.findById(userIdString).exec())._id;
     if (!userId) {
         throw new ResourceNotFoundError(userId);
     }
@@ -20,7 +30,44 @@ async function createCart(userIdString: string): Promise<ICartModel> {
     return cart.save();
 }
 
+async function addProduct(productId: string, cartId: string): Promise<IProductInCartModel> {
+    const productPrice = (await productsLogic.getOneProduct(productId)).productPrice;
+    const productInCart = new ProductInCartModel({ productId: productId, amount: 1, totalProductPrice: productPrice, cartId: cartId });
+
+    const errors = productInCart.validateSync();
+    if (errors) {
+        throw new ValidationError(errors.message);
+    }
+    return productInCart.save();
+}
+
+async function updateProduct(product: IProductInCartModel): Promise<IProductInCartModel> {
+    const productPrice = (await productsLogic.getOneProduct(product.productId)).productPrice;
+    product.totalProductPrice = productPrice * product.amount;
+
+    const errors = product.validateSync();
+    if (errors) {
+        throw new ValidationError(errors.message);
+    }
+    const updatedProduct = await ProductInCartModel.findByIdAndUpdate(product._id, product, { returnOriginal: false });
+    if (!updatedProduct) {
+        throw new ResourceNotFoundError(product._id);
+    }
+    return updatedProduct;
+}
+
+async function deleteProduct(_id: string): Promise<void> {
+    const deletedProduct = await ProductInCartModel.findByIdAndDelete(_id);
+    if (!deletedProduct) {
+        throw new ResourceNotFoundError(_id);
+    }
+}
+
 export default {
+    getCartByUser,
     createCart,
-    
+    addProduct,
+    updateProduct,
+    deleteProduct
+
 }
