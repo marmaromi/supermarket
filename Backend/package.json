@@ -11,9 +11,11 @@
         "cors": "^2.8.5",
         "express": "^4.17.3",
         "express-fileupload": "^1.4.0",
+        "express-rate-limit": "^6.4.0",
         "israeli-id-validator": "^1.0.1",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.4.4",
+        "striptags": "^3.2.0",
         "uuid": "^8.3.2"
     },
     "devDependencies": {

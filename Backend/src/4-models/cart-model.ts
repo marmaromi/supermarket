@@ -8,8 +8,7 @@ export interface ICartModel extends mongoose.Document {
 export const CartSchema = new mongoose.Schema<ICartModel>({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: [true, "Missing customer _id"],
-        unique: true
+        required: [true, "Missing customer _id"]
     },
     creationDate: {
         type: String,

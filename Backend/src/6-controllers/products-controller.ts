@@ -1,10 +1,12 @@
 import express, { NextFunction, Request, Response } from "express";
+import verifyAdmin from "../3-middleware/verify-admin";
+import verifyLogIn from "../3-middleware/verify-log-in";
 import { ProductModel } from "../4-models/product-model";
 import productsLogic from "../5-logic/products-logic";
 
 const router = express.Router();
 
-router.get("/products", async (request: Request, response: Response, next: NextFunction) => {
+router.get("/products", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const products = await productsLogic.getAllProducts();
         response.json(products);
@@ -14,7 +16,7 @@ router.get("/products", async (request: Request, response: Response, next: NextF
     }
 });
 
-router.get("/products/:_id", async (request: Request, response: Response, next: NextFunction) => {
+router.get("/products/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const _id = request.params._id;
         const product = await productsLogic.getOneProduct(_id);
@@ -25,7 +27,7 @@ router.get("/products/:_id", async (request: Request, response: Response, next: 
     } 
 });
 
-router.post("/products", async (request: Request, response: Response, next: NextFunction) => {
+router.post("/products", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const product = new ProductModel(request.body);
         const addedProduct = await productsLogic.addProduct(product);
@@ -36,7 +38,7 @@ router.post("/products", async (request: Request, response: Response, next: Next
     }
 });
 
-router.put("/products/:_id", async (request: Request, response: Response, next: NextFunction) => {
+router.put("/products/:_id", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const _id = request.params._id;
         const product = new ProductModel(request.body);

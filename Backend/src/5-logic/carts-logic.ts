@@ -5,13 +5,13 @@ import { UserModel } from "../4-models/user-model";
 import productsLogic from "./products-logic";
 
 
-async function getCartByUser(userId: string): Promise<ICartModel> {
-    const cart = await CartModel.findOne({ userId: userId }).exec();
+async function getLatestCartByUser(userId: string): Promise<ICartModel> {
+    const latestCart = (await CartModel.find({ userId: userId }, null, { sort: { creationDate: -1 } }).exec())[0];    
 
-    if (!cart) {
+    if (!latestCart) {
         throw new ResourceNotFoundError(userId);
     }
-    return cart;
+    return latestCart;
 }
 
 async function createCart(userIdString: string): Promise<ICartModel> {
@@ -64,7 +64,7 @@ async function deleteProduct(_id: string): Promise<void> {
 }
 
 export default {
-    getCartByUser,
+    getLatestCartByUser,
     createCart,
     addProduct,
     updateProduct,
