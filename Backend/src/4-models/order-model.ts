@@ -18,8 +18,7 @@ export interface IOrderModel extends mongoose.Document {
 export const OrderSchema = new mongoose.Schema<IOrderModel>({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: [true, "Missing user _id"],
-        unique: true
+        required: [true, "Missing user _id"]
     },
     cartId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -58,11 +57,10 @@ export const OrderSchema = new mongoose.Schema<IOrderModel>({
     fourLastDigits: {
         type: Number,
         required: [true, "Missing payment details"],
-        min: [4, "Last 4 digits of payment card are required"],
-        max: [4, "Last 4 digits of payment card are required"],
+        minlength: [4, "Last 4 digits of payment card are required"],
+        maxlength: [4, "Last 4 digits of payment card are required"],
         trim: true
     }
-
 
 }, {
     versionKey: false,
