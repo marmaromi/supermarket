@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 export interface ICartModel extends mongoose.Document {
-    customerId: mongoose.Schema.Types.ObjectId;
+    userId: mongoose.Schema.Types.ObjectId;
     creationDate: string;
 }
 
 export const CartSchema = new mongoose.Schema<ICartModel>({
-    customerId: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: [true, "Missing customer _id"],
         unique: true

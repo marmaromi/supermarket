@@ -8,6 +8,7 @@ export interface IProductModel extends mongoose.Document {
     productPrice: number;
     imageName: string;
     image: UploadedFile;
+    priceParameter: string;
 }
 
 export const ProductSchema = new mongoose.Schema<IProductModel>({
@@ -34,6 +35,14 @@ export const ProductSchema = new mongoose.Schema<IProductModel>({
     image: {
         type: Buffer, // **************************** probably won't work ***********************************
         // required: [true, "Missing product image"]
+    },
+    priceParameter: {
+        type: String,
+        required: [true, "Missing product price parameter (יחידה/קילוגרם)"],
+        match: [
+            /^יחידה$|^קילוגרם$/,
+            "enter יחידה or קילוגרם",
+        ]
     }
 }, {
     versionKey: false,

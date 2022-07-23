@@ -1,9 +1,8 @@
-import mongoose from "mongoose";
 import hash from "../2-utils/cyber-hash";
 import cyberToken from "../2-utils/cyber-token";
 import { CredentialsModel, ICredentialsModel } from "../4-models/credentials-model";
-import { ResourceNotFoundError, ValidationError } from "../4-models/error-models";
-import { IUserModel, UserModel } from "../4-models/user-model";
+import { ValidationError } from "../4-models/error-models";
+import { IUserModel } from "../4-models/user-model";
 
 
 async function register(user: IUserModel): Promise<string> {

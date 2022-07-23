@@ -1,7 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import { ProductModel } from "../4-models/product-model";
 import productsLogic from "../5-logic/products-logic";
-import logic from "../5-logic/products-logic";
 
 const router = express.Router();
 
