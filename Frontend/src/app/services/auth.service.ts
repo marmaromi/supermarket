@@ -5,7 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CredentialsModel } from '../models/credentials-model';
 import { UserModel } from '../models/user-model';
-import { NotifyService } from './notify.service';
+// import { NotifyService } from './notify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthService {
   public token: string = null;
   public user: UserModel = null;
 
-  constructor(private http: HttpClient, private notifyService: NotifyService) {
+  constructor(private http: HttpClient, /*private notifyService: NotifyService*/) {
     this.token = localStorage.getItem("token");
     if (this.token) {
       this.user = (jwtDecode(this.token) as any).user;
@@ -28,7 +28,7 @@ export class AuthService {
       localStorage.setItem("token", token);
 
     } catch (error: any) {
-      this.notifyService.error(error)
+      // this.notifyService.error(error)
     }
   }
 

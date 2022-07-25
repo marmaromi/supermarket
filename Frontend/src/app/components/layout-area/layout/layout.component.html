@@ -2,10 +2,17 @@
     <app-header></app-header>
 </header>
 
-<aside>
-    <app-cart-customer></app-cart-customer>
-</aside>
-
 <main>
     <router-outlet></router-outlet>
 </main>
+
+<!-- <section *ngIf="loggedIn; else loggedOut ">
+    <app-logged-in-layout></app-logged-in-layout>
+</section>
+
+<ng-template #loggedOut>
+    <app-logged-out-layout></app-logged-out-layout>
+</ng-template>
+
+<aside>
+</aside> -->

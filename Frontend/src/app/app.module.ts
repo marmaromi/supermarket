@@ -13,6 +13,9 @@ import { ProductsListComponent } from './components/products-area/products-list/
 import { HeaderComponent } from './components/layout-area/header/header.component';
 import { CartItemComponent } from './components/cart-area/cart-item/cart-item.component';
 import { StoreModule } from '@ngrx/store';
+import { LoggedInLayoutComponent } from './components/layout-area/logged-in-layout/logged-in-layout.component';
+import { LoggedOutLayoutComponent } from './components/layout-area/logged-out-layout/logged-out-layout.component';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { StoreModule } from '@ngrx/store';
     CartAdminComponent,
     ProductsListComponent,
     HeaderComponent,
-    CartItemComponent
+    CartItemComponent,
+    LoggedInLayoutComponent,
+    LoggedOutLayoutComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,14 @@
+<aside>
+    <app-login *ngIf="url === 'login'; else loggedOut"></app-login>
+    <ng-template #loggedOut>
+        <app-register></app-register>
+    </ng-template>
+</aside>
+
+<div class="aboutUs">
+    About Us
+</div>
+
+<div class="storeDetails">
+    Store Details
+</div>
