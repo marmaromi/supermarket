@@ -8,10 +8,10 @@ import { CartCustomerComponent } from './components/cart-area/cart-customer/cart
 import { PageNotFoundComponent } from './components/layout-area/page-not-found/page-not-found.component';
 import { RegisterComponent } from './components/auth-area/register/register.component';
 import { LoginComponent } from './components/auth-area/login/login.component';
-import { CartChooseUserComponent } from './components/cart-area/cart-choose-user/cart-choose-user.component';
 import { CartAdminComponent } from './components/cart-area/cart-admin/cart-admin.component';
 import { ProductsListComponent } from './components/products-area/products-list/products-list.component';
 import { HeaderComponent } from './components/layout-area/header/header.component';
+import { CartItemComponent } from './components/cart-area/cart-item/cart-item.component';
 
 @NgModule({
   declarations: [
@@ -20,10 +20,10 @@ import { HeaderComponent } from './components/layout-area/header/header.componen
     PageNotFoundComponent,
     RegisterComponent,
     LoginComponent,
-    CartChooseUserComponent,
     CartAdminComponent,
     ProductsListComponent,
-    HeaderComponent
+    HeaderComponent,
+    CartItemComponent
   ],
   imports: [
     BrowserModule,
