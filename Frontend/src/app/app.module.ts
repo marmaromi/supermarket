@@ -12,6 +12,7 @@ import { CartAdminComponent } from './components/cart-area/cart-admin/cart-admin
 import { ProductsListComponent } from './components/products-area/products-list/products-list.component';
 import { HeaderComponent } from './components/layout-area/header/header.component';
 import { CartItemComponent } from './components/cart-area/cart-item/cart-item.component';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CartItemComponent } from './components/cart-area/cart-item/cart-item.co
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({}, {})
   ],
   providers: [],
   bootstrap: [LayoutComponent]
