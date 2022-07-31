@@ -1,14 +1,16 @@
-<aside>
-    <app-login *ngIf="url === 'login'; else loggedOut"></app-login>
-    <ng-template #loggedOut>
-        <app-register></app-register>
-    </ng-template>
-</aside>
+<div class="loggedOutLayout">
+    <aside class="login">
+        <app-login *ngIf="url === 'login'; else register"></app-login>
+        <ng-template #register>
+            <app-register></app-register>
+        </ng-template>
+    </aside>
 
-<div class="aboutUs">
-    About Us
-</div>
+    <div class="aboutUs">
+        <app-about></app-about>
+    </div>
 
-<div class="storeDetails">
-    Store Details
+    <!-- <div class="storeDetails">
+        <app-store-details></app-store-details>
+    </div> -->
 </div>

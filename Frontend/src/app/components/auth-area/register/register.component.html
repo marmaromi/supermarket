@@ -1,1 +1,102 @@
-<p>register works!</p>
+<div class="register">
+    <h2>הרשמה</h2>
+
+    <form *ngIf="cities" [formGroup]="registerForm" (ngSubmit)="register()">
+
+        <div *ngIf="page===1">
+            <mat-form-field class="full-width">
+                <mat-label>תעודת זהות</mat-label>
+                <input type="text" name="citizenId" matInput formControlName='citizenId' />
+            </mat-form-field>
+            <span *ngIf="citizenId.errors?.['required'] && citizenId.touched">תעודת זהות חסרה</span>
+            <span *ngIf="(citizenId.errors?.['pattern'] || registerForm.errors?.['validId']) && citizenId.touched">תעודת
+                זהות לא תקינה</span>
+            <br />
+
+            <mat-form-field class="full-width">
+                <mat-label>אימייל</mat-label>
+                <input type="email" name="email" matInput formControlName='email' />
+            </mat-form-field>
+            <span *ngIf="email.errors?.['required'] && email.touched">אימייל חסר</span>
+            <span *ngIf="email.errors?.['email'] && email.touched">אימייל לא תקין</span>
+            <br />
+
+            <mat-form-field class="full-width">
+                <mat-label>סיסמה</mat-label>
+                <input type="password" name="password" matInput formControlName='password' />
+            </mat-form-field>
+            <span *ngIf="password.errors?.['required'] && password.touched">סיסמה חסרה</span>
+            <span *ngIf="password.errors?.['minlength'] && password.touched">הסיסמה קצרה מדי -מינימום 8 תווים</span>
+            <span *ngIf="password.errors?.['maxlength'] && password.touched">הסיסמה ארוכה מדי -מקסימום 30
+                תווים</span>
+            <br />
+
+            <mat-form-field class="full-width">
+                <mat-label>אישור סיסמה</mat-label>
+                <input type="password" name="verifyPassword" matInput formControlName='verifyPassword' />
+            </mat-form-field>
+            <span *ngIf="verifyPassword.errors?.['required'] && verifyPassword.touched">אישור סיסמה חסר</span>
+            <span
+                *ngIf="registerForm.errors?.['valuesDoNotMatch'] && verifyPassword.valid && verifyPassword.touched">הסיסמאות לא זהות</span>
+            <br />
+
+        </div>
+
+        <div *ngIf="page===2">
+            <mat-form-field class="full-width" >
+                <mat-label>עיר מגורים</mat-label>
+                <input type="text" matInput name="street" formControlName='city' [matAutocomplete]="auto"  />
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let city of filteredCities | async" [value]="city">
+                        {{city}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <span *ngIf="city.errors?.['required'] && city.touched">עיר מגורים חסרה</span>
+            <span *ngIf="registerForm.errors?.['inList'] && city.valid && city.touched">בחרו עיר מהרשימה</span>
+            <br />
+
+            <mat-form-field class="full-width">
+                <mat-label>רחוב</mat-label>
+                <input type="text" matInput name="street" formControlName='street'/>
+            </mat-form-field>
+            <span *ngIf="street.errors?.['required'] && street.touched">רחוב מגורים חסר</span>
+            <span *ngIf="street.errors?.['minlength'] && street.touched">רחוב מגורים קצר מדי -2 תווים מינימום</span>
+            <span *ngIf="street.errors?.['maxlength'] && street.touched">רחוב מגורים ארוך מדי -30 תווים מקסימום</span>
+
+
+            <br />
+
+            <mat-form-field class="full-width">
+                <mat-label>שם פרטי</mat-label>
+                <input type="text" name="firstName" matInput formControlName='firstName' required minlength="2"
+                    maxlength="30" />
+            </mat-form-field>
+            <span *ngIf="firstName.errors?.['required'] && firstName.touched">שם פרטי חסר</span>
+            <span *ngIf="firstName.errors?.['minlength'] && firstName.touched">שם קצר מדי - מינימום 2 תווים</span>
+            <span *ngIf="firstName.errors?.['maxlength'] && firstName.touched">שם ארוך מדי - מקסימום 30 תווים</span>
+            <br />
+
+            <mat-form-field class="full-width">
+                <mat-label>שם משפחה</mat-label>
+                <input type="text" name="lastName" matInput formControlName='lastName' required minlength="2"
+                    maxlength="30" />
+            </mat-form-field>
+            <span *ngIf="lastName.errors?.['required'] && lastName.touched">שם משפחה חסר</span>
+            <span *ngIf="lastName.errors?.['minlength'] && lastName.touched">שם קצר מדי - מינימום 2 תווים</span>
+            <span *ngIf="lastName.errors?.['maxlength'] && lastName.touched">שם ארוך מדי - מקסימום 30 תווים</span>
+            <br />
+        </div>
+
+        <div class="buttons">
+            <button mat-raised-button *ngIf="page===1" (click)="movePage(page)"
+                [disabled]="citizenId.invalid || email.invalid  || password.invalid || registerForm.errors?.['valuesDoNotMatch']">הבא</button>
+            <button  mat-raised-button *ngIf="page===2" [disabled]="registerForm.invalid">הרשמה</button>
+            <button mat-raised-button *ngIf="page===2" (click)="movePage(page)">הקודם</button>
+        </div>
+    </form>
+    <div class="login">
+        יש לך משתמש?
+        <a routerLink="/login">כניסה</a>
+    </div>
+</div>

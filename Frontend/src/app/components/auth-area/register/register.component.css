@@ -1,0 +1,47 @@
+.register {
+    background: rgb(132, 183, 128);
+    background: linear-gradient(180deg, rgba(132, 183, 128, 1) 20%, rgba(198, 255, 194, 1) 80%);
+    padding-inline: 15px;
+    height: 100%;
+    padding-top: 10px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+label {
+    width: 100px;
+}
+
+span {
+    color: rgb(208, 2, 2);
+}
+
+button {
+    margin: auto;
+    width: 25%;
+    min-width: 75px;
+    margin-top: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.error {
+    color: rgb(208, 2, 2);
+    font-size: medium;
+}
+
+.login {
+    padding-top: 10px;
+    text-align: start;
+}

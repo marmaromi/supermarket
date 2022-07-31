@@ -1,8 +1,11 @@
 export class UserModel {
-    public id: number;
+    public id: string;
     public firstName: string;
     public lastName: string;
-    public username: string;
+    public email: string;
+    public citizenId: number;
     public password: string;
-    public privileges: string;
+    public city: string;
+    public street: string;
+    public role: string;
 }

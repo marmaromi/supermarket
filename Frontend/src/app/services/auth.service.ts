@@ -35,7 +35,7 @@ export class AuthService {
   public async register(user: UserModel): Promise<void> {
     await firstValueFrom(this.http.post<string>(environment.authUrl + "register", user));
 
-    const credentials = new CredentialsModel(user.username, user.password);
+    const credentials = new CredentialsModel(user.email, user.password);
     await this.login(credentials);
   }
 

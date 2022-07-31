@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div class="login">
+    <h2>כניסה</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-form-field class="full-width">
+            <mat-label>אימייל</mat-label>
+            <input type="email" name="email" matInput formControlName='email' />
+        </mat-form-field>
+        <span *ngIf="email.errors?.['required'] && email.touched">אימייל חסר</span>
+
+        <br />
+
+        <mat-form-field class="full-width">
+        <mat-label>סיסמה</mat-label>
+        <input type="password" name="password" matInput formControlName='password' />
+        </mat-form-field>
+        <span *ngIf="password.errors?.['required'] && password.touched">סיסמה חסרה</span>
+        <br />
+
+        <button mat-raised-button [disabled]="loginForm.invalid">כניסה</button>
+
+    </form>
+    <div class="register">
+        אין לך משתמש?
+        <a routerLink="/register">הרשמה</a>
+    </div>
+</div>
