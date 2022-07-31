@@ -16,7 +16,7 @@ router.post("/users/register", async (request: Request, response: Response, next
     }
 });
 
-router.get("/users/login", async (request: Request, response: Response, next: NextFunction) => {
+router.post("/users/login", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const credentials = new CredentialsModel(request.body)
         const user = await usersLogic.login(credentials);

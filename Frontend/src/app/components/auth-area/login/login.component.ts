@@ -46,11 +46,12 @@ export class LoginComponent implements OnInit {
       const fromValue = this.loginForm.value;
       // console.log(fromValue);
       await this.authService.login(fromValue)
-      this.router.navigate(['/home']);
+      console.log("logged in successfully");
+      this.router.navigateByUrl('/home');
 
     } catch (err: any) {
       console.log(err);
-      
+
     }
   }
 

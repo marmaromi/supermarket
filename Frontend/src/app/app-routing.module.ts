@@ -7,20 +7,13 @@ import { LoggedOutLayoutComponent } from './components/layout-area/logged-out-la
 import { PageNotFoundComponent } from './components/layout-area/page-not-found/page-not-found.component';
 import { ProductsListComponent } from './components/products-area/products-list/products-list.component';
 import { LoginGuard } from './guards/login.guard';
+import { LogoutGuard } from './guards/logout.guard';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
-    {
-        path: 'home',
-        component: LoggedInLayoutComponent,
-        canActivate: [LoginGuard]
-    },
-    {
-        path: 'login',
-        component: LoggedOutLayoutComponent,
-        // canActivate: [LoginGuard]
-    },
-    { path: 'register', component: LoggedOutLayoutComponent },
+    { path: 'home', component: LoggedInLayoutComponent, canActivate: [LoginGuard] },
+    { path: 'login', component: LoggedOutLayoutComponent, canActivate: [LogoutGuard] },
+    { path: 'register', component: LoggedOutLayoutComponent, canActivate: [LogoutGuard] },
     { path: '**', component: PageNotFoundComponent }
 ];
 

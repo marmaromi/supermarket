@@ -49,7 +49,7 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
         type: String,
         required: [true, "Missing password"],
         minlength: [8, "Password must be at least 8 characters long"],
-        maxlength: [30, "Password must be 30 characters or less"]
+        maxlength: [128, "Password must be 128 characters or less"]
 
     },
     city: {
