@@ -13,7 +13,12 @@ async function addOrder(order: IOrderModel): Promise<IOrderModel> {
     return order.save();
 }
 
+async function getOrdersCount(): Promise<number> {
+    return OrderModel.count().exec()
+}
+
 export default {
     getAllOrders,
-    addOrder
+    addOrder,
+    getOrdersCount
 }

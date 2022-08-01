@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Notyf } from 'notyf';
-import 'notyf/notyf.min.css';
-
+import { NotifierService } from 'angular-notifier';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotifyService {
 
-  private notification = new Notyf({ duration: 3000, position: { x: "left", y: "bottom" } });
+  private readonly notifier: NotifierService;
 
-  public success(message: string): void {
-    this.notification.success(message);
+  constructor(notifierService: NotifierService) {
+    this.notifier = notifierService;
+  }
+
+  public success(message: string): void {    
+    this.notifier.notify('success', message);
   }
 
   public error(err: any): void {
-    console.log(err); // log error
-    
-    this.notification.error(this.extractError(err));
+    this.notifier.notify("error",this.extractError(err));
   }
 
   private extractError(err: any): string {
@@ -30,6 +30,6 @@ export class NotifyService {
 
     if (typeof err.message === "string") return err.message;
 
-    return "Some error, please try again.";
+    return "שגיאה כללית - בבקשה נסה שנית.";
   }
 }

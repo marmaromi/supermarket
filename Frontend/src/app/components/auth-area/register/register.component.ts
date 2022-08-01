@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { controlValuesAreEqual, isIdValid, cityInList, streetInList } from "./form-validations"
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { NotifyService } from 'src/app/services/notify.service';
 
 interface LooseObject {
   [key: string]: string[]
@@ -26,7 +27,7 @@ export class RegisterComponent implements OnInit {
   public filteredCities: Observable<string[]>
 
 
-  constructor(private fb: FormBuilder, private citiesService: CitiesService, private authService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private citiesService: CitiesService, private authService: AuthService, private router: Router, private notify: NotifyService) { }
 
   async ngOnInit() {
     await this.getCitiesAndStreets()
@@ -132,21 +133,23 @@ export class RegisterComponent implements OnInit {
       this.cities = Object.keys(this.streetsByCities);
 
     } catch (err: any) {
-      console.log(err);
+      this.notify.error(err);
 
     }
   }
 
   public async register() {
-    const fromValue = this.registerForm.value;
     try {
       const fromValue = this.registerForm.value;
-      console.log(fromValue);
       await this.authService.register(fromValue)
+      this.authService.isLoggedIn();
+      this.notify.success("נרשמת בהצלחה");
+
       this.router.navigate(['/home']);
 
     } catch (err: any) {
-      console.log(err);
+      this.notify.error(err);
+
 
     }
   }

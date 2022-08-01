@@ -28,4 +28,14 @@ router.post("/orders", verifyAdmin, async (request: Request, response: Response,
     }
 });
 
+router.get("/orders-count", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const orderCount = await ordersLogic.getOrdersCount();
+        response.json(orderCount);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
 export default router;

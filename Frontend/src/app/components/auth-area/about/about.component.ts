@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { OrdersService } from 'src/app/services/orders.service';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-about',
@@ -7,12 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  public stock = 100;
-  public orders = 50;
+  public stock: number;
+  public orders: number;
 
-  constructor() { }
+  constructor(private productsService: ProductsService, private ordersService: OrdersService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.stock = await this.productsService.getProductsCount();
+    this.orders = await this.ordersService.getOrdersCount();
+    
   }
 
 }

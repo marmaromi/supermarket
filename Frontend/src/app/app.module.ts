@@ -17,10 +17,13 @@ import { LoggedInLayoutComponent } from './components/layout-area/logged-in-layo
 import { LoggedOutLayoutComponent } from './components/layout-area/logged-out-layout/logged-out-layout.component';
 import { AboutComponent } from './components/auth-area/about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { NotifierModule } from 'angular-notifier';
+
+
 
 
 
@@ -51,7 +54,47 @@ import { MatButtonModule } from '@angular/material/button';
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    NotifierModule.withConfig({
+      position: {
+        horizontal: {
+          position: 'right',
+          distance: 12,
+        },
+        vertical: {
+          position: 'bottom',
+          distance: 12,
+          gap: 10,
+        },
+      },
+      theme: 'material',
+      behaviour: {
+        autoHide: 3000,
+        onClick: false,
+        onMouseover: 'pauseAutoHide',
+        showDismissButton: false,
+        stacking: 4,
+      },
+      animations: {
+        enabled: true,
+        show: {
+          preset: 'slide',
+          speed: 300,
+          easing: 'ease',
+        },
+        hide: {
+          preset: 'fade',
+          speed: 300,
+          easing: 'ease',
+          offset: 50,
+        },
+        shift: {
+          speed: 300,
+          easing: 'ease',
+        },
+        overlap: 150,
+      },
+    })
   ],
   providers: [],
   bootstrap: [LayoutComponent]

@@ -14,7 +14,7 @@ export class ProductsListComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.loggedIn = this.authService.isLoggedIn();
+    this.authService.loginStatus$.subscribe(loginStatus => this.loggedIn = loginStatus)
     if (!this.loggedIn) {
       this.router.navigateByUrl("/login");
     }

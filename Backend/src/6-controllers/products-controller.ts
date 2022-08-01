@@ -51,4 +51,14 @@ router.put("/products/:_id", verifyAdmin, async (request: Request, response: Res
     }
 });
 
+router.get("/products-count", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const productsCount = await productsLogic.getProductsCount();
+        response.json(productsCount);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
 export default router;

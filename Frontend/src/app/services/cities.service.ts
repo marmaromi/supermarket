@@ -43,7 +43,6 @@ export class CitiesService {
       }
 
     });
-    // console.log(cityList);
 
     return cityList
   }

@@ -14,10 +14,11 @@ export class LoginGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isLoggedIn()) {      
+
+    if (this.authService.isLoggedIn()) {
       return true;
     }
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login');
     return false;
   }
 }

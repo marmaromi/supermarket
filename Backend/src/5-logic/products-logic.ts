@@ -35,13 +35,18 @@ async function updateProduct(product: IProductModel): Promise<IProductModel>{
     return updatedProduct;
 }
 
+async function getProductsCount(): Promise<number> {
+    return ProductModel.count().exec()
+}
+
 
 
 export default {
     getAllProducts,
     getOneProduct,
     addProduct,
-    updateProduct
+    updateProduct,
+    getProductsCount
 
 };
 

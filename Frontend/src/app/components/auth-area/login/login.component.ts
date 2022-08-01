@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, Validators, ValidatorFn, FormBuilder, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { NotifyService } from 'src/app/services/notify.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private notify: NotifyService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -44,13 +45,14 @@ export class LoginComponent implements OnInit {
   public async login() {
     try {
       const fromValue = this.loginForm.value;
-      // console.log(fromValue);
       await this.authService.login(fromValue)
-      console.log("logged in successfully");
+      this.authService.isLoggedIn();
+      this.notify.success("התחברת בהצלחה")
+
       this.router.navigateByUrl('/home');
 
     } catch (err: any) {
-      console.log(err);
+      this.notify.error(err);
 
     }
   }

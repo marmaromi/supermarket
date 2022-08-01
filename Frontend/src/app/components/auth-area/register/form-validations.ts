@@ -40,7 +40,6 @@ export function controlValuesAreEqual(controlNameA: string, controlNameB: string
     return (control: AbstractControl): ValidationErrors | null => {
       const formGroup = control as FormGroup;
       const selected: string = formGroup.get(selection)?.value;
-    //   console.log(list);
 
       if (!list?.includes(selected)) {
         
@@ -54,7 +53,6 @@ export function controlValuesAreEqual(controlNameA: string, controlNameB: string
     return (control: AbstractControl): ValidationErrors | null => {
       const formGroup = control as FormGroup;
       const selected: string = formGroup.get(selection)?.value;
-    //   console.log(list);
 
       if (!list?.includes(selected)) {
         

@@ -1,26 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CredentialsModel } from '../models/credentials-model';
 import { UserModel } from '../models/user-model';
-// import { NotifyService } from './notify.service';
+import { NotifyService } from './notify.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  public token: string = null;
-  public user: UserModel = null;
+  private _loginStatusSource = new Subject<boolean>();
+  loginStatus$ = this._loginStatusSource.asObservable();
 
-  constructor(private http: HttpClient, /*private notifyService: NotifyService*/) {
-    this.token = localStorage.getItem("token");
-    if (this.token) {
-      this.user = (jwtDecode(this.token) as any).user;
-    }
-  }
+  private _userDetailsSource = new Subject<UserModel>();
+  userDetails$ = this._userDetailsSource.asObservable();
+
+  constructor(private http: HttpClient, private notify: NotifyService) { }
 
   public async login(credentials: CredentialsModel): Promise<void> {
     try {
@@ -28,15 +26,20 @@ export class AuthService {
       localStorage.setItem("token", token);
 
     } catch (error: any) {
-      // this.notifyService.error(error)
+      this.notify.error(error);
     }
   }
 
   public async register(user: UserModel): Promise<void> {
-    await firstValueFrom(this.http.post<string>(environment.authUrl + "register", user));
+    try {
+      await firstValueFrom(this.http.post<string>(environment.authUrl + "register", user));
+      const credentials = new CredentialsModel(user.email, user.password);
+      await this.login(credentials);
+      this.getUserDetails();
 
-    const credentials = new CredentialsModel(user.email, user.password);
-    await this.login(credentials);
+    } catch (error) {
+      this.notify.error(error);
+    }
   }
 
   public logout(): void {
@@ -44,22 +47,21 @@ export class AuthService {
   }
 
   public isLoggedIn(): boolean {
-    if (this.token = localStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
+      this._loginStatusSource.next(true);
+      this.getUserDetails();
       return true;
     }
     else {
+      this._loginStatusSource.next(false);
       return false;
     }
   }
 
-  public getUserDetails(): UserModel {
-    if (this.user) {
-      return this.user;
-    }
-    else {
-      console.log("No user is logged in");
-      return null;
-
+  public getUserDetails(): void {
+    const user = (jwtDecode(localStorage.getItem("token")) as any).user;
+    if (user) {
+      this._userDetailsSource.next(user);
     }
   }
 
