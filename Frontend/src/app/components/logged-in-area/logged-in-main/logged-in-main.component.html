@@ -1,0 +1,9 @@
+<div *ngIf="role==='admin'; then ifAdmin else ifUser"></div>
+
+<ng-template #ifAdmin>
+    <app-admin-layout></app-admin-layout>
+</ng-template>
+
+<ng-template #ifUser>
+    <app-user-layout></app-user-layout>
+</ng-template>

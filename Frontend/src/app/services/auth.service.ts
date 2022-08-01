@@ -65,5 +65,15 @@ export class AuthService {
     }
   }
 
+  public getUserRole(): string {
+    const user: UserModel = (jwtDecode(localStorage.getItem("token")) as any).user;
+    if (user) {
+      return user.role;
+    }
+    else {
+      return null;
+    }
+  }
+
 
 }

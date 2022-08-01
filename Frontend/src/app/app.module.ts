@@ -13,7 +13,7 @@ import { ProductsListComponent } from './components/products-area/products-list/
 import { HeaderComponent } from './components/layout-area/header/header.component';
 import { CartItemComponent } from './components/cart-area/cart-item/cart-item.component';
 import { StoreModule } from '@ngrx/store';
-import { LoggedInLayoutComponent } from './components/layout-area/logged-in-layout/logged-in-layout.component';
+import { LoggedInMainComponent } from './components/logged-in-area/logged-in-main/logged-in-main.component';
 import { LoggedOutLayoutComponent } from './components/layout-area/logged-out-layout/logged-out-layout.component';
 import { AboutComponent } from './components/auth-area/about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +22,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { NotifierModule } from 'angular-notifier';
+import { AdminLayoutComponent } from './components/logged-in-area/admin-layout/admin-layout.component';
+import { UserLayoutComponent } from './components/logged-in-area/user-layout/user-layout.component';
 
 
 
@@ -38,9 +40,11 @@ import { NotifierModule } from 'angular-notifier';
     ProductsListComponent,
     HeaderComponent,
     CartItemComponent,
-    LoggedInLayoutComponent,
+    LoggedInMainComponent,
     LoggedOutLayoutComponent,
     AboutComponent,
+    AdminLayoutComponent,
+    UserLayoutComponent,
 
   ],
   imports: [

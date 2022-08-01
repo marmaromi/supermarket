@@ -1,9 +1,7 @@
 <div class="loggedOutLayout">
     <aside class="login">
         <app-login *ngIf="url === 'login'; else register"></app-login>
-        <ng-template #register>
-            <app-register></app-register>
-        </ng-template>
+        <ng-template #register> <app-register></app-register> </ng-template>
     </aside>
 
     <div class="aboutUs">
