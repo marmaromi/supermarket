@@ -143,7 +143,7 @@ export class RegisterComponent implements OnInit {
       const fromValue = this.registerForm.value;
       await this.authService.register(fromValue)
       this.authService.isLoggedIn();
-      this.notify.success("נרשמת בהצלחה");
+      this.notify.success("ברוך הבא לקניה הראשונה שלך");
 
       this.router.navigate(['/home']);
 

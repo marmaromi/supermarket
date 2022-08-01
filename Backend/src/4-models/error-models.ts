@@ -28,7 +28,7 @@ export class ValidationError extends ClientError {
 export class UnauthorizedError extends ClientError {
     public constructor(message: string) {
         super(401, message)
-    }
+    }    
 }
 
 export class ForbiddenError extends ClientError {

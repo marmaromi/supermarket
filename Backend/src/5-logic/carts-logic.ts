@@ -30,6 +30,13 @@ async function createCart(userIdString: string): Promise<ICartModel> {
     return cart.save();
 }
 
+async function deleteCart(_id: string): Promise<void> {
+    const deletedCart = await ProductInCartModel.findByIdAndDelete(_id);
+    if (!deletedCart) {
+        throw new ResourceNotFoundError(_id);
+    }
+}
+
 async function addProduct(productId: string, cartId: string): Promise<IProductInCartModel> {
     const productPrice = (await productsLogic.getOneProduct(productId)).productPrice;
     const productInCart = new ProductInCartModel({ productId: productId, amount: 1, totalProductPrice: productPrice, cartId: cartId });
@@ -66,6 +73,7 @@ async function deleteProduct(_id: string): Promise<void> {
 export default {
     getLatestCartByUser,
     createCart,
+    deleteCart,
     addProduct,
     updateProduct,
     deleteProduct

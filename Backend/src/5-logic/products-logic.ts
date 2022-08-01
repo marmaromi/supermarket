@@ -3,11 +3,11 @@ import { IProductModel, ProductModel } from "../4-models/product-model";
 
 
 async function getAllProducts(): Promise<IProductModel[]> {
-    return ProductModel.find().populate("category").exec();
+    return ProductModel.find().populate("category", "-_id").exec();
 }
 
 async function getOneProduct(_id: string): Promise<IProductModel> {
-    const product = await ProductModel.findById(_id).exec();
+    const product = await ProductModel.findById(_id).populate("category", "-_id").exec();
     
     if(!product){
         throw new ResourceNotFoundError(_id);

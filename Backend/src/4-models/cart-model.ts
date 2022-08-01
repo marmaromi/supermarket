@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 export interface ICartModel extends mongoose.Document {
     userId: mongoose.Schema.Types.ObjectId;
     creationDate: string;
+    cartOpen: boolean;
 }
 
 export const CartSchema = new mongoose.Schema<ICartModel>({
@@ -13,6 +14,9 @@ export const CartSchema = new mongoose.Schema<ICartModel>({
     creationDate: {
         type: String,
         required: [true, "Missing cart creation date"]
+    },
+    cartOpen: {
+        type: Boolean
     }
 
 }, {
