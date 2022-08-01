@@ -16,7 +16,7 @@ router.get("/carts/:userId", verifyLogIn, async (request: Request, response: Res
     }
 });
 
-router.post("/carts/new/:userId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+router.post("/carts/:userId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const userId = request.params.userId;
         const cart = await cartLogic.createCart(userId);
@@ -27,7 +27,18 @@ router.post("/carts/new/:userId", verifyLogIn, async (request: Request, response
     }
 });
 
-router.post("/carts/:cartId/:productId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+router.delete("/carts/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const _id = request.params._id;
+        await cartLogic.deleteCart(_id);
+        response.sendStatus(204);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
+router.post("/products-in-cart/:cartId/:productId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const cartId: string = request.params.cartId;
         const productId: string = request.params.productId;
@@ -39,7 +50,7 @@ router.post("/carts/:cartId/:productId", verifyLogIn, async (request: Request, r
     }
 });
 
-router.put("/carts/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+router.put("/products-in-cart/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         request.body._id = request.params._id;
         const product = new ProductInCartModel(request.body)
@@ -51,7 +62,7 @@ router.put("/carts/:_id", verifyLogIn, async (request: Request, response: Respon
     }
 });
 
-router.delete("/carts/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+router.delete("/products-in-cart/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const _id = request.params._id;
         await cartLogic.deleteProduct(_id);
@@ -61,7 +72,5 @@ router.delete("/carts/:_id", verifyLogIn, async (request: Request, response: Res
         next(err);
     }
 });
-
-
 
 export default router;

@@ -6,7 +6,7 @@ import productsLogic from "./products-logic";
 
 
 async function getLatestCartByUser(userId: string): Promise<ICartModel> {
-    const latestCart = (await CartModel.find({ userId: userId }, null, { sort: { creationDate: -1 } }).exec())[0];    
+    const latestCart = (await CartModel.find({ userId: userId }, null, { sort: { creationDate: -1 } }).exec())[0];
 
     if (!latestCart) {
         throw new ResourceNotFoundError(userId);
@@ -21,7 +21,7 @@ async function createCart(userIdString: string): Promise<ICartModel> {
     }
 
     const now = new Date().toLocaleString();
-    const cart = new CartModel({ userId: userId, creationDate: now });
+    const cart = new CartModel({ userId: userId, creationDate: now, cartOpen: true });
 
     const errors = cart.validateSync();
     if (errors) {
@@ -30,8 +30,17 @@ async function createCart(userIdString: string): Promise<ICartModel> {
     return cart.save();
 }
 
+async function closeCart(_id: string): Promise<void> {
+    const cart = await CartModel.findById(_id);
+    if (!cart) {
+        throw new ResourceNotFoundError(_id);
+    }
+    cart.cartOpen = false;
+    await CartModel.findByIdAndUpdate(_id, cart, {returnOriginal: false});
+}
+
 async function deleteCart(_id: string): Promise<void> {
-    const deletedCart = await ProductInCartModel.findByIdAndDelete(_id);
+    const deletedCart = await CartModel.findByIdAndDelete(_id);
     if (!deletedCart) {
         throw new ResourceNotFoundError(_id);
     }
@@ -73,6 +82,7 @@ async function deleteProduct(_id: string): Promise<void> {
 export default {
     getLatestCartByUser,
     createCart,
+    closeCart,
     deleteCart,
     addProduct,
     updateProduct,

@@ -18,6 +18,18 @@ router.get("/orders", verifyLogIn, async (request: Request, response: Response, 
     }
 });
 
+router.get("/orders/:userId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const userId = request.params.userId;
+        const order = await ordersLogic.getOrdersByUserId(userId);
+        response.json(order);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
+
 router.post("/orders", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const order = new OrderModel(request.body);
