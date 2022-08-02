@@ -1,11 +1,10 @@
-.logout span:hover {
-    color: red;
+.logoutButton{
+    text-decoration: underline;
+    color: white;
 }
 
-.logoutButton{
-    /* padding-block: 5px; */
-    /* padding: 0; */
-    text-decoration: underline;
+.logoutButton:hover {
+    color: red;
 }
 
 .navbar-brand{
