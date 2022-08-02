@@ -5,3 +5,9 @@
 .cartButton{
     position: absolute;
 }
+
+/* @media (prefers-reduced-motion: reduce) {
+    .collapsing {
+
+    }
+} */

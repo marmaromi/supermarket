@@ -16,7 +16,9 @@
 .cartButton{
     position: absolute;
     left: 12px;
-    top: 9px
+    top: 9px;
+    font-size: x-large;
+    padding-block: 0%;
 }
 
 @media only screen and (min-width: 768px) {

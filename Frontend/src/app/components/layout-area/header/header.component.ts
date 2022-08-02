@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
 
   public loggedIn: boolean;
   public user: UserModel;
-  public collapse = true;
+  public collapse = false;
 
   constructor(private authService: AuthService, private router: Router, private notify: NotifyService, private cartService: CartService) { }
 

@@ -14,10 +14,10 @@ export class CartService {
 
   public changeCartCollapse(collapsed: boolean): void {
     if (collapsed) {
-      this._cartCollapseStatusSource.next("col-sm-12 col-md-8 col-lg-9")
+      this._cartCollapseStatusSource.next("col-sm-12")
     }
     else {
-      this._cartCollapseStatusSource.next("col-sm-12");
+      this._cartCollapseStatusSource.next("col-sm-12col-md-8 col-lg-9");
     }
 
   }
