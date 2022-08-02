@@ -1,6 +1,5 @@
 .loggedOutLayout{
-    height: 94vh;
-    box-sizing: border-box;
+    height: 94%;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
 }

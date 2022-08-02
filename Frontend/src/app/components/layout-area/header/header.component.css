@@ -11,3 +11,17 @@
     margin: 0;
     padding: 10px;
 }
+
+
+.cartButton{
+    position: absolute;
+    left: 12px;
+    top: 9px
+}
+
+@media only screen and (min-width: 768px) {
+    .cartButton{
+        position: absolute;
+        left: 300px;
+    }
+}

@@ -1,3 +1,17 @@
-header {
-    padding-top: 56px;
-}
+    .loggedIn {
+        padding-top: 102px;
+    }
+
+    .loggedOut {
+        padding-top: 56px;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .loggedIn {
+            padding-top: 56px;
+        }
+
+        .loggedOut {
+            padding-top: 56px;
+        }
+    }

@@ -2,10 +2,14 @@
   <div class="container-fluid">
     <span *ngIf="!loggedIn" class="navbar-brand">שלום אורח</span>
     <span *ngIf="loggedIn && user" class="navbar-brand">ברוך הבא {{user.firstName + ' ' + user.lastName}}!</span>
-    <span *ngIf="loggedIn" class="logoutButton me-auto" type="button"
-      aria-current="logout" (click)="logout()">התנתק/י</span>
+    <span *ngIf="loggedIn" class="logoutButton me-auto" type="button" aria-current="logout"
+      (click)="logout()">התנתק/י</span>
+      <button *ngIf="loggedIn" class="btn btn-primary cartButton" type="button" data-bs-toggle="collapse" (click)="changeCollapse()"
+        data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+        הצג עגלה
+      </button>
     <div class="navbar-collapse">
-      <div class="me-auto mb-2 mb-md-0 "></div>
+      <div *ngIf="loggedIn" class="me-auto mb-2 mb-md-0 "></div>
       <form *ngIf="loggedIn" class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="חיפוש מוצר" aria-label="search">
         <button class="btn btn-success" type="submit">חיפוש</button>
