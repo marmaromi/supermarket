@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutComponent } from './components/layout-area/layout/layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { InterceptorService } from './services/interceptor.service';
 import { CartCustomerComponent } from './components/cart-area/cart-customer/cart-customer.component';
 import { PageNotFoundComponent } from './components/layout-area/page-not-found/page-not-found.component';
 import { RegisterComponent } from './components/auth-area/register/register.component';
@@ -93,7 +94,7 @@ import { LoggedInLayoutComponent } from './components/layout-area/logged-in-layo
       },
     })
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
   bootstrap: [LayoutComponent]
 })
 export class AppModule { }

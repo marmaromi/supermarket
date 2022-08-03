@@ -2,9 +2,9 @@
     <nav class="categries">
         <h2>קטגוריות</h2>
         <ul>
-            <li>קטגוריה 1</li>
-            <li>קטגוריה 2</li>
-            <li>קטגוריה 3</li>
+            <li *ngFor="let category of categories">
+                {{category}}
+            </li>
         </ul>
     </nav>
 

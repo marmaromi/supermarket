@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
-import { firstValueFrom, Subject } from 'rxjs';
+import { firstValueFrom, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CredentialsModel } from '../models/credentials-model';
 import { UserModel } from '../models/user-model';
@@ -26,7 +26,8 @@ export class AuthService {
       localStorage.setItem("token", token);
 
     } catch (error: any) {
-      this.notify.error(error);
+      throw error;
+      // this.notify.error(error);
     }
   }
 
@@ -38,7 +39,9 @@ export class AuthService {
       this.getUserDetails();
 
     } catch (error) {
-      this.notify.error(error);
+      throw error;
+
+      // this.notify.error(error);
     }
   }
 
