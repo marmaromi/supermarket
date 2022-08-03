@@ -9,7 +9,7 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class LoggedInLayoutComponent implements OnInit {
 
-  public mainCollapse = "col-xs-12 col-md-8 col-lg-9";
+  public mainCollapse = "col-xs-12 col-md-8 col-lg-9 main";
   public userRole: string;
 
   constructor(private cartService: CartService, private authService: AuthService) { }
@@ -22,11 +22,11 @@ export class LoggedInLayoutComponent implements OnInit {
 
   isCollapsed() {
 
-    if (this.mainCollapse === "col-xs-12 col-md-8 col-lg-9") {
-      this.mainCollapse = "col-xs-12";
+    if (this.mainCollapse === "col-xs-12 col-md-8 col-lg-9 main") {
+      this.mainCollapse = "col-xs-12 main";
     }
     else {
-      this.mainCollapse = "col-xs-12 col-md-8 col-lg-9";
+      this.mainCollapse = "col-xs-12 col-md-8 col-lg-9 main";
     }
   }
 
