@@ -1,12 +1,14 @@
+<button class="btn btn-outline-danger cartButton" type="button" data-bs-toggle="collapse" (click)="collapseCart()"
+    data-bs-target="#collapse" title="הצג/הסתר עגלת קניות" aria-expanded="true" aria-controls="collapse">
+    🛒
+</button>
 <div class="container-fluid loggedIn">
     <div class="row">
-        <aside class="col-xs-12 col-md-4 col-lg-3 collapse show cart" id="collapseWidthExample">
-            
+        <aside [ngClass]="screenWidth < 768 ? cartPanel: cartPanel + ' show'" id="collapse">
             <app-cart-customer *ngIf="userRole != 'admin'"></app-cart-customer>
-            
         </aside>
-        
-        <main [class]="mainCollapse">
+
+        <main [ngClass]="mainPanel">
             <app-products-list *ngIf="userRole != 'admin'"></app-products-list>
         </main>
     </div>

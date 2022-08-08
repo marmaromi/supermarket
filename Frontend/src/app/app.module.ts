@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { NotifierModule } from 'angular-notifier';
 import { LoggedInLayoutComponent } from './components/layout-area/logged-in-layout/logged-in-layout.component';
+import { ProductCardComponent } from './components/products-area/product-card/product-card.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { LoggedInLayoutComponent } from './components/layout-area/logged-in-layo
     LoggedOutLayoutComponent,
     AboutComponent,
     LoggedInLayoutComponent,
+    ProductCardComponent,
 
   ],
   imports: [

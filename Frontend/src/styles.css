@@ -8,7 +8,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    /* height: 100%; */
     text-align: center;
     color: rgb(2, 85, 85);
     background-color: rgba(173, 216, 230, 0.492);
@@ -17,16 +17,14 @@ html, body {
 .box {
     display: inline-block;
     margin: 10px;
-    padding: 10px;
+    /* padding: 10px; */
     border: 1px solid black;
     border-radius: 10px;
-    box-shadow: 5px 5px 10px;
-    text-align: left;
+    /* box-shadow: 5px 5px 10px; */
+    text-align: right;
 }
 
-html, body {
-    height: 100%;
-}
+
 
 body {
     margin: 0;

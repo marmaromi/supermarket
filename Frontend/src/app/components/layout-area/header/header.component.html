@@ -4,11 +4,6 @@
     <span *ngIf="loggedIn && user" class="navbar-brand">ברוך הבא {{user.firstName + ' ' + user.lastName}}!</span>
     <span *ngIf="loggedIn" class="logoutButton me-auto" type="button" aria-current="logout"
       (click)="logout()">התנתק/י</span>
-    <button *ngIf="loggedIn" class="btn cartButton" type="button" data-bs-toggle="collapse" (click)="changeCollapse()"
-      data-bs-target="#collapseWidthExample" title="הצג/הסתר עגלת קניות" aria-expanded="true"
-      aria-controls="collapseWidthExample">
-      🛒
-    </button>
     <div class="navbar-collapse">
       <div *ngIf="loggedIn" class="me-auto mb-2 mb-md-0 "></div>
       <form *ngIf="loggedIn" class="d-flex" role="search">

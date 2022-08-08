@@ -1,21 +1,42 @@
-* {
-    /* border: 1px solid black; */
-    /* overflow: hidden; */
-}
-
 .main {
     border: 1px solid black;
-    height: fit-content;
-
 }
 
 .cart {
     border: 1px solid black;
+
 }
+
+.cartButton{
+    position: absolute;
+    left: 14px;
+    top: 10px;
+    font-size: x-large;
+    padding-block: 0%;
+    z-index: 9999;
+}
+
 
 @media only screen and (min-width: 768px) {
     .main {
         border: 1px solid black;
+        overflow: auto;
         height: 94vh;
     }
+
+    .cart {
+        overflow: auto;
+        padding-top: 10px;
+    }
+
+    .cartButton{
+        position: absolute;
+        left: 310px;
+        top: 9px;
+        font-size: x-large;
+        padding-block: 0%;
+        z-index: 9999;
+    }
 }
+
+

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoryModel } from 'src/app/models/category-model';
 import { ProductModel } from 'src/app/models/product-model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductsService } from 'src/app/services/products.service';
@@ -27,9 +26,9 @@ export class ProductsListComponent implements OnInit {
     try {
       this.products = await this.productsService.getProducts();
       for (const product of this.products) {
-        if(this.categories.indexOf(product.category.name) === -1) {
+        if (this.categories.indexOf(product.category.name) === -1) {
           this.categories.push(product.category.name);
-      }
+        }        
       }
 
 

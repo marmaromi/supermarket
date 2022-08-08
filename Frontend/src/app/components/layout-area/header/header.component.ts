@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/user-model';
 import { AuthService } from 'src/app/services/auth.service';
-import { CartService } from 'src/app/services/cart.service';
 import { NotifyService } from 'src/app/services/notify.service';
 
 @Component({
@@ -14,9 +13,8 @@ export class HeaderComponent implements OnInit {
 
   public loggedIn: boolean;
   public user: UserModel;
-  public collapse = false;
 
-  constructor(private authService: AuthService, private router: Router, private notify: NotifyService, private cartService: CartService) { }
+  constructor(private authService: AuthService, private router: Router, private notify: NotifyService) { }
 
   ngOnInit(): void {
     this.authService.loginStatus$.subscribe(loginStatus => this.loggedIn = loginStatus)
@@ -31,14 +29,4 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
-  changeCollapse(){
-    if (this.collapse) {
-      this.cartService.changeCartCollapse(false);
-      this.collapse = false;
-    }
-    else{
-      this.cartService.changeCartCollapse(true);
-      this.collapse = true;
-    }
-  }
 }
