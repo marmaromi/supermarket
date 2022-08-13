@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductModel } from 'src/app/models/product-model';
 import { AuthService } from 'src/app/services/auth.service';
+import { NotifyService } from 'src/app/services/notify.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -11,19 +12,13 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class ProductsListComponent implements OnInit {
 
-  // public loggedIn: boolean;
   public products: ProductModel[];
   public categories: string[] = [];
 
-  constructor(private productsService: ProductsService, private authService: AuthService, private router: Router) { }
+  constructor(private productsService: ProductsService, private authService: AuthService, private router: Router, private notify: NotifyService) { }
 
   async ngOnInit() {
-    // this.authService.loginStatus$.subscribe(loginStatus => this.loggedIn = loginStatus)
-    // if (!this.loggedIn) {
-    //   this.router.navigateByUrl("/login");
-    // }
-
-    try {
+    try {      
       this.products = await this.productsService.getProducts();
       for (const product of this.products) {
         if (this.categories.indexOf(product.category.name) === -1) {
@@ -33,7 +28,7 @@ export class ProductsListComponent implements OnInit {
 
 
     } catch (error: any) {
-      console.log(error);
+      this.notify.error(error);
 
     }
 

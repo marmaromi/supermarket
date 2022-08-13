@@ -17,13 +17,12 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private notify: NotifyService) { }
 
   ngOnInit(): void {
-    this.authService.loginStatus$.subscribe(loginStatus => this.loggedIn = loginStatus)
-    this.authService.userDetails$.subscribe(user => this.user = user)
-
+    this.authService.loginStatus$.subscribe(loginStatus => this.loggedIn = loginStatus);
+    this.authService.userDetails$.subscribe(user => this.user = user);
   }
 
-  public logout() {
-    this.authService.logout()
+  public logout() {    
+    this.authService.logout();
     this.authService.isLoggedIn();
     this.notify.success("התנתקות בוצעה בהצלחה")
     this.router.navigateByUrl('/login');

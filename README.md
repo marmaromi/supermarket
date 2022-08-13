@@ -10,3 +10,4 @@
 - add login message
 - add page not found
 - improve interceptor looks
+- maybe better collapse: https://coreui.io/angular/docs/components/collapse

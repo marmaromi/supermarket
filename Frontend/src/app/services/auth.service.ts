@@ -13,10 +13,10 @@ import { NotifyService } from './notify.service';
 export class AuthService {
 
   private _loginStatusSource = new Subject<boolean>();
-  loginStatus$ = this._loginStatusSource.asObservable();
+  public loginStatus$ = this._loginStatusSource.asObservable();
 
   private _userDetailsSource = new Subject<UserModel>();
-  userDetails$ = this._userDetailsSource.asObservable();
+  public userDetails$ = this._userDetailsSource.asObservable();
 
   constructor(private http: HttpClient, private notify: NotifyService) { }
 

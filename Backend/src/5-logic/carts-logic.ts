@@ -14,8 +14,19 @@ async function getLatestCartByUser(userId: string): Promise<ICartModel> {
     return latestCart;
 }
 
+async function getCartWithItems(cartId: string): Promise<IProductInCartModel[]> {
+    const cart = await ProductInCartModel.find({ cartId: cartId }).populate([{ path: "product", select: "-_id" }, { path: "cart", select: "-_id" }]).exec();
+    
+    if (!cart) {
+        throw new ResourceNotFoundError(cartId);
+    }
+    return cart;
+}
+
 async function createCart(userIdString: string): Promise<ICartModel> {
     const userId = (await UserModel.findById(userIdString).exec())._id;
+    console.log(await UserModel.findById(userIdString).exec());
+    
     if (!userId) {
         throw new ResourceNotFoundError(userId);
     }
@@ -81,6 +92,7 @@ async function deleteProduct(_id: string): Promise<void> {
 
 export default {
     getLatestCartByUser,
+    getCartWithItems,
     createCart,
     closeCart,
     deleteCart,

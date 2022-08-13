@@ -22,7 +22,7 @@ export class InterceptorService implements HttpInterceptor {
             console.log("ERROR 401 UNAUTHORIZED")
           }
           const err = error.error.message || error.statusText;
-          return throwError(() => error);                
+          return throwError(() => error);
         })
       );
   }

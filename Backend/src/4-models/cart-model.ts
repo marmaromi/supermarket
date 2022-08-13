@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ProductInCartModel } from "./product-in-cart-model";
 
 export interface ICartModel extends mongoose.Document {
     userId: mongoose.Schema.Types.ObjectId;
@@ -20,8 +21,17 @@ export const CartSchema = new mongoose.Schema<ICartModel>({
     }
 
 }, {
-    versionKey: false
+    versionKey: false,
+    // toJSON: {virtuals: true},
+    // id: false
 });
+
+// CartSchema.virtual("product-in-cart",{
+//     ref: ProductInCartModel,
+//     localField: "_id",
+//     foreignField: "cartId",
+//     justOne: true
+// });
 
 export const CartModel = mongoose.model<ICartModel>(
     "CartModel",
