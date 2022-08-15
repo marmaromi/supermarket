@@ -13,7 +13,9 @@ import { ProductsService } from 'src/app/services/products.service';
 export class ProductsListComponent implements OnInit {
 
   public products: ProductModel[];
+  public productsToShow: ProductModel[];
   public categories: string[] = [];
+  public category: string = 'כל המוצרים';
 
   constructor(private productsService: ProductsService, private authService: AuthService, private router: Router, private notify: NotifyService) { }
 
@@ -26,12 +28,19 @@ export class ProductsListComponent implements OnInit {
         }        
       }
 
+      this.productsToShow = [...this.products];
 
     } catch (error: any) {
       this.notify.error(error);
 
     }
 
+  }
+
+  showCategory(category: string){
+    this.category = category;
+    this.productsToShow.length = 0;
+    this.productsToShow = this.products.filter(p=> p.category.name === category);    
   }
 
 }
