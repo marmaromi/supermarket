@@ -24,6 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { NotifierModule } from 'angular-notifier';
 import { LoggedInLayoutComponent } from './components/layout-area/logged-in-layout/logged-in-layout.component';
 import { ProductCardComponent } from './components/products-area/product-card/product-card.component';
+import { SearchMainComponent } from './components/search-area/search-main/search-main.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import { ProductCardComponent } from './components/products-area/product-card/pr
     AboutComponent,
     LoggedInLayoutComponent,
     ProductCardComponent,
+    SearchMainComponent,
 
   ],
   imports: [
@@ -55,6 +58,7 @@ import { ProductCardComponent } from './components/products-area/product-card/pr
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    Ng2SearchPipeModule,
     NotifierModule.withConfig({
       position: {
         horizontal: {

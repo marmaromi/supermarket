@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup, Validators, ValidatorFn, FormBuilder, ValidationErrors, FormControl } from '@angular/forms';
+import { AbstractControl, FormGroup, Validators, ValidatorFn, FormBuilder, ValidationErrors } from '@angular/forms';
 import { CitiesService } from 'src/app/services/cities.service';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { controlValuesAreEqual, isIdValid, cityInList, streetInList } from "./form-validations"
+import { controlValuesAreEqual, isIdValid, cityInList } from "./form-validations"
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { NotifyService } from 'src/app/services/notify.service';

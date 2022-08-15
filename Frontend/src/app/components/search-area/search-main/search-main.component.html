@@ -1,0 +1,14 @@
+<form class="d-flex" role="search" >
+    <input class="form-control me-2" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="חיפוש מוצר" aria-label="search" [matAutocomplete]="auto">
+    <!-- <select class="form-control me-2" aria-label="search"> -->
+        <option value="" disabled selected hidden>חיפוש מוצר</option>
+        <!-- <option *ngFor="let product of products | filter:searchText" value="product">{{product.productName}}</option> -->
+
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let product of products | filter:searchText" [value]="product.productName">
+                {{product.productName}}
+            </mat-option>
+        </mat-autocomplete>
+    <!-- </select> -->
+    <button class="btn btn-success" type="submit">חיפוש</button>
+  </form>
