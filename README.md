@@ -2,9 +2,10 @@
 
 ## issues
 - register email validation not consistent with backend validation - works without .com
-- fix error messages for frontend
+- fix error messages for frontend (login wrong password ot username)
 - fix horizontal collapse in user layout
 - show cart in small screen and than enlarge it breaks layout
+- 
 
 ## things to add
 - add login message

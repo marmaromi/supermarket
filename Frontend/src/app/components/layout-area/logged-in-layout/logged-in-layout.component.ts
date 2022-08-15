@@ -31,8 +31,8 @@ export class LoggedInLayoutComponent implements OnInit {
         //   this.userRole = user.role;
         //   this.userId = user._id;
         // });
-        
-        await this.cartService.getCartWithProducts(this.userId);
+                        
+        await this.cartService.getLatestCartByUser(this.userId);
 
 
     } catch (err: any) {

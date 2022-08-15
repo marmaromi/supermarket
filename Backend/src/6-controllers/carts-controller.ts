@@ -16,9 +16,10 @@ router.get("/carts/:userId", verifyLogIn, async (request: Request, response: Res
     }
 });
 
-router.get("/cart/products/:cartId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+router.get("/carts/products/:cartId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const cartId = request.params.cartId;
+        
         const cart = await cartLogic.getCartWithItems(cartId);
         response.json(cart);
     }
@@ -51,7 +52,7 @@ router.delete("/carts/:_id", verifyLogIn, async (request: Request, response: Res
     }
 });
 
-router.post("/cart/products/:cartId/:productId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+router.post("/carts/products/:cartId/:productId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const cartId: string = request.params.cartId;
         const productId: string = request.params.productId;
@@ -63,7 +64,7 @@ router.post("/cart/products/:cartId/:productId", verifyLogIn, async (request: Re
     }
 });
 
-router.put("/cart/products/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+router.put("/carts/products/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         request.body._id = request.params._id;
         const product = new ProductInCartModel(request.body)
@@ -75,7 +76,7 @@ router.put("/cart/products/:_id", verifyLogIn, async (request: Request, response
     }
 });
 
-router.delete("/cart/products/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+router.delete("/carts/products/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const _id = request.params._id;
         await cartLogic.deleteProduct(_id);

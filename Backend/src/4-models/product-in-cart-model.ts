@@ -43,12 +43,12 @@ ProductInCartSchema.virtual("product", {
     justOne: true
 });
 
-ProductInCartSchema.virtual("cart", {
-    ref: CartModel,
-    localField: "cartId",
-    foreignField: "_id",
-    justOne: true
-});
+// ProductInCartSchema.virtual("cart", {
+//     ref: CartModel,
+//     localField: "cartId",
+//     foreignField: "_id",
+//     justOne: true
+// });
 
 export const ProductInCartModel = mongoose.model<IProductInCartModel>(
     "ProductInCartModel",

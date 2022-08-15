@@ -28,9 +28,8 @@ export class ProductCardComponent implements OnInit {
     this.addProductToCartForm = this.fb.group({
       productAmount: 0
     })
+    this.cartId = sessionStorage.getItem("cartId");
 
-    this.cartService.cartWithProducts$.subscribe(cart => console.log(cart._id));
-    
   }
 
   get productAmount() {
@@ -42,9 +41,10 @@ export class ProductCardComponent implements OnInit {
     try {
       const formValue = this.addProductToCartForm.value;
       if (formValue.productAmount > 0) {
-        console.log(formValue);
-        console.log(this.cartId, this.product._id);
-        // this.cartService.addToCart(this.cartId, this.product._id)
+        this.cartService.addToCart(this.cartId, this.product._id, formValue.productAmount)
+      }
+      if(formValue.productAmount === 0){
+        //delete
       }
 
     } catch (err: any) {

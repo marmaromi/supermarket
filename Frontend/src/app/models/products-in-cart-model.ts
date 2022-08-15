@@ -1,4 +1,3 @@
-import { CartModel } from "./cart-model";
 import { ProductModel } from "./product-model";
 
 export class ProductsInCartModel {
@@ -8,5 +7,4 @@ export class ProductsInCartModel {
     public totalProductPrice: number;
     public cartId: string;
     public product: ProductModel;
-    public cart: CartModel;
 }

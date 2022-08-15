@@ -15,18 +15,19 @@ async function getLatestCartByUser(userId: string): Promise<ICartModel> {
 }
 
 async function getCartWithItems(cartId: string): Promise<IProductInCartModel[]> {
-    const cart = await ProductInCartModel.find({ cartId: cartId }).populate([{ path: "product", select: "-_id" }, { path: "cart", select: "-_id" }]).exec();
+    const cart = await ProductInCartModel.find({ cartId: cartId }).populate("product", "-_id").exec();
     
-    if (!cart) {
-        throw new ResourceNotFoundError(cartId);
-    }
+
+    // if (!cart) {
+    //     throw new ResourceNotFoundError(cartId);
+    // }
     return cart;
 }
 
 async function createCart(userIdString: string): Promise<ICartModel> {
     const userId = (await UserModel.findById(userIdString).exec())._id;
     console.log(await UserModel.findById(userIdString).exec());
-    
+
     if (!userId) {
         throw new ResourceNotFoundError(userId);
     }
@@ -47,7 +48,7 @@ async function closeCart(_id: string): Promise<void> {
         throw new ResourceNotFoundError(_id);
     }
     cart.cartOpen = false;
-    await CartModel.findByIdAndUpdate(_id, cart, {returnOriginal: false});
+    await CartModel.findByIdAndUpdate(_id, cart, { returnOriginal: false });
 }
 
 async function deleteCart(_id: string): Promise<void> {
