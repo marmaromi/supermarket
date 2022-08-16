@@ -5,11 +5,11 @@
 <div class="container-fluid loggedIn">
     <div class="row">
         <aside [ngClass]="screenWidth < 768 ? cartPanel: cartPanel + ' show'" id="collapse">
-            <app-cart-customer *ngIf="userRole != 'admin'"></app-cart-customer>
+            <app-cart-customer *ngIf="userRole !== 'admin'"></app-cart-customer>
         </aside>
         
         <main [ngClass]="mainPanel">
-            <app-products-list *ngIf="userRole != 'admin'"></app-products-list>
+            <app-products-list *ngIf="userRole !== 'admin'"></app-products-list>
         </main>
     </div>
 </div>
