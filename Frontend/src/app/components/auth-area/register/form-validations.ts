@@ -16,7 +16,7 @@ export function isIdValid(citizenId: number, validId: any): any {
     }) % 10 === 0;
 
     if (validId) {
-        return true
+        return true;
 
     }
 }
@@ -29,35 +29,35 @@ export function controlValuesAreEqual(controlNameA: string, controlNameB: string
 
 
         if (valueOfControlA !== valueOfControlB) {
-            return { valuesDoNotMatch: true }
+            return { valuesDoNotMatch: true };
         }
-        return null
+        return null;
 
-    }
+    };
 }
 
-  export function cityInList(selection: string, list: string[]): ValidatorFn {
+export function cityInList(selection: string, list: string[]): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const formGroup = control as FormGroup;
-      const selected: string = formGroup.get(selection)?.value;
+        const formGroup = control as FormGroup;
+        const selected: string = formGroup.get(selection)?.value;
 
-      if (!list?.includes(selected)) {
+        if (!list?.includes(selected)) {
         
-        return { inList: true };
-      }
-      return null;
-    }
-  }
+            return { inList: true };
+        }
+        return null;
+    };
+}
 
-  export function streetInList(selection: string, list: string[]): ValidatorFn {
+export function streetInList(selection: string, list: string[]): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const formGroup = control as FormGroup;
-      const selected: string = formGroup.get(selection)?.value;
+        const formGroup = control as FormGroup;
+        const selected: string = formGroup.get(selection)?.value;
 
-      if (!list?.includes(selected)) {
+        if (!list?.includes(selected)) {
         
-        return { inList: true };
-      }
-      return null;
-    }
-  }
+            return { inList: true };
+        }
+        return null;
+    };
+}
