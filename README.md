@@ -18,7 +18,6 @@ A supermarket site - trainig project.
 - fix error messages for frontend (login wrong password ot username)
 - fix horizontal collapse in user layout
 - show cart in small screen and than enlarge it breaks layout
-- 
 
 ## things to add
 - add login message
