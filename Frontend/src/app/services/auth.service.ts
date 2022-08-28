@@ -61,11 +61,12 @@ export class AuthService {
         }
     }
 
-    public getUserDetails(): void {
+    public getUserDetails(): UserModel {
         const user = (jwtDecode(localStorage.getItem("token")) as any).user;
         if (user) {
             this._userDetailsSource.next(user);
         }
+        return user;
     }
 
     public getUserRole(): string {

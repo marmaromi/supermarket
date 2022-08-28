@@ -1,38 +1,43 @@
 .categories {
-    list-style-type: none;
-    margin: 0;
-    padding: 0 0 0.5rem 0;
-    text-align: center;
-  }
-  .categories li {
-    display: inline-block;
-    min-width: 5em;
-    margin: 0 0.5em;
-  }
-  .categories a {
-    text-decoration: none;
-    display: block;
-    font-family:Arial;
-    font-weight: 600;
-    position: relative;
-    color: black;
-    padding:.5em 0;
-  }
-  .categories a:hover {
-    color: #c69f73;
-  }
-  
-  .categories a:hover:before {
-    left: 0;
-    width: 100%;
-  }
-  .categories a:before {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: .5px;
-    background-color: #c69f73;
-    bottom: calc(-1px);
-    right: 0;
-    transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-  }
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.categories li {
+  display: inline-block;
+  min-width: 5em;
+  margin: 0 0.5em;
+}
+
+.categories a {
+  text-decoration: none;
+  display: block;
+  font-family: Arial;
+  font-weight: 600;
+  position: relative;
+  color: black;
+  padding: .5em 0;
+  cursor: pointer;
+}
+
+.categories a:hover {
+  color: #c69f73;
+}
+
+.categories a:hover:before {
+  left: 0;
+  width: 100%;
+}
+
+.categories a:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: .5px;
+  background-color: #c69f73;
+  bottom: calc(-1px);
+  right: 0;
+  transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
