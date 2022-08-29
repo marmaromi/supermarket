@@ -55,9 +55,9 @@ export class CartItemComponent implements OnInit {
         }
     }
 
-    // deleteProductFromCart() {
-    //     this.cartService.deleteProductFromCart(this.cartId, this.cartProduct._id);
-    // }
+    deleteProduct() {
+        this.cartService.deleteProductFromCart(this.cartProduct._id);
+    }
 
 
 }

@@ -58,9 +58,14 @@ export class CartService {
 
             }
 
+        } catch (err: any) {
+            throw err;
+        }
+    }
 
-
-
+    public async deleteProductFromCart(productInCartId: string) {
+        try {
+            const res = await firstValueFrom(this.http.delete(environment.productsInCartUrl + `/${productInCartId}`));
         } catch (err: any) {
             throw err;
         }

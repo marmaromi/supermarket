@@ -1,6 +1,6 @@
 # supermarket
 
-A supermarket site - trainig project.
+A supermarket site - training project.
 
 ## built with:
 - Database: 
@@ -18,6 +18,7 @@ A supermarket site - trainig project.
 - fix error messages for frontend (login wrong password ot username)
 - fix horizontal collapse in user layout
 - show cart in small screen and than enlarge it breaks layout
+- fix product Cart delete not rendering
 
 ## things to add
 - add login message

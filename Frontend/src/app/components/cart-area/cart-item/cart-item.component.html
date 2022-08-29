@@ -12,7 +12,7 @@
             <input type="number" class="form-control" name="productAmount" formControlName='productAmount' required
                 min=1 [value]="cartProduct.amount" aria-label="productAmount" (keydown)="onKeydown($event)">
             <button (click)="updatePrice(-1)">-</button>
-            <button class="btn btn-danger">מחק</button><br>
+            <button class="btn btn-danger" (click)="deleteProduct()">מחק</button><br>
         </form>
         <span *ngIf="productAmount.errors?.['min'] && productAmount.touched">סיסמה חסרה</span>
     </div>
