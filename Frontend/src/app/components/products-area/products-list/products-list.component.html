@@ -8,8 +8,15 @@
         </ul>
     </nav>
 
-    <div class="products">
+    <div class="products" >
         <h2>{{category}}</h2>
-        <app-product-card *ngFor="let product of productsToShow" [product]="product" [productsInCart]="productsInCart"> </app-product-card>
+        <ng-template *ngIf="userRole !== 'admin' ; else admin">
+            <app-product-card *ngFor=" let product of productsToShow" [product]="product" [productsInCart]="productsInCart"> </app-product-card>
+        </ng-template>
+
+        <ng-template #admin>
+            <app-product-card-admin *ngFor=" let product of productsToShow" [product]="product"> </app-product-card-admin>
+        </ng-template>
+
     </div>
 </section>

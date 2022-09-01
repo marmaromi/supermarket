@@ -20,25 +20,36 @@ export class CartService {
 
     public async getLatestCartByUser(userId: string): Promise<CartModel> {
         try {
-            const cart = await firstValueFrom(this.http.get<CartModel>(environment.cartsUrl + `/${userId}`));
+            const cart = await firstValueFrom(this.http.get<CartModel>(environment.cartsUrl + `/${userId}`));            
             sessionStorage.setItem("cartId", cart._id);
             return cart;
 
         } catch (err: any) {
-            throw err;
+            const cart = await this.createCart(userId);
+            sessionStorage.setItem("cartId", cart._id);
+            return cart;
         }
 
     }
 
     public async getProductsInCart(): Promise<ProductsInCartModel[]> {
         try {
-            const userId = this.authService.getUserDetails()._id;
-            const cartId = (await this.getLatestCartByUser(userId))._id;
+            const cartId = sessionStorage.getItem("cartId");
             const products = await firstValueFrom(this.http.get<ProductsInCartModel[]>(environment.productsInCartUrl + `/${cartId}`));
             this._productsInCartSource.next(products);
             return products;
 
 
+
+        } catch (err: any) {
+            throw err;
+        }
+    }
+
+    public async createCart(userId: string): Promise<CartModel> {
+        try {
+            const cart = await firstValueFrom(this.http.post<CartModel>(environment.cartsUrl + `/${userId}`, null));
+            return cart;
 
         } catch (err: any) {
             throw err;

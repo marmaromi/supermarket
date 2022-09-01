@@ -1,14 +1,15 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { ProductModel } from "src/app/models/product-model";
-import { ProductsInCartModel } from "src/app/models/products-in-cart-model";
-import { CartService } from "src/app/services/cart.service";
-import { NotifyService } from "src/app/services/notify.service";
-import { environment } from "src/environments/environment";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ProductModel } from 'src/app/models/product-model';
+import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
+import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
+import { NotifyService } from 'src/app/services/notify.service';
+import { environment } from 'src/environments/environment';
 @Component({
-    selector: "app-product-card",
-    templateUrl: "./product-card.component.html",
-    styleUrls: ["./product-card.component.css"]
+    selector: 'app-product-card',
+    templateUrl: './product-card.component.html',
+    styleUrls: ['./product-card.component.css']
 })
 export class ProductCardComponent implements OnInit {
 
@@ -25,23 +26,19 @@ export class ProductCardComponent implements OnInit {
     async ngOnInit(): Promise<void> {
     
         if (this.product.imageName) {
-            this.productImage = environment.productsImagesUrl + "/" + this.product.imageName;
+            this.productImage = environment.productsImagesUrl + '/' + this.product.imageName;
         }
         
         this.initialAmount = this.productsInCart.find(p => p.productId === this.product._id)?.amount || 0;
         this.addProductToCartForm = this.fb.group({
             productAmount:  this.initialAmount
         });
-        this.cartId = sessionStorage.getItem("cartId");
-
-
-        
-
+        this.cartId = sessionStorage.getItem('cartId');
 
     }
 
     get productAmount() {
-        return this.addProductToCartForm.get("productAmount");
+        return this.addProductToCartForm.get('productAmount');
     }
 
 

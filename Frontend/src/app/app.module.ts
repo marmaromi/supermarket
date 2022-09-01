@@ -25,6 +25,7 @@ import { LoggedInLayoutComponent } from "./components/layout-area/logged-in-layo
 import { ProductCardComponent } from "./components/products-area/product-card/product-card.component";
 import { SearchMainComponent } from "./components/search-area/search-main/search-main.component";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
+import { ProductCardAdminComponent } from './components/products-area/product-card-admin/product-card-admin.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { Ng2SearchPipeModule } from "ng2-search-filter";
         LoggedInLayoutComponent,
         ProductCardComponent,
         SearchMainComponent,
+        ProductCardAdminComponent,
 
     ],
     imports: [
