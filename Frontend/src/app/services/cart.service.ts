@@ -4,16 +4,17 @@ import { first, firstValueFrom, Subject } from "rxjs";
 import { environment } from "src/environments/environment";
 import { CartModel } from "../models/cart-model";
 import { ProductsInCartModel } from "../models/products-in-cart-model";
+import { UserModel } from "../models/user-model";
 import { AuthService } from "./auth.service";
 
 @Injectable({
     providedIn: "root"
 })
 export class CartService {
-    private userId: string;
+    private user: UserModel;
 
-    // private _productsInCartSource = new Subject<ProductsInCartModel>();
-    // public productsInCart$ = this._productsInCartSource.asObservable();
+    private _productsInCartSource = new Subject<ProductsInCartModel[]>();
+    public productsInCart$ = this._productsInCartSource.asObservable();
 
     constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -29,11 +30,12 @@ export class CartService {
 
     }
 
-    public async getProductsInCart(userId: string): Promise<ProductsInCartModel[]> {
+    public async getProductsInCart(): Promise<ProductsInCartModel[]> {
         try {
+            const userId = this.authService.getUserDetails()._id;
             const cartId = (await this.getLatestCartByUser(userId))._id;
             const products = await firstValueFrom(this.http.get<ProductsInCartModel[]>(environment.productsInCartUrl + `/${cartId}`));
-            // this._productsInCartSource.next(cart);
+            this._productsInCartSource.next(products);
             return products;
 
 
@@ -43,19 +45,24 @@ export class CartService {
         }
     }
 
-    public async addToCart(cartId: string, productId: string, amount: number) {
+    public async addToCart(cartId: string, productId: string, amount: number): Promise<ProductsInCartModel> {
         try {
-            this.authService.userDetails$.subscribe(user => this.userId = user._id);
-            const products = await this.getProductsInCart(this.userId);
+            const products = await this.getProductsInCart();
             const productIndex = products.findIndex(p => p.productId === productId);
+            
+            if (productIndex === -1) {                
+                const product = await firstValueFrom(this.http.post<ProductsInCartModel>(environment.productsInCartUrl + `/${cartId}/${productId}`, {"amount": amount}));
+                // this.store.dispatch(addProductToCart({product: product}));
+                return product;
 
-            if (productIndex === -1) {
-                const res = await firstValueFrom(this.http.post(environment.productsInCartUrl + `/${cartId}/${productId}`, amount));
             }
             else {
                 const productInCartId = products[productIndex]._id;
-                const res = await firstValueFrom(this.http.put(environment.productsInCartUrl + `/${productInCartId}`, amount));
-
+                const product = products[productIndex];
+                product.amount = amount;
+                await firstValueFrom(this.http.put<ProductsInCartModel>(environment.productsInCartUrl + `/${productInCartId}`, products[productIndex]));
+                // this.store.dispatch(updateProductInCart({product: product}));
+                return product;
             }
 
         } catch (err: any) {
@@ -66,6 +73,7 @@ export class CartService {
     public async deleteProductFromCart(productInCartId: string) {
         try {
             const res = await firstValueFrom(this.http.delete(environment.productsInCartUrl + `/${productInCartId}`));
+
         } catch (err: any) {
             throw err;
         }

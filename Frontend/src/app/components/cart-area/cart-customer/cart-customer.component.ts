@@ -14,15 +14,15 @@ export class CartCustomerComponent implements OnInit {
 
   @Input() cartId: string;
 
-  public user: UserModel;
+  // public user: UserModel;
   public productsInCart: ProductsInCartModel[] = [];
 
   constructor(private authService: AuthService, private cartService: CartService) { }
 
   async ngOnInit(): Promise<void> {
-    this.user = this.authService.getUserDetails();
-    this.productsInCart = await this.cartService.getProductsInCart(this.user._id);
-    console.log(this.productsInCart);
+    // this.user = this.authService.getUserDetails();
+    this.productsInCart = await this.cartService.getProductsInCart();
+    // console.log(this.productsInCart);
     
 
   }

@@ -21,7 +21,6 @@
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
-    "@ngrx/store": "^14.0.2",
     "angular-notifier": "^11.0.0",
     "jwt-decode": "^3.1.2",
     "ng2-search-filter": "^0.5.1",

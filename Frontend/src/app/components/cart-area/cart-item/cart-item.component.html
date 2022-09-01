@@ -1,19 +1,20 @@
 <div class="box productContainer">
     <img src={{productImage}} alt="תמונת המוצר"> <br>
-    <div class="cardText">
+    <div>
         <div>
             <span>{{cartProduct.product.productName}}</span> <br>
-            <span>{{cartProduct.amount}} {{cartProduct.product.priceParameter}}</span><br>
+            <span>{{initialAmount}} {{cartProduct.product.priceParameter}}</span><br>
             <span>{{cartProduct.totalProductPrice}}₪</span><br>
-
+            
         </div>
         <form [formGroup]="cartForm">
-            <button (click)="updatePrice(1)">+</button>
-            <input type="number" class="form-control" name="productAmount" formControlName='productAmount' required
-                min=1 [value]="cartProduct.amount" aria-label="productAmount" (keydown)="onKeydown($event)">
-            <button (click)="updatePrice(-1)">-</button>
-            <button class="btn btn-danger" (click)="deleteProduct()">מחק</button><br>
+            <button (click)="updateAmountCounter(1)">+</button>
+            <input #amount type="number" class="form-control" name="productAmount" formControlName='productAmount' required
+            min=1 [value]="cartProduct.amount" aria-label="productAmount" (keydown)="onKeydown($event)">
+            <button (click)="updateAmountCounter(-1)">-</button>
+            <button class="btn btn-danger" (click)="updateProduct()" [disabled]="cartProduct.amount === initialAmount">עדכן</button>
+            <button class="delete" (click)="deleteProduct()">❌</button>
         </form>
-        <span *ngIf="productAmount.errors?.['min'] && productAmount.touched">סיסמה חסרה</span>
+        <span *ngIf="productAmount.errors?.['min'] && productAmount.touched">מינימום פריט אחד</span>
     </div>
 </div>

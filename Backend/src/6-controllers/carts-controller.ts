@@ -54,9 +54,10 @@ router.delete("/carts/:_id", verifyLogIn, async (request: Request, response: Res
 
 router.post("/carts/products/:cartId/:productId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
-        const cartId: string = request.params.cartId;
         const productId: string = request.params.productId;
-        const addedProduct = await cartLogic.addProduct(productId, cartId);
+        const cartId: string = request.params.cartId;
+        const amount = request.body.amount;
+        const addedProduct = await cartLogic.addProduct(productId, cartId, amount);
         response.status(201).json(addedProduct);
     }
     catch (err: any) {
@@ -67,7 +68,7 @@ router.post("/carts/products/:cartId/:productId", verifyLogIn, async (request: R
 router.put("/carts/products/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         request.body._id = request.params._id;
-        const product = new ProductInCartModel(request.body)
+        const product = new ProductInCartModel(request.body)        
         const updatedProduct = await cartLogic.updateProduct(product);
         response.json(updatedProduct);
     }

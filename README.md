@@ -25,3 +25,4 @@ A supermarket site - training project.
 - add page not found
 - improve interceptor looks
 - maybe better collapse: https://coreui.io/angular/docs/components/collapse
+- add ngrx for products in cart

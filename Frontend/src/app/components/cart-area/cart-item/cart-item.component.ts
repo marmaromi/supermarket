@@ -16,7 +16,7 @@ export class CartItemComponent implements OnInit {
     @Input() cartProduct: ProductsInCartModel;
     public productImage: string;
     public cartId: string;
-
+    public initialAmount: number;
 
 
     constructor(private fb: FormBuilder, private notify: NotifyService, private cartService: CartService, private renderer2: Renderer2) { }
@@ -28,6 +28,8 @@ export class CartItemComponent implements OnInit {
             this.productImage = environment.productsImagesUrl + "/" + this.cartProduct.product.imageName;
         }
 
+        this.initialAmount = this.cartProduct.amount;
+
         this.cartForm = this.fb.group({
             productAmount: this.cartProduct.amount
         });
@@ -38,19 +40,23 @@ export class CartItemComponent implements OnInit {
         return this.cartForm.get("productAmount");
     }
 
-    updatePrice(num: number) {
-        if (num === -1 && this.cartProduct.amount === 1) {
-
-        }
-        else {
+    updateAmountCounter(num: number) {
+        if (!(num === -1 && this.cartProduct.amount === 1)) {
             this.cartProduct.amount = this.cartProduct.amount + num;
-            this.cartProduct.totalProductPrice = this.cartProduct.product.productPrice * this.cartProduct.amount;
         }
     }
 
-    onKeydown(event: KeyboardEvent) {        
+    async updateProduct(): Promise<void> {
+        if (this.cartProduct.amount !== this.initialAmount && this.cartProduct.amount > 0) {
+            await this.cartService.addToCart(this.cartProduct.cartId, this.cartProduct.productId, this.cartProduct.amount);
+            this.initialAmount = this.cartProduct.amount;
+            this.cartProduct.totalProductPrice = this.cartProduct.product.productPrice * this.cartProduct.amount;
+
+        }
+    }
+
+    onKeydown(event: KeyboardEvent) {
         if (event.key === "-" || event.key === "+" || event.key === "e" || event.key === "0") {
-            console.log(event.key);
             event.preventDefault();
         }
     }

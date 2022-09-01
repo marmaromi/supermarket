@@ -19,7 +19,7 @@
 
 @media only screen and (min-width: 768px) {
     .main {
-        border: 1px solid black;
+        /* border: 1px solid black; */
         overflow: auto;
         height: 94vh;
     }
@@ -27,15 +27,16 @@
     .cart {
         overflow: auto;
         padding-top: 10px;
+        height: 94vh;
     }
 
     .cartButton{
-        position: absolute;
+        /* position: absolute; */
         left: 310px;
         top: 9px;
-        font-size: x-large;
-        padding-block: 0%;
-        z-index: 9999;
+        /* font-size: x-large; */
+        /* padding-block: 0%; */
+        /* z-index: 9999; */
     }
 }
 

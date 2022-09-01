@@ -129,6 +129,7 @@ export class RegisterComponent implements OnInit {
 
     public async getCitiesAndStreets() {
         try {
+            
             this.streetsByCities = await this.citiesService.getCitiesAndStreets();
             this.cities = Object.keys(this.streetsByCities);
 

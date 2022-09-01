@@ -4,7 +4,7 @@
     <span>{{product.productName}}</span> <br>
 
     <form [formGroup]="addProductToCartForm" (ngSubmit)="addToCart()">
-        <input type="number" class="form-control" name="productAmount" formControlName='productAmount' required min=0 value=0 aria-label="productAmount">
+        <input type="number" class="form-control" name="productAmount" formControlName='productAmount' required min=0 [value]="initialAmount" aria-label="productAmount">
         <button class="btn btn-primary"> הוסף לסל</button>
     </form>
 </div>

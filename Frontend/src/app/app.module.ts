@@ -13,7 +13,6 @@ import { CartAdminComponent } from "./components/cart-area/cart-admin/cart-admin
 import { ProductsListComponent } from "./components/products-area/products-list/products-list.component";
 import { HeaderComponent } from "./components/layout-area/header/header.component";
 import { CartItemComponent } from "./components/cart-area/cart-item/cart-item.component";
-import { StoreModule } from "@ngrx/store";
 import { LoggedOutLayoutComponent } from "./components/layout-area/logged-out-layout/logged-out-layout.component";
 import { AboutComponent } from "./components/auth-area/about/about.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -51,8 +50,7 @@ import { Ng2SearchPipeModule } from "ng2-search-filter";
         AppRoutingModule,
         FormsModule,
         HttpClientModule,
-        ReactiveFormsModule,
-        StoreModule.forRoot({}, {}),
+        ReactiveFormsModule,       
         BrowserAnimationsModule,
         MatAutocompleteModule,
         MatFormFieldModule,

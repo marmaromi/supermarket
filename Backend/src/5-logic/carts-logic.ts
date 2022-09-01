@@ -58,9 +58,9 @@ async function deleteCart(_id: string): Promise<void> {
     }
 }
 
-async function addProduct(productId: string, cartId: string): Promise<IProductInCartModel> {
+async function addProduct(productId: string, cartId: string, amount: number): Promise<IProductInCartModel> {
     const productPrice = (await productsLogic.getOneProduct(productId)).productPrice;
-    const productInCart = new ProductInCartModel({ productId: productId, amount: 1, totalProductPrice: productPrice, cartId: cartId });
+    const productInCart = new ProductInCartModel({ productId: productId, amount: amount, totalProductPrice: productPrice, cartId: cartId });
 
     const errors = productInCart.validateSync();
     if (errors) {

@@ -10,6 +10,6 @@
 
     <div class="products">
         <h2>{{category}}</h2>
-        <app-product-card *ngFor="let product of productsToShow" [product]="product"> </app-product-card>
+        <app-product-card *ngFor="let product of productsToShow" [product]="product" [productsInCart]="productsInCart"> </app-product-card>
     </div>
 </section>

@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    mainURL: "http://localhost:3000",
     authUrl: "http://localhost:3001/api/users/",
     productsUrl: "http://localhost:3001/api/products",
     ordersUrl: "http://localhost:3001/api/orders",

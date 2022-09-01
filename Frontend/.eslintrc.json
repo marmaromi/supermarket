@@ -35,10 +35,21 @@
             "style": "kebab-case"
           }
         ],
-        "quotes": ["error", "double"],
-        "semi": ["error", "always"],
-        "indent": ["error", 4],
-        "no-multi-spaces": ["error"]
+        "quotes": [
+          "error",
+          "double"
+        ],
+        "semi": [
+          "error",
+          "always"
+        ],
+        "indent": [
+          "error",
+          4
+        ],
+        "no-multi-spaces": [
+          "error"
+        ]
       }
     },
     {
@@ -49,6 +60,13 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {}
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+      ]
     }
   ]
 }
