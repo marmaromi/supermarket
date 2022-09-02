@@ -21,22 +21,32 @@ img {
     border: 1px black solid;
 }
 
-form {
-    display: flex;
-    padding-top: 20px;
-}
-
-form>* {
-    margin-inline-start: 5px;
-}
-
-input[type='number'] {
-    width: 60px;
-}
-
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
 
     opacity: 1;
 
+}
+
+.form-group {
+    width: 100%;
+    margin-block: 15px;
+}
+
+label {
+    font-size: large;
+}
+
+button {
+    margin: 20px;
+    width: 25%;
+    min-width: 75px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,21 +1,21 @@
-import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormGroup, Validators, ValidatorFn, FormBuilder, ValidationErrors } from "@angular/forms";
-import { CitiesService } from "src/app/services/cities.service";
-import { map, startWith } from "rxjs/operators";
-import { Observable } from "rxjs";
-import { controlValuesAreEqual, isIdValid, cityInList } from "./form-validations";
-import { AuthService } from "src/app/services/auth.service";
-import { Router } from "@angular/router";
-import { NotifyService } from "src/app/services/notify.service";
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup, Validators, ValidatorFn, FormBuilder, ValidationErrors } from '@angular/forms';
+import { CitiesService } from 'src/app/services/cities.service';
+import { map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { controlValuesAreEqual, isIdValid, cityInList } from './form-validations';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { NotifyService } from 'src/app/services/notify.service';
 
 interface LooseObject {
   [key: string]: string[]
 }
 
 @Component({
-    selector: "app-register",
-    templateUrl: "./register.component.html",
-    styleUrls: ["./register.component.css"]
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
 
@@ -32,65 +32,65 @@ export class RegisterComponent implements OnInit {
     async ngOnInit() {
         await this.getCitiesAndStreets();
 
-        this.registerForm = this.fb.group({
-            citizenId: "",
-            email: "",
-            password: "",
-            verifyPassword: "",
-            city: "",
-            street: "",
-            firstName: "",
-            lastName: "",
-        });
+        // this.registerForm = this.fb.group({
+        //     citizenId: '',
+        //     email: '',
+        //     password: '',
+        //     verifyPassword: '',
+        //     city: '',
+        //     street: '',
+        //     firstName: '',
+        //     lastName: '',
+        // });
 
-        this.registerForm.valueChanges.subscribe(console.log);
-
+        
         this.registerForm = this.fb.group({
-            citizenId: ["", [
+            citizenId: ['', [
                 Validators.required,
                 Validators.pattern(/^\d{2,9}$/)
             ]],
-            email: ["", [
+            email: ['', [
                 Validators.required,
                 Validators.email
             ]],
-            password: ["", [
+            password: ['', [
                 Validators.required,
                 Validators.minLength(8),
                 Validators.maxLength(30)
             ]],
-            verifyPassword: ["", [
+            verifyPassword: ['', [
                 Validators.required,
             ]],
-            city: ["", [
+            city: ['', [
                 Validators.required,
             ]],
-            street: ["", [
-                Validators.required,
-                Validators.minLength(2),
-                Validators.maxLength(30),
-            ]],
-            firstName: ["", [
+            street: ['', [
                 Validators.required,
                 Validators.minLength(2),
                 Validators.maxLength(30),
             ]],
-            lastName: ["", [
+            firstName: ['', [
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(30),
+            ]],
+            lastName: ['', [
                 Validators.required,
                 Validators.minLength(2),
                 Validators.maxLength(30),
             ]]
         }, {
             validators: [
-                controlValuesAreEqual("password", "verifyPassword"),
-                this.idValidator("citizenId"),
-                cityInList("city", this.cities),
+                controlValuesAreEqual('password', 'verifyPassword'),
+                this.idValidator('citizenId'),
+                cityInList('city', this.cities),
             ]
         });
+        this.registerForm.valueChanges.subscribe(console.log);
 
         this.filteredCities = this.city.valueChanges.pipe(
-            startWith(""),
-            map(value => this._citiesFilter(value || "")),
+            startWith(''),
+            map(value => this._citiesFilter(value || '')),
         );
 
     }
@@ -144,9 +144,9 @@ export class RegisterComponent implements OnInit {
             const fromValue = this.registerForm.value;
             await this.authService.register(fromValue);
             this.authService.isLoggedIn();
-            this.notify.success("ברוך הבא לקניה הראשונה שלך");
+            this.notify.success('ברוך הבא לקניה הראשונה שלך');
 
-            this.router.navigate(["/home"]);
+            this.router.navigate(['/home']);
 
         } catch (err: any) {
             this.notify.error(err);
@@ -158,35 +158,35 @@ export class RegisterComponent implements OnInit {
 
 
     get citizenId() {
-        return this.registerForm.get("citizenId");
+        return this.registerForm.get('citizenId');
     }
 
     get email() {
-        return this.registerForm.get("email");
+        return this.registerForm.get('email');
     }
 
     get password() {
-        return this.registerForm.get("password");
+        return this.registerForm.get('password');
     }
 
     get verifyPassword() {
-        return this.registerForm.get("verifyPassword");
+        return this.registerForm.get('verifyPassword');
     }
 
     get city() {
-        return this.registerForm.get("city");
+        return this.registerForm.get('city');
     }
 
     get street() {
-        return this.registerForm.get("street");
+        return this.registerForm.get('street');
     }
 
     get firstName() {
-        return this.registerForm.get("firstName");
+        return this.registerForm.get('firstName');
     }
 
     get lastName() {
-        return this.registerForm.get("lastName");
+        return this.registerForm.get('lastName');
     }
 
 }
