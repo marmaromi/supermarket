@@ -1,7 +1,9 @@
 <div class="box productContainer">
     <img src={{productImage}} alt="תמונת המוצר"> <br>
-    <span>{{product.productPrice}} ש"ח ל{{product.priceParameter}}</span><br>
-    <span>{{product.productName}}</span> <br>
+    <div style="margin-bottom: 20px">
+        ₪<span class="productPrice">{{product.productPrice}}</span> <br>
+        <span>ל{{product.priceParameter}}</span>
+    </div>    <div class="productName">{{product.productName}}</div>
 
     <form [formGroup]="addProductToCartForm" (ngSubmit)="addToCart()">
         <input type="number" class="form-control" name="productAmount" formControlName='productAmount' required min=0 [value]="initialAmount" aria-label="productAmount">

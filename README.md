@@ -19,6 +19,7 @@ A supermarket site - training project.
 - fix horizontal collapse in user layout
 - show cart in small screen and than enlarge it breaks layout
 - fix product Cart delete not rendering
+- shopping cart icon disappears on scrolling in phone mode
 
 ## things to add
 - add login message
