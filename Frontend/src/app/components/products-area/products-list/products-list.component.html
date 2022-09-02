@@ -9,13 +9,13 @@
     </nav>
 
     <div class="products" >
-        <h2>{{category}}</h2>
-        <ng-template *ngIf="userRole !== 'admin' ; else admin">
+        <h3>{{category}}</h3>
+        <ng-template [ngIf]="userRole !== 'admin'" [ngIfElse]="admin" >
             <app-product-card *ngFor=" let product of productsToShow" [product]="product" [productsInCart]="productsInCart"> </app-product-card>
         </ng-template>
 
-        <ng-template #admin>
-            <app-product-card-admin *ngFor=" let product of productsToShow" [product]="product"> </app-product-card-admin>
+        <ng-template  #admin>
+            <app-product-card-admin class="prod" *ngFor=" let product of productsToShow" [product]="product"> </app-product-card-admin>
         </ng-template>
 
     </div>

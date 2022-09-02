@@ -26,6 +26,7 @@ export class ProductsListComponent implements OnInit {
 
     async ngOnInit() {
         try {      
+            this.userRole = (this.authService.getUserDetails()).role;            
             this.productsInCart = await this.cartService.getProductsInCart(); //??????????????
             
             this.products = await this.productsService.getProducts();
@@ -34,10 +35,8 @@ export class ProductsListComponent implements OnInit {
                     this.categories.push(product.category.name);
                 }        
             }
-
+            
             this.productsToShow = [...this.products];
-            this.userRole = (this.authService.getUserDetails()).role;
-
 
         } catch (error: any) {
             this.notify.error(error);

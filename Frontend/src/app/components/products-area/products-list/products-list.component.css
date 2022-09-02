@@ -1,8 +1,12 @@
 .categories {
   list-style-type: none;
-  margin: 0;
-  padding: 0 0 0.5rem 0;
+  margin: 0 0 1rem 0;
+  padding: 0;
   text-align: center;
+  font-size: large;
+  background-color: #e7d2abc5;
+  box-shadow: 5px 5px 15px #e7d2abc5;
+
 }
 
 .categories li {
@@ -23,7 +27,9 @@
 }
 
 .categories a:hover {
-  color: #c69f73;
+  color: #bf8b50;
+  text-shadow: 5px 5px 15px #c69f73;
+
 }
 
 .categories a:hover:before {
@@ -40,4 +46,13 @@
   bottom: calc(-1px);
   right: 0;
   transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+h3{
+  font-weight: bold;
+}
+
+.prod:last-of-type{
+  background-color: black;
+  align-items: right;
 }

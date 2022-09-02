@@ -1,1 +1,39 @@
-<p>cart-admin works!</p>
+<div class="box productContainer">
+    <h2>עדכון מוצר</h2>
+    <img alt="תמונת המוצר"> <br>
+
+    <form [formGroup]="productForm" (ngSubmit)="updateProduct()">
+        <div class="form-group">
+            <label for="name">שם המוצר</label>
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="שם המוצר">
+        </div>
+        <div class="form-group">
+            <label for="category">קטגוריה</label>
+            <select class="form-control" id="category" formControlName="category">
+                <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="price">מחיר</label>
+            <input type="number" class="form-control" id="price" formControlName="price" placeholder="מחיר">
+        </div>
+        <div class="form-group">
+            <label for="image">תמונה</label>
+            <input type="text" class="form-control" id="image" formControlName="image" placeholder="תמונה">
+        </div>
+        <div class="form-group">
+            <label for="description">תיאור</label>
+            <textarea class="form-control" id="description" formControlName="description" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">עדכן</button>
+
+    </form>
+    <span> שם מוצר:</span><br>
+    <span> מחיר:</span><br>
+    <span>יחידה או קילוגרם:</span> <br>
+    <span> קטגוריה:</span> <br>
+
+    <button class="btn btn-primary"> עדכון מוצר</button>
+    <button class="btn btn-danger"> בטל עדכון</button>
+
+</div>

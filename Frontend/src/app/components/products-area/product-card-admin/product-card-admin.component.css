@@ -1,15 +1,26 @@
 .productContainer {
-    width: 324px;
+    width: 224px;
     height: 290px;
     padding: 10px;
     background-color: white;
 }
 
 img {
-    width: 200px;
-    height: 200px;
+    width: 155px;
+    height: 155px;
     object-fit: cover;
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.productPrice{
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.productName{
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 10px;
 }

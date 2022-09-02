@@ -5,6 +5,7 @@
     padding: 10px;
     background-color: white;
     display: flex;
+    margin-inline: 0;
     /* flex-wrap: wrap; */
     /* align-items: stretch; */
 

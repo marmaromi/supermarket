@@ -1,5 +1,6 @@
 @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~angular-notifier/styles";
+/* @import url(http://fonts.googleapis.com/css?family=Varela+Round?subset); */
 
 * {
     box-sizing: border-box;
@@ -11,16 +12,17 @@ html, body {
     /* height: 100%; */
     text-align: center;
     color: rgb(2, 85, 85);
-    background-color: rgba(173, 216, 230, 0.492);
+    background-color: rgba(238, 238, 238, 0.311);
 }
 
 .box {
     display: inline-block;
     margin: 10px;
     /* padding: 10px; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 10px;
-    /* box-shadow: 5px 5px 10px; */
+    box-shadow: 5px 5px 15px rgba(152, 152, 152, 0.5);
+
     text-align: right;
 }
 
@@ -28,5 +30,10 @@ html, body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+    /* font-family: "Alef Hebrew",
+               “Helvetica Neue”,
+               Helvetica,
+               Arial,
+               sans-serif; */
 }

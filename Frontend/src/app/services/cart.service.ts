@@ -1,14 +1,14 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { first, firstValueFrom, Subject } from "rxjs";
-import { environment } from "src/environments/environment";
-import { CartModel } from "../models/cart-model";
-import { ProductsInCartModel } from "../models/products-in-cart-model";
-import { UserModel } from "../models/user-model";
-import { AuthService } from "./auth.service";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { first, firstValueFrom, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { CartModel } from '../models/cart-model';
+import { ProductsInCartModel } from '../models/products-in-cart-model';
+import { UserModel } from '../models/user-model';
+import { AuthService } from './auth.service';
 
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root'
 })
 export class CartService {
     private user: UserModel;
@@ -21,12 +21,12 @@ export class CartService {
     public async getLatestCartByUser(userId: string): Promise<CartModel> {
         try {
             const cart = await firstValueFrom(this.http.get<CartModel>(environment.cartsUrl + `/${userId}`));            
-            sessionStorage.setItem("cartId", cart._id);
+            sessionStorage.setItem('cartId', cart._id);
             return cart;
 
         } catch (err: any) {
             const cart = await this.createCart(userId);
-            sessionStorage.setItem("cartId", cart._id);
+            sessionStorage.setItem('cartId', cart._id);
             return cart;
         }
 
@@ -34,12 +34,10 @@ export class CartService {
 
     public async getProductsInCart(): Promise<ProductsInCartModel[]> {
         try {
-            const cartId = sessionStorage.getItem("cartId");
+            const cartId = sessionStorage.getItem('cartId');
             const products = await firstValueFrom(this.http.get<ProductsInCartModel[]>(environment.productsInCartUrl + `/${cartId}`));
             this._productsInCartSource.next(products);
             return products;
-
-
 
         } catch (err: any) {
             throw err;
@@ -62,7 +60,7 @@ export class CartService {
             const productIndex = products.findIndex(p => p.productId === productId);
             
             if (productIndex === -1) {                
-                const product = await firstValueFrom(this.http.post<ProductsInCartModel>(environment.productsInCartUrl + `/${cartId}/${productId}`, {"amount": amount}));
+                const product = await firstValueFrom(this.http.post<ProductsInCartModel>(environment.productsInCartUrl + `/${cartId}/${productId}`, {'amount': amount}));
                 // this.store.dispatch(addProductToCart({product: product}));
                 return product;
 

@@ -23,11 +23,11 @@ export class LoggedInLayoutComponent implements OnInit {
     async ngOnInit(): Promise<void> {
         try {
             this.screenWidth = window.innerWidth;
-            const user: UserModel = this.authService.getUserDetails();
+            const user = this.authService.getUserDetails();
             this.userRole = user.role;
-            this.userId = user._id;
 
             if (this.userRole !== 'admin') {
+                this.userId = user._id;
                 await this.cartService.getLatestCartByUser(this.userId);
             }
 

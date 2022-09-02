@@ -1,5 +1,8 @@
 <div class="box productContainer" (click)="click()">
     <img src={{productImage}} alt="תמונת המוצר"> <br>
-    <span>{{product.productPrice}} ש"ח ל{{product.priceParameter}}</span><br>
-    <span>{{product.productName}}</span> <br>
+    <div style="margin-bottom: 20px">
+        ₪<span class="productPrice">{{product.productPrice}}</span> <br>
+        <span>ל{{product.priceParameter}}</span>
+    </div>
+    <div class="productName">{{product.productName}}</div>
 </div>
