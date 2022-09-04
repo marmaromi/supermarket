@@ -65,7 +65,14 @@
       "files": [
         "*.ts"
       ],
+      "extends": []
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
       "extends": [
+        "plugin:@ngrx/recommended"
       ]
     }
   ]

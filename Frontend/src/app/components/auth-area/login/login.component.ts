@@ -1,13 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormGroup, Validators, ValidatorFn, FormBuilder, ValidationErrors } from "@angular/forms";
-import { Router } from "@angular/router";
-import { AuthService } from "src/app/services/auth.service";
-import { NotifyService } from "src/app/services/notify.service";
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup, Validators, ValidatorFn, FormBuilder, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { NotifyService } from 'src/app/services/notify.service';
 
 @Component({
-    selector: "app-login",
-    templateUrl: "./login.component.html",
-    styleUrls: ["./login.component.css"]
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
@@ -18,28 +18,28 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.loginForm = this.fb.group({
-            email: "",
-            password: ""
+            email: '',
+            password: ''
         });
 
         this.loginForm.valueChanges.subscribe(console.log);
 
         this.loginForm = this.fb.group({
-            email: ["", [
+            email: ['', [
                 Validators.required
             ]],
-            password: ["", [
+            password: ['', [
                 Validators.required
             ]]
         });
     }
 
     get email() {
-        return this.loginForm.get("email");
+        return this.loginForm.get('email');
     }
 
     get password() {
-        return this.loginForm.get("password");
+        return this.loginForm.get('password');
     }
 
     public async login() {
@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
             const fromValue = this.loginForm.value;
             await this.authService.login(fromValue);
             this.authService.isLoggedIn();
-            this.notify.success("התחברת בהצלחה");
+            this.notify.success('התחברת בהצלחה');
 
-            this.router.navigateByUrl("/home");
+            this.router.navigateByUrl('/home');
 
         } catch (err: any) {
             this.notify.error(err);

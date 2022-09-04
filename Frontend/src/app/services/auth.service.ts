@@ -1,14 +1,14 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import jwtDecode from "jwt-decode";
-import { firstValueFrom, Subject, throwError } from "rxjs";
-import { environment } from "src/environments/environment";
-import { CredentialsModel } from "../models/credentials-model";
-import { UserModel } from "../models/user-model";
-import { NotifyService } from "./notify.service";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import jwtDecode from 'jwt-decode';
+import { firstValueFrom, Subject, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { CredentialsModel } from '../models/credentials-model';
+import { UserModel } from '../models/user-model';
+import { NotifyService } from './notify.service';
 
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root'
 })
 export class AuthService {
 
@@ -22,8 +22,8 @@ export class AuthService {
 
     public async login(credentials: CredentialsModel): Promise<void> {
         try {
-            const token = await firstValueFrom(this.http.post<string>(environment.authUrl + "login", credentials));
-            localStorage.setItem("token", token);
+            const token = await firstValueFrom(this.http.post<string>(environment.authUrl + 'login', credentials));
+            localStorage.setItem('token', token);
 
         } catch (error: any) {
             throw error;
@@ -33,7 +33,7 @@ export class AuthService {
 
     public async register(user: UserModel): Promise<void> {
         try {
-            await firstValueFrom(this.http.post<string>(environment.authUrl + "register", user));
+            await firstValueFrom(this.http.post<string>(environment.authUrl + 'register', user));
             const credentials = new CredentialsModel(user.email, user.password);
             await this.login(credentials);
             this.getUserDetails();
@@ -46,11 +46,11 @@ export class AuthService {
     }
 
     public logout(): void {
-        localStorage.removeItem("token");
+        localStorage.removeItem('token');
     }
 
     public isLoggedIn(): boolean {
-        if (localStorage.getItem("token")) {
+        if (localStorage.getItem('token')) {
             this._loginStatusSource.next(true);
             this.getUserDetails();
             return true;
@@ -62,7 +62,7 @@ export class AuthService {
     }
 
     public getUserDetails(): UserModel {
-        const user = (jwtDecode(localStorage.getItem("token")) as any).user;
+        const user = (jwtDecode(localStorage.getItem('token')) as any).user;
         if (user) {
             this._userDetailsSource.next(user);
         }
@@ -70,7 +70,7 @@ export class AuthService {
     }
 
     public getUserRole(): string {
-        const user: UserModel = (jwtDecode(localStorage.getItem("token")) as any).user;
+        const user: UserModel = (jwtDecode(localStorage.getItem('token')) as any).user;
         if (user) {
             return user.role;
         }

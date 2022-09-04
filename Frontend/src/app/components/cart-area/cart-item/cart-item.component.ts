@@ -1,14 +1,14 @@
-import { Component, Input, OnDestroy, OnInit, Renderer2 } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { ProductsInCartModel } from "src/app/models/products-in-cart-model";
-import { CartService } from "src/app/services/cart.service";
-import { NotifyService } from "src/app/services/notify.service";
-import { environment } from "src/environments/environment";
+import { Component, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
+import { CartService } from 'src/app/services/cart.service';
+import { NotifyService } from 'src/app/services/notify.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: "app-cart-item",
-    templateUrl: "./cart-item.component.html",
-    styleUrls: ["./cart-item.component.css"]
+    selector: 'app-cart-item',
+    templateUrl: './cart-item.component.html',
+    styleUrls: ['./cart-item.component.css']
 })
 export class CartItemComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class CartItemComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.cartProduct.product.imageName) {
-            this.productImage = environment.productsImagesUrl + "/" + this.cartProduct.product.imageName;
+            this.productImage = environment.productsImagesUrl + '/' + this.cartProduct.product.imageName;
         }
 
         this.initialAmount = this.cartProduct.amount;
@@ -33,11 +33,11 @@ export class CartItemComponent implements OnInit {
         this.cartForm = this.fb.group({
             productAmount: this.cartProduct.amount
         });
-        this.cartId = sessionStorage.getItem("cartId");
+        this.cartId = sessionStorage.getItem('cartId');
     }
 
     get productAmount() {
-        return this.cartForm.get("productAmount");
+        return this.cartForm.get('productAmount');
     }
 
     updateAmountCounter(num: number) {
@@ -56,7 +56,7 @@ export class CartItemComponent implements OnInit {
     }
 
     onKeydown(event: KeyboardEvent) {
-        if (event.key === "-" || event.key === "+" || event.key === "e" || event.key === "0") {
+        if (event.key === '-' || event.key === '+' || event.key === 'e' || event.key === '0') {
             event.preventDefault();
         }
     }

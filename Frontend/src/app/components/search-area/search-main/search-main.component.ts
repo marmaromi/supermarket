@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { ProductModel } from "src/app/models/product-model";
-import { ProductsService } from "src/app/services/products.service";
+import { Component, OnInit } from '@angular/core';
+import { ProductModel } from 'src/app/models/product-model';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
-    selector: "app-search-main",
-    templateUrl: "./search-main.component.html",
-    styleUrls: ["./search-main.component.css"]
+    selector: 'app-search-main',
+    templateUrl: './search-main.component.html',
+    styleUrls: ['./search-main.component.css']
 })
 export class SearchMainComponent implements OnInit {
 

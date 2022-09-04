@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { AuthService } from "src/app/services/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-    selector: "app-logged-out-layout",
-    templateUrl: "./logged-out-layout.component.html",
-    styleUrls: ["./logged-out-layout.component.css"]
+    selector: 'app-logged-out-layout',
+    templateUrl: './logged-out-layout.component.html',
+    styleUrls: ['./logged-out-layout.component.css']
 })
 export class LoggedOutLayoutComponent implements OnInit {
 
@@ -17,15 +17,15 @@ export class LoggedOutLayoutComponent implements OnInit {
     ngOnInit(): void {
         this.authService.loginStatus$.subscribe(loginStatus => this.loggedIn = loginStatus);
         if (this.loggedIn) {
-            this.router.navigateByUrl("/home");
+            this.router.navigateByUrl('/home');
         }
 
-        if (this.router.url === "/login") {
-            this.url = "login";
+        if (this.router.url === '/login') {
+            this.url = 'login';
         }
 
-        if (this.router.url === "/register") {
-            this.url = "register";
+        if (this.router.url === '/register') {
+            this.url = 'register';
         }    
 
     }

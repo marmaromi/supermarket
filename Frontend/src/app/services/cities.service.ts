@@ -1,7 +1,7 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { firstValueFrom } from "rxjs";
-import { environment } from "src/environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 interface LooseObject {
   [key: string]: string[]
@@ -9,7 +9,7 @@ interface LooseObject {
 
 
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root'
 })
 
 
@@ -36,10 +36,10 @@ export class CitiesService {
         allStreets.result.records.forEach((result: any) => {
 
             try {
-                cityList[result["שם_ישוב"].trim()].push(result["שם_רחוב"].trim());
+                cityList[result['שם_ישוב'].trim()].push(result['שם_רחוב'].trim());
             }
             catch {
-                cityList[result["שם_ישוב"].trim()] = [result["שם_רחוב"].trim()];
+                cityList[result['שם_ישוב'].trim()] = [result['שם_רחוב'].trim()];
             }
 
         });

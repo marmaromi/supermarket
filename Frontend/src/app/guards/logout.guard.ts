@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { Observable } from "rxjs";
-import { AuthService } from "../services/auth.service";
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root'
 })
 export class LogoutGuard implements CanActivate {
 
@@ -17,7 +17,7 @@ export class LogoutGuard implements CanActivate {
         if (!this.authService.isLoggedIn()) {      
             return true;
         }
-        this.router.navigateByUrl("/home");
+        this.router.navigateByUrl('/home');
         return false;
     }
 }

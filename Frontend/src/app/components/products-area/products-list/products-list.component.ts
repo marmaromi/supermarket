@@ -26,8 +26,10 @@ export class ProductsListComponent implements OnInit {
 
     async ngOnInit() {
         try {      
-            this.userRole = (this.authService.getUserDetails()).role;            
-            this.productsInCart = await this.cartService.getProductsInCart(); //??????????????
+            this.userRole = (this.authService.getUserDetails()).role;
+            if(this.userRole !== 'admin'){
+                this.productsInCart = await this.cartService.getProductsInCart();
+            }       
             
             this.products = await this.productsService.getProducts();
             for (const product of this.products) {
