@@ -1,5 +1,5 @@
-// import { ProductsState } from "./products/products.reducer";
+import { ProductsInCartState } from './productsInCart/productsInCart.reducer';
 
-// export interface AppState {
-//     productsInCart: ProductsState;
-// }
+export interface AppState {
+    productsInCart: ProductsInCartState;
+}

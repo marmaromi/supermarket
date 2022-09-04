@@ -27,6 +27,9 @@ import { SearchMainComponent } from './components/search-area/search-main/search
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ProductCardAdminComponent } from './components/products-area/product-card-admin/product-card-admin.component';
 import { StoreModule } from '@ngrx/store';
+import {productsInCartReducer} from './state/productsInCart/productsInCart.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductsInCartEffects } from './state/productsInCart/productsInCart.effects';
 
 
 @NgModule({
@@ -46,6 +49,7 @@ import { StoreModule } from '@ngrx/store';
         ProductCardComponent,
         SearchMainComponent,
         ProductCardAdminComponent,
+        
 
     ],
     imports: [
@@ -60,6 +64,8 @@ import { StoreModule } from '@ngrx/store';
         MatInputModule,
         MatButtonModule,
         Ng2SearchPipeModule,
+        StoreModule.forRoot({productsInCart: productsInCartReducer}),
+        EffectsModule.forRoot([ProductsInCartEffects]),
         NotifierModule.withConfig({
             position: {
                 horizontal: {
@@ -100,7 +106,7 @@ import { StoreModule } from '@ngrx/store';
                 overlap: 150,
             },
         }),
-        StoreModule.forRoot({}, {})
+
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
     bootstrap: [LayoutComponent]

@@ -20,7 +20,7 @@ export class CartService {
 
     public async getLatestCartByUser(userId: string): Promise<CartModel> {
         try {
-            const cart = await firstValueFrom(this.http.get<CartModel>(environment.cartsUrl + `/${userId}`));            
+            const cart = await firstValueFrom(this.http.get<CartModel>(environment.cartsUrl + `/${userId}`));
             sessionStorage.setItem('cartId', cart._id);
             return cart;
 
@@ -44,6 +44,15 @@ export class CartService {
         }
     }
 
+    // public async getProductsInCart() {
+    //     try {
+    //         const cartId = sessionStorage.getItem('cartId');
+    //         return this.http.get<ProductsInCartModel[]>(environment.productsInCartUrl + `/${cartId}`);
+    //     } catch (err: any) {
+    //         throw err;
+    //     }
+    // }
+
     public async createCart(userId: string): Promise<CartModel> {
         try {
             const cart = await firstValueFrom(this.http.post<CartModel>(environment.cartsUrl + `/${userId}`, null));
@@ -58,9 +67,9 @@ export class CartService {
         try {
             const products = await this.getProductsInCart();
             const productIndex = products.findIndex(p => p.productId === productId);
-            
-            if (productIndex === -1) {                
-                const product = await firstValueFrom(this.http.post<ProductsInCartModel>(environment.productsInCartUrl + `/${cartId}/${productId}`, {'amount': amount}));
+
+            if (productIndex === -1) {
+                const product = await firstValueFrom(this.http.post<ProductsInCartModel>(environment.productsInCartUrl + `/${cartId}/${productId}`, { 'amount': amount }));
                 // this.store.dispatch(addProductToCart({product: product}));
                 return product;
 
