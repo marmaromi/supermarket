@@ -24,7 +24,7 @@ export class CartCustomerComponent implements OnInit {
       try {
           this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));
           this.productsInCart$.subscribe(products => {
-              this.productsInCart = products.productsInCart;
+              this.productsInCart = products.productsInCart;              
           });
 
       } catch (err: any) {

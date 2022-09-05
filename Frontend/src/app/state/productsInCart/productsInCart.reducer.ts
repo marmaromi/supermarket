@@ -31,9 +31,9 @@ export const productsInCartReducer = createReducer(
         status: 'error'
     })),
 
-    on(productsInCartActions.addProductToCart, (state, { product }): ProductsInCartState => ({
+    on(productsInCartActions.addProductToCart, (state, action): ProductsInCartState => ({
         ...state,
-        productsInCart: [...state.productsInCart, product]
+        productsInCart: [...state.productsInCart, action.product]
     })),
 
     on(productsInCartActions.updateProductInCart, (state, { product }) => ({

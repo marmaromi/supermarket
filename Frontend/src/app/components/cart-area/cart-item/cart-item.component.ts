@@ -1,8 +1,9 @@
 import { Component, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
-import { CartService } from 'src/app/services/cart.service';
 import { NotifyService } from 'src/app/services/notify.service';
+import { addProductToCart, removeProductFromCart } from 'src/app/state/productsInCart/productsInCart.actions';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,17 +14,19 @@ import { environment } from 'src/environments/environment';
 export class CartItemComponent implements OnInit {
 
     public cartForm: FormGroup;
-    @Input() cartProduct: ProductsInCartModel;
+    @Input() cartProductInput: ProductsInCartModel;
+    public cartProduct: ProductsInCartModel;
     public productImage: string;
     public cartId: string;
     public initialAmount: number;
 
 
-    constructor(private fb: FormBuilder, private notify: NotifyService, private cartService: CartService, private renderer2: Renderer2) { }
+    constructor(private fb: FormBuilder, private store: Store, private notify: NotifyService) { }
 
 
 
     ngOnInit(): void {
+        this.cartProduct = {...this.cartProductInput}; // can't use this.cartProductInput because it's a reference to the original object
         if (this.cartProduct.product.imageName) {
             this.productImage = environment.productsImagesUrl + '/' + this.cartProduct.product.imageName;
         }
@@ -41,16 +44,19 @@ export class CartItemComponent implements OnInit {
     }
 
     updateAmountCounter(num: number) {
+
         if (!(num === -1 && this.cartProduct.amount === 1)) {
+            console.log(typeof (this.cartProduct));
             this.cartProduct.amount = this.cartProduct.amount + num;
         }
     }
 
     async updateProduct(): Promise<void> {
         if (this.cartProduct.amount !== this.initialAmount && this.cartProduct.amount > 0) {
-            await this.cartService.addToCart(this.cartProduct.cartId, this.cartProduct.productId, this.cartProduct.amount);
-            this.initialAmount = this.cartProduct.amount;
-            this.cartProduct.totalProductPrice = this.cartProduct.product.productPrice * this.cartProduct.amount;
+            this.store.dispatch(addProductToCart({ product: this.cartProduct }));
+            // await this.cartService.addToCart(this.cartProduct.cartId, this.cartProduct.productId, this.cartProduct.amount);
+            // this.initialAmount = this.cartProduct.amount;
+            // this.cartProduct.totalProductPrice = this.cartProduct.product.productPrice * this.cartProduct.amount;
 
         }
     }
@@ -62,7 +68,8 @@ export class CartItemComponent implements OnInit {
     }
 
     deleteProduct() {
-        this.cartService.deleteProductFromCart(this.cartProduct._id);
+        // this.cartService.deleteProductFromCart(this.cartProduct._id);
+        this.store.dispatch(removeProductFromCart({ id: this.cartProduct._id }));
     }
 
 
