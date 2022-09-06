@@ -5,7 +5,7 @@ import { ProductModel } from 'src/app/models/product-model';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { CartService } from 'src/app/services/cart.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { addProductToCart, removeProductFromCart } from 'src/app/state/productsInCart/productsInCart.actions';
+import { addProductToCart, getAllProductsInCart, removeProductFromCart, updateProductInCart } from 'src/app/state/productsInCart/productsInCart.actions';
 import { environment } from 'src/environments/environment';
 @Component({
     selector: 'app-product-card',
@@ -55,15 +55,16 @@ export class ProductCardComponent implements OnInit {
                     totalProductPrice: this.product.productPrice * formValue.productAmount,
                     product: this.product
                 };
-                this.store.dispatch(addProductToCart({ product: productInCart }));
+                this.store.dispatch(updateProductInCart({ product: productInCart }));
+                setTimeout(() => { // wait for the store to update
+                    this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));
+                }, 10);
             }
-            if (formValue.productAmount === 0) {
-                // this.cartService.deleteProductFromCart(this.product._id);
+            if (formValue.productAmount === 0 && this.initialAmount > 0) {
                 const productInCartId = this.productsInCart.find(p => p.productId === this.product._id)._id;
                 this.store.dispatch(removeProductFromCart({ id: productInCartId }));
 
             }
-
         } catch (err: any) {
             this.notify.error(err);
 

@@ -4,7 +4,7 @@
         <div>
             <span>{{cartProduct.product.productName}}</span> <br>
             <span>{{initialAmount}} {{cartProduct.product.priceParameter}}</span><br>
-            <span>{{cartProduct.totalProductPrice}}₪</span><br>
+            <span>{{totalProductPrice}}₪</span><br>
             
         </div>
         <form [formGroup]="cartForm">
@@ -12,7 +12,7 @@
             <input #amount type="number" class="form-control" name="productAmount" formControlName='productAmount' required
             min=1 [value]="cartProduct.amount" aria-label="productAmount" (keydown)="onKeydown($event)">
             <button (click)="updateAmountCounter(-1)">-</button>
-            <button class="btn btn-danger" (click)="updateProduct()" [disabled]="cartProduct.amount === initialAmount">עדכן</button>
+            <button type="button" class="btn btn-danger" (click)="updateProduct()" [disabled]="cartProduct.amount === initialAmount">עדכן</button>
             <button type="button" class="delete" (click)="deleteProduct()">❌</button>
         </form>
         <span *ngIf="productAmount.errors?.['min'] && productAmount.touched">מינימום פריט אחד</span>

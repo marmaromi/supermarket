@@ -20,6 +20,7 @@ A supermarket site - training project.
 - show cart in small screen and than enlarge it breaks layout
 - fix product Cart delete not rendering
 - shopping cart icon disappears on scrolling in phone mode
+- NgRx store not updating correctly - current fix is setTimout to fetch cart after add/update
 
 ## things to add
 - add login message

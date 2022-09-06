@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { NotifyService } from 'src/app/services/notify.service';
-import { addProductToCart, removeProductFromCart } from 'src/app/state/productsInCart/productsInCart.actions';
+import { addProductToCart, removeProductFromCart, updateProductInCart } from 'src/app/state/productsInCart/productsInCart.actions';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -19,6 +19,7 @@ export class CartItemComponent implements OnInit {
     public productImage: string;
     public cartId: string;
     public initialAmount: number;
+    public totalProductPrice: number;
 
 
     constructor(private fb: FormBuilder, private store: Store, private notify: NotifyService) { }
@@ -32,6 +33,7 @@ export class CartItemComponent implements OnInit {
         }
 
         this.initialAmount = this.cartProduct.amount;
+        this.totalProductPrice = this.initialAmount*this.cartProduct.product.productPrice;
 
         this.cartForm = this.fb.group({
             productAmount: this.cartProduct.amount
@@ -46,18 +48,13 @@ export class CartItemComponent implements OnInit {
     updateAmountCounter(num: number) {
 
         if (!(num === -1 && this.cartProduct.amount === 1)) {
-            console.log(typeof (this.cartProduct));
             this.cartProduct.amount = this.cartProduct.amount + num;
         }
     }
 
     async updateProduct(): Promise<void> {
         if (this.cartProduct.amount !== this.initialAmount && this.cartProduct.amount > 0) {
-            this.store.dispatch(addProductToCart({ product: this.cartProduct }));
-            // await this.cartService.addToCart(this.cartProduct.cartId, this.cartProduct.productId, this.cartProduct.amount);
-            // this.initialAmount = this.cartProduct.amount;
-            // this.cartProduct.totalProductPrice = this.cartProduct.product.productPrice * this.cartProduct.amount;
-
+            this.store.dispatch(updateProductInCart({ product: this.cartProduct }));
         }
     }
 
