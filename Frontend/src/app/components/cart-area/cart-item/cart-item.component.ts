@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { NotifyService } from 'src/app/services/notify.service';
-import { addProductToCart, removeProductFromCart, updateProductInCart } from 'src/app/state/productsInCart/productsInCart.actions';
+import { addProductToCart, getAllProductsInCart, removeProductFromCart, updateProductInCart } from 'src/app/state/productsInCart/productsInCart.actions';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -67,6 +67,9 @@ export class CartItemComponent implements OnInit {
     deleteProduct() {
         // this.cartService.deleteProductFromCart(this.cartProduct._id);
         this.store.dispatch(removeProductFromCart({ id: this.cartProduct._id }));
+        setTimeout(() => { // wait for the store to update
+            this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));
+        }, 10);
     }
 
 

@@ -1,7 +1,7 @@
 <h2>עגלת קניות</h2>
-<!-- <form [formGroup]="cartForm"> -->
-    
-    <app-cart-item *ngFor="let cartProduct of productsInCart" [cartProductInput]="cartProduct"></app-cart-item>
-
+<app-cart-item *ngFor="let cartProduct of productsInCart" [cartProductInput]="cartProduct"></app-cart-item>
+<form [formGroup]="cartForm">
+    <div class="payButton">
         <button (click)="pay()" class="btn btn-primary">לתשלום: ₪{{totalCartPrice}}</button>
-<!-- </form> -->
+    </div>
+</form>

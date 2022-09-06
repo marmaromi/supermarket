@@ -1,0 +1,17 @@
+.payButton {
+    position: relative;
+    width: 100%;
+    /* padding: 10px; */
+    /* margin: 5% auto; */
+    /* background-color: rgba(238, 238, 238); */
+    /* box-shadow: 5px 5px 15px rgba(152, 152, 152, 0.5); */
+
+}
+
+button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}

@@ -18,13 +18,14 @@ A supermarket site - training project.
 - fix error messages for frontend (login wrong password ot username)
 - fix horizontal collapse in user layout
 - show cart in small screen and than enlarge it breaks layout
-- fix product Cart delete not rendering
 - shopping cart icon disappears on scrolling in phone mode
 - NgRx store not updating correctly - current fix is setTimout to fetch cart after add/update
+- product amount in shopping list not updating after cart update
+- fix location of cart pay button to bottom
+- 
 
 ## things to add
 - add login message
 - add page not found
 - improve interceptor looks
 - maybe better collapse: https://coreui.io/angular/docs/components/collapse
-- add ngrx for products in cart
