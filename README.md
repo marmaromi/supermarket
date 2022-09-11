@@ -21,8 +21,7 @@ A supermarket site - training project.
 - shopping cart icon disappears on scrolling in phone mode
 - NgRx store not updating correctly - current fix is setTimout to fetch cart after add/update
 - product amount in shopping list not updating after cart update
-- fix location of cart pay button to bottom
-- 
+- cart list box shadow in phone mode not looking good
 
 ## things to add
 - add login message

@@ -2,6 +2,7 @@
 /* eslint-disable @ngrx/no-typed-global-store */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
@@ -19,10 +20,11 @@ export class CartCustomerComponent implements OnInit {
     @Input() cartId: string;
     public cartForm: FormGroup;
     public totalCartPrice: number;
+    public url = this.router.url;
 
 
 
-    constructor(private notify: NotifyService, private store: Store<{ productsInCart: ProductsInCartModel[] }>) { }
+    constructor(private notify: NotifyService, private store: Store<{ productsInCart: ProductsInCartModel[] }>, private router: Router) { }
 
     async ngOnInit(): Promise<void> {
         try {
@@ -34,13 +36,11 @@ export class CartCustomerComponent implements OnInit {
 
         } catch (err: any) {
             this.notify.error(err);
-        }
-
-
+        }        
     }
 
     pay = () => {
-        console.log('pay');
+        this.router.navigateByUrl('/order');
     };
 
 }

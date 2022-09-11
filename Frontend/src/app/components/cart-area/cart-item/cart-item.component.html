@@ -7,11 +7,11 @@
             <span>{{totalProductPrice}}₪</span><br>
             
         </div>
-        <form [formGroup]="cartForm">
-            <button (click)="updateAmountCounter(1)">+</button>
+        <form *ngIf="url !== '/order'" [formGroup]="cartForm">
+            <button class="amount btn btn-primary me-1 px-2" (click)="updateAmountCounter(1)">+</button>
             <input #amount type="number" class="form-control" name="productAmount" formControlName='productAmount' required
             min=1 [value]="cartProduct.amount" aria-label="productAmount" (keydown)="onKeydown($event)">
-            <button (click)="updateAmountCounter(-1)">-</button>
+            <button class="amount btn btn-primary ms-1 me-3 px-2" (click)="updateAmountCounter(-1)">-</button>
             <button type="button" class="btn btn-danger" (click)="updateProduct()" [disabled]="cartProduct.amount === initialAmount">עדכן</button>
             <button type="button" class="delete" (click)="deleteProduct()">❌</button>
         </form>

@@ -25,19 +25,19 @@ export class ProductsListComponent implements OnInit {
     constructor(private productsService: ProductsService, private authService: AuthService, private router: Router, private notify: NotifyService, private cartService: CartService) { }
 
     async ngOnInit() {
-        try {      
+        try {
             this.userRole = (this.authService.getUserDetails()).role;
-            if(this.userRole !== 'admin'){
+            if (this.userRole !== 'admin') {
                 this.productsInCart = await this.cartService.getProductsInCart();
-            }       
-            
+            }
+
             this.products = await this.productsService.getProducts();
             for (const product of this.products) {
                 if (this.categories.indexOf(product.category.name) === -1) {
                     this.categories.push(product.category.name);
-                }        
+                }
             }
-            
+
             this.productsToShow = [...this.products];
 
         } catch (error: any) {
@@ -47,10 +47,15 @@ export class ProductsListComponent implements OnInit {
 
     }
 
-    showCategory(category: string){
-        this.category = category;
-        this.productsToShow.length = 0;
-        this.productsToShow = this.products.filter(p=> p.category.name === category);    
+    showCategory(category: string) {
+        if (category === 'all') {
+            this.productsToShow = [...this.products];
+        }
+        else {
+            this.category = category;
+            this.productsToShow.length = 0;
+            this.productsToShow = this.products.filter(p => p.category.name === category);
+        }
     }
 
 }

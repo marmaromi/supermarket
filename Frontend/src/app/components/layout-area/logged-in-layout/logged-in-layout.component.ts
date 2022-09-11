@@ -1,6 +1,4 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
-import { UserModel } from 'src/app/models/user-model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -13,8 +11,8 @@ import { NotifyService } from 'src/app/services/notify.service';
 export class LoggedInLayoutComponent implements OnInit {
 
     public screenWidth: any;
-    public mainPanel = 'col-xs-12 col-md-8 col-lg-9 main';
-    public cartPanel = 'col-xs-12 col-md-4 col-lg-3 collapse cart';
+    public mainPanel = 'col main';
+    public cartPanel = 'col collapse cart';
     public userRole: string;
     public userId: string;
 
@@ -40,11 +38,11 @@ export class LoggedInLayoutComponent implements OnInit {
 
     collapseCart() {
 
-        if (this.mainPanel === 'col-xs-12 col-md-8 col-lg-9 main') {
+        if (this.mainPanel === 'col main') {
             this.mainPanel = 'main';
         }
         else {
-            this.mainPanel = 'col-xs-12 col-md-8 col-lg-9 main';
+            this.mainPanel = 'col main';
         }
     }
 

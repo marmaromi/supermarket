@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -20,9 +21,11 @@ export class CartItemComponent implements OnInit {
     public cartId: string;
     public initialAmount: number;
     public totalProductPrice: number;
+    public url = this.router.url;
 
 
-    constructor(private fb: FormBuilder, private store: Store, private notify: NotifyService) { }
+
+    constructor(private fb: FormBuilder, private store: Store, private notify: NotifyService, private router: Router) { }
 
 
 

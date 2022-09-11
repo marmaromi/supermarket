@@ -1,17 +1,37 @@
-.payButton {
-    position: relative;
-    width: 100%;
-    /* padding: 10px; */
-    /* margin: 5% auto; */
-    /* background-color: rgba(238, 238, 238); */
-    /* box-shadow: 5px 5px 15px rgba(152, 152, 152, 0.5); */
-
+button {
+    margin-top: 10px;
+    margin-inline: 7px;
 }
 
-button {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+.cart {
+    height: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: 87% 8%;
+}
+
+.items {
+    overflow: auto;
+    direction: ltr;
+    padding-inline: 7px;
+}
+
+h2 {
+    margin-bottom: 0;
+}
+
+app-cart-item {
+    direction: rtl;
+}
+
+@media only screen and (max-width: 767px) {
+    .items {
+        margin: auto;
+    }
+
+    button {
+        margin-top: 30px;
+        margin-inline: auto;
+        width: 330px;
+    }
 }

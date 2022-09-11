@@ -3,37 +3,48 @@
 /* @import url(http://fonts.googleapis.com/css?family=Varela+Round?subset); */
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html, body {
-    margin: 0;
-    padding: 0;
-    /* height: 100%; */
-    text-align: center;
-    color: rgb(2, 85, 85);
-    background-color: rgba(238, 238, 238, 0.311);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: rgb(2, 85, 85);
+  background-color: rgba(238, 238, 238, 0.311);
+  overflow-x: hidden;
 }
 
 .box {
-    display: inline-block;
-    margin: 10px;
-    /* padding: 10px; */
-    /* border: 1px solid black; */
-    border-radius: 10px;
-    box-shadow: 5px 5px 15px rgba(152, 152, 152, 0.5);
-
-    text-align: right;
+  display: inline-block;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(152, 152, 152, 0.5);
+  text-align: right;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 
-body {
-    margin: 0;
-    /* font-family: Roboto, "Helvetica Neue", sans-serif; */
-    /* font-family: "Alef Hebrew",
-               “Helvetica Neue”,
-               Helvetica,
-               Arial,
-               sans-serif; */
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(201, 201, 201);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media only screen and (min-width: 768px) {
+  html, body {
+    overflow: hidden;
+  }
 }

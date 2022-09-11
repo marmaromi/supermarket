@@ -2,6 +2,9 @@
     <nav>
         <!-- <h2>קטגוריות</h2> -->
         <ul class="categories">
+            <li>
+                <a (click)="showCategory('all')">כל המוצרים</a>
+            </li>
             <li *ngFor="let category of categories">
                 <a (click)="showCategory(category)">{{category}}</a>
             </li>

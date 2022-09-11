@@ -30,6 +30,9 @@ import { StoreModule } from '@ngrx/store';
 import {productsInCartReducer} from './state/productsInCart/productsInCart.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductsInCartEffects } from './state/productsInCart/productsInCart.effects';
+import { OrderDetailsComponent } from './components/order-area/order-details/order-details.component';
+import { OrderCartComponent } from './components/order-area/order-cart/order-cart.component';
+import { OrderLayoutComponent } from './components/order-area/order-layout/order-layout.component';
 
 
 @NgModule({
@@ -49,6 +52,9 @@ import { ProductsInCartEffects } from './state/productsInCart/productsInCart.eff
         ProductCardComponent,
         SearchMainComponent,
         ProductCardAdminComponent,
+        OrderDetailsComponent,
+        OrderCartComponent,
+        OrderLayoutComponent,
         
 
     ],

@@ -1,7 +1,7 @@
 <h2>עגלת קניות</h2>
-<app-cart-item *ngFor="let cartProduct of productsInCart" [cartProductInput]="cartProduct"></app-cart-item>
-<form [formGroup]="cartForm">
-    <div class="payButton">
-        <button (click)="pay()" class="btn btn-primary">לתשלום: ₪{{totalCartPrice}}</button>
+<div class="cart">
+    <div class="items">
+        <app-cart-item *ngFor="let cartProduct of productsInCart" [cartProductInput]="cartProduct"></app-cart-item>
     </div>
-</form>
+    <button *ngIf="url !== '/order'" (click)="pay()" class="btn btn-outline-primary">לתשלום: ₪{{totalCartPrice}}</button>
+</div>

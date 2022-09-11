@@ -1,0 +1,21 @@
+.contain {
+    display: flex;
+}
+
+.cart {
+    height: 100vh;
+    flex: 350px 0 0;
+}
+
+.details {
+    flex-grow: 1;
+}
+
+@media screen and (max-width: 600px) {
+    .contain {
+        display: contents;
+    }
+    .cart, .details {
+      width: 100%;
+    }
+  }
