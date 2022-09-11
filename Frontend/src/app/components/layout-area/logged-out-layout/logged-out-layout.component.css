@@ -12,10 +12,12 @@
 .login {
     grid-column: span 1;
     overflow: auto;
+    box-shadow: 1px 1px 20px rgba(152, 152, 152, 0.5);
+
 }
 
  .loggedOutLayout > * {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-bottom: 0;
     border-top: 0;
 }

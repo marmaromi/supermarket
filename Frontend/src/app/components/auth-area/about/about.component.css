@@ -17,3 +17,7 @@ img{
 p{
     text-align: start;
 }
+
+.box{
+    padding: 10px;
+}
