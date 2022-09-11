@@ -20,4 +20,19 @@ export class ProductsService {
         const products = await firstValueFrom(this.http.get<ProductModel[]>(environment.productsUrl));
         return products;
     }
+
+    public async getOneProduct(id: string): Promise<ProductModel> {
+        const product = await firstValueFrom(this.http.get<ProductModel>(environment.productsUrl + id));
+        return product;
+    }
+
+    public async addProduct(product: ProductModel): Promise<ProductModel> {
+        const addedProduct = await firstValueFrom(this.http.post<ProductModel>(environment.productsUrl, product));
+        return addedProduct;
+    }
+
+    public async updateProduct(product: ProductModel): Promise<ProductModel> {
+        const updatedProduct = await firstValueFrom(this.http.put<ProductModel>(environment.productsUrl + product._id, product));
+        return updatedProduct;
+    }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first, firstValueFrom, Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CartModel } from '../models/cart-model';
 import { ProductsInCartModel } from '../models/products-in-cart-model';

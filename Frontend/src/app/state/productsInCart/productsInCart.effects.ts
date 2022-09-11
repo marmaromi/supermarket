@@ -1,8 +1,10 @@
+/* eslint-disable @ngrx/no-typed-global-store */
+/* eslint-disable @ngrx/prefer-selector-in-select */
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, Effect, ofType, concatLatestFrom } from '@ngrx/effects';
+import { Actions, createEffect, ofType, concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { from, of } from 'rxjs';
-import { map, catchError, switchMap, withLatestFrom } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
 import { AppState } from '../app.state';
 import { addProductToCart, getAllProductsInCart, getAllProductsInCartFailure, getAllProductsInCartSuccess, removeProductFromCart, updateProductInCart } from './productsInCart.actions';

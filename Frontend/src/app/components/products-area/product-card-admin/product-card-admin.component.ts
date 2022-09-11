@@ -21,8 +21,9 @@ export class ProductCardAdminComponent implements OnInit {
         }
     }
 
-    click(){
+    editProduct(){
         console.log(this.product.productName);
+        
         
     }
 

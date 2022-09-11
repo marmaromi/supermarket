@@ -29,7 +29,10 @@ export class CartCustomerComponent implements OnInit {
     async ngOnInit(): Promise<void> {
         try {
             this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));
+            console.log(this.productsInCart$);
+            
             this.productsInCart$.subscribe(products => {
+                
                 this.productsInCart = products.productsInCart;
                 this.totalCartPrice = this.productsInCart.reduce((acc, curr) => acc + curr.product.productPrice * curr.amount, 0);
             });
