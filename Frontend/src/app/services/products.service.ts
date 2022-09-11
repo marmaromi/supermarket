@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { firstValueFrom, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ProductModel } from '../models/product-model';
 
@@ -9,7 +10,11 @@ import { ProductModel } from '../models/product-model';
 })
 export class ProductsService {
 
-    constructor(private http: HttpClient) { }
+    
+    private _productToEditSource = new Subject<ProductModel>();
+    public productToEdit$ = this._productToEditSource.asObservable();
+
+    constructor(private http: HttpClient, store: Store) { }
 
     public async getProductsCount(): Promise<number> {
         const productsCount = await firstValueFrom(this.http.get<number>(environment.productsUrl + '-count'));
@@ -17,12 +22,17 @@ export class ProductsService {
     }
 
     public async getProducts(): Promise<ProductModel[]> {
-        const products = await firstValueFrom(this.http.get<ProductModel[]>(environment.productsUrl));
-        return products;
+        try {
+            const products = await firstValueFrom(this.http.get<ProductModel[]>(environment.productsUrl));
+            return products;
+        } catch (error) {
+            throw error;
+        }
     }
 
     public async getOneProduct(id: string): Promise<ProductModel> {
-        const product = await firstValueFrom(this.http.get<ProductModel>(environment.productsUrl + id));
+        const product = await firstValueFrom(this.http.get<ProductModel>(environment.productsUrl + '/' +id));
+        this._productToEditSource.next(product);
         return product;
     }
 

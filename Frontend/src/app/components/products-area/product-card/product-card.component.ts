@@ -30,7 +30,8 @@ export class ProductCardComponent implements OnInit {
             this.productImage = environment.productsImagesUrl + '/' + this.product.imageName;
         }
 
-        this.initialAmount = this.productsInCart.find(p => p.productId === this.product._id)?.amount || 0;
+        
+        this.initialAmount = this.productsInCart.find(p => p.productId === this.product._id)?.amount || 0;        
         this.addProductToCartForm = this.fb.group({
             productAmount: this.initialAmount
         });

@@ -28,9 +28,7 @@ export class CartCustomerComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         try {
-            this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));
-            console.log(this.productsInCart$);
-            
+            this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));            
             this.productsInCart$.subscribe(products => {
                 
                 this.productsInCart = products.productsInCart;

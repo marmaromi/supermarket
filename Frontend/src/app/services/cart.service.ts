@@ -13,8 +13,8 @@ import { AuthService } from './auth.service';
 export class CartService {
     private user: UserModel;
 
-    private _productsInCartSource = new Subject<ProductsInCartModel[]>();
-    public productsInCart$ = this._productsInCartSource.asObservable();
+    // private _productsInCartSource = new Subject<ProductsInCartModel[]>();
+    // public productsInCart$ = this._productsInCartSource.asObservable();
 
     constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -36,7 +36,7 @@ export class CartService {
         try {
             const cartId = sessionStorage.getItem('cartId');
             const products = await firstValueFrom(this.http.get<ProductsInCartModel[]>(environment.productsInCartUrl + `/${cartId}`));
-            this._productsInCartSource.next(products);
+            // this._productsInCartSource.next(products);
             return products;
 
         } catch (err: any) {

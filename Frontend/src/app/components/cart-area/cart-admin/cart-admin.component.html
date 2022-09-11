@@ -1,6 +1,6 @@
 <div class="box productContainer">
     <h2>עדכון מוצר</h2>
-    <img alt="תמונת המוצר"> <br>
+    <img [src]="productImage" alt="תמונת המוצר"> <br>
 
     <form *ngIf="product" [formGroup]="productForm" (ngSubmit)="updateProduct()">
         <div class="form-group">

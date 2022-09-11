@@ -1,4 +1,4 @@
-<div class="box productContainer">
+<div *ngIf="productsInCart" class="box productContainer">
     <img src={{productImage}} alt="תמונת המוצר"> <br>
     <div style="margin-bottom: 20px">
         ₪<span class="productPrice">{{product.productPrice}}</span> <br>

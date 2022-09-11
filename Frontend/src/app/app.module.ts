@@ -27,9 +27,11 @@ import { SearchMainComponent } from './components/search-area/search-main/search
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ProductCardAdminComponent } from './components/products-area/product-card-admin/product-card-admin.component';
 import { StoreModule } from '@ngrx/store';
-import {productsInCartReducer} from './state/productsInCart/productsInCart.reducer';
+import { productsInCartReducer } from './state/productsInCart/productsInCart.reducer';
+import { productsReducer } from './state/products/products.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductsInCartEffects } from './state/productsInCart/productsInCart.effects';
+import { ProductsEffects } from './state/products/products.effects';
 import { OrderDetailsComponent } from './components/order-area/order-details/order-details.component';
 import { OrderCartComponent } from './components/order-area/order-cart/order-cart.component';
 import { OrderLayoutComponent } from './components/order-area/order-layout/order-layout.component';
@@ -55,7 +57,7 @@ import { OrderLayoutComponent } from './components/order-area/order-layout/order
         OrderDetailsComponent,
         OrderCartComponent,
         OrderLayoutComponent,
-        
+
 
     ],
     imports: [
@@ -63,15 +65,15 @@ import { OrderLayoutComponent } from './components/order-area/order-layout/order
         AppRoutingModule,
         FormsModule,
         HttpClientModule,
-        ReactiveFormsModule,       
+        ReactiveFormsModule,
         BrowserAnimationsModule,
         MatAutocompleteModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
         Ng2SearchPipeModule,
-        StoreModule.forRoot({productsInCart: productsInCartReducer}),
-        EffectsModule.forRoot([ProductsInCartEffects]),
+        StoreModule.forRoot({ productsInCart: productsInCartReducer, products: productsReducer }),
+        EffectsModule.forRoot([ProductsInCartEffects, ProductsEffects]),
         NotifierModule.withConfig({
             position: {
                 horizontal: {

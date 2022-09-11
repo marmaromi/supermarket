@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductModel } from 'src/app/models/product-model';
 import { NotifyService } from 'src/app/services/notify.service';
+import { ProductsService } from 'src/app/services/products.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,7 +14,7 @@ export class ProductCardAdminComponent implements OnInit {
     @Input() product: ProductModel;
     public productImage: string;
 
-    constructor(private notify: NotifyService) { }
+    constructor(private notify: NotifyService, private productsService: ProductsService) { }
 
     ngOnInit(): void {
         if (this.product.imageName) {
@@ -21,9 +22,10 @@ export class ProductCardAdminComponent implements OnInit {
         }
     }
 
-    editProduct(){
+    editProduct() {
         console.log(this.product.productName);
-        
+        sessionStorage.setItem('productToEdit', this.product._id);
+        this.productsService.getOneProduct(this.product._id);
         
     }
 

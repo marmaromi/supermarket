@@ -5,6 +5,11 @@ export const getAllProducts = createAction(
     '[Products] Get All Products',
 );
 
+export const getOneProduct = createAction(
+    '[Product] Get One Product',
+    props<{ productId: string }>()
+);
+
 export const getAllProductsSuccess = createAction(
     '[Products] Get All Products Success',
     props<{ products: ProductModel[] }>());
