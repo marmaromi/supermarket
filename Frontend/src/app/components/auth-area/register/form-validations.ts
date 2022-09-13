@@ -1,4 +1,4 @@
-import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function isIdValid(citizenId: number, validId: any): any {
 
@@ -9,7 +9,7 @@ export function isIdValid(citizenId: number, validId: any): any {
 
     let id = citizenId.toString().trim();
     if (id.length > 9 || isNaN(citizenId)) return false;
-    id = id.length < 9 ? ("00000000" + id).slice(-9) : id;
+    id = id.length < 9 ? ('00000000' + id).slice(-9) : id;
     validId = Array.from(id, Number).reduce((counter, digit, i) => {
         const step = digit * ((i % 2) + 1);
         return counter + (step > 9 ? step - 9 : step);
@@ -42,7 +42,7 @@ export function cityInList(selection: string, list: string[]): ValidatorFn {
         const selected: string = formGroup.get(selection)?.value;
 
         if (!list?.includes(selected)) {
-        
+
             return { inList: true };
         }
         return null;
@@ -55,9 +55,16 @@ export function streetInList(selection: string, list: string[]): ValidatorFn {
         const selected: string = formGroup.get(selection)?.value;
 
         if (!list?.includes(selected)) {
-        
+
             return { inList: true };
         }
         return null;
     };
 }
+
+export const dateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const selectedDate = new Date(control.get('date').value);
+    const today = new Date();
+    return selectedDate !== null && today !== null && selectedDate > today
+        ? null : { dateValid: true };
+};

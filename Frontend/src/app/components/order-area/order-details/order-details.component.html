@@ -1,46 +1,52 @@
 <h2>הזמנה</h2>
 <hr>
-<div class="">
     <h3>פרטי משלוח</h3>
-    <mat-form-field>
-        <mat-label>עיר</mat-label>
-        <input type="text" matInput name="street" formControlName='city' [matAutocomplete]="auto" />
-        <mat-autocomplete #auto="matAutocomplete">
-            <!-- <mat-option *ngFor="let city of filteredCities | async" [value]="city"> -->
-                <!-- {{city}} -->
-            <!-- </mat-option> -->
-        </mat-autocomplete>
-    </mat-form-field> 
-    <br>
+    <form *ngIf="cities" [formGroup]="orderForm" (ngSubmit)="order()">
 
-    <mat-form-field>
-        <mat-label>רחוב</mat-label>
-        <input type="text" matInput name="street" formControlName='street'/>
-    </mat-form-field>
-    <br>
+        <mat-form-field>
+            <mat-label>עיר</mat-label>
+            <input type="text" matInput name="city" formControlName='city' [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let city of filteredCities | async" [value]="city">
+                    {{city}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <span class="error" *ngIf="city.errors?.['required'] && city.touched"><br>עיר מגורים חסרה</span>
+        <span class="error" *ngIf="orderForm.errors?.['inList'] && city.valid && city.touched"><br>בחרו עיר מהרשימה</span>
+        <br>
 
-    <mat-form-field class="full-width">
-        <mat-label>תאריך משלוח</mat-label>
-        <input type="datetime-local" matInput name="date" formControlName='date' >
-        
-    </mat-form-field>
+        <mat-form-field>
+            <mat-label>רחוב</mat-label>
+            <input type="text" matInput name="street" formControlName='street' />
+        </mat-form-field>
+        <span class="error" *ngIf="street.errors?.['required'] && street.touched"><br>רחוב מגורים חסר</span>
+        <span class="error" *ngIf="street.errors?.['minlength'] && street.touched"><br>רחוב מגורים קצר מדי -2 תווים מינימום</span>
+        <span class="error" *ngIf="street.errors?.['maxlength'] && street.touched"><br>רחוב מגורים ארוך מדי -30 תווים מקסימום</span>
+        <br>
 
-    <hr>
-    <h3>פרטי תשלום</h3>
+        <mat-form-field class="full-width">
+            <mat-label>תאריך משלוח</mat-label>
+            <input type="date" matInput name="date" formControlName='date' min="{{today |  date:'yyyy-MM-dd'}}">
+        </mat-form-field>
+        <span class="error" *ngIf="date.errors?.['required'] && date.touched"><br>תאריך חסר</span>
+        <span class="error" *ngIf="orderForm.errors?.['dateValid'] && date.touched"><br>תאריך לא תקין</span>
 
 
-    <mat-form-field class="full-width">
-        <mat-label>מספר כרטיס אשראי</mat-label>
-        <input type="number" matInput name="credit" >
-        
-    </mat-form-field>
 
-    <br>
+        <hr>
+        <h3>פרטי תשלום</h3>
 
-    <button class="btn btn-primary">הזמנה</button>
+        <mat-form-field class="full-width">
+            <mat-label>מספר כרטיס אשראי</mat-label>
+            <input type="text" matInput name="creditCard" formControlName='creditCard'>
+        </mat-form-field>
+        <span class="error" *ngIf="creditCard.errors?.['required'] && creditCard.touched"><br>מספר כרטיס אשראי חסר<br></span>
+        <br>
 
-    <hr>
-    
+        <button class="btn btn-primary" [disabled]="orderForm.invalid">הזמנה</button>
 
-</div>
+        <hr>
+    </form>
 
+<a routerLink="/home">חזרה לרשימת מוצרים</a>

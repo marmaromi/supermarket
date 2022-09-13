@@ -2,3 +2,13 @@ h3{
     text-decoration: underline;
     font-weight: bold;
 }
+
+h2{
+    padding: 0;
+    margin: 15px;
+
+}
+
+.error {
+    color: rgb(208, 2, 2);
+}

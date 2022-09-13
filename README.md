@@ -23,9 +23,12 @@ A supermarket site - training project.
 - product amount in shopping list not updating after cart update
 - cart list box shadow in phone mode not looking good
 - product image not updating live
+- backend error for imageName in product update
 
 ## things to add
 - add login message
 - add page not found
 - improve interceptor looks
 - maybe better collapse: https://coreui.io/angular/docs/components/collapse
+- double click to update address in order page
+- credit card regex

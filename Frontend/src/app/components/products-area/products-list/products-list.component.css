@@ -51,8 +51,3 @@
 h3{
   font-weight: bold;
 }
-
-.prod:last-of-type{
-  background-color: black;
-  align-items: right;
-}

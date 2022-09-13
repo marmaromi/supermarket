@@ -4,4 +4,5 @@
         <app-cart-item *ngFor="let cartProduct of productsInCart" [cartProductInput]="cartProduct"></app-cart-item>
     </div>
     <button *ngIf="url !== '/order'" (click)="pay()" class="btn btn-outline-primary">לתשלום: ₪{{totalCartPrice}}</button>
+    <div class="orderTotal" *ngIf="url === '/order'">סך הכל לתשלום: ₪{{totalCartPrice}}</div>
 </div>

@@ -5,13 +5,15 @@
 .cart {
     height: 100vh;
     flex: 350px 0 0;
+    box-shadow: 5px 5px 15px rgba(152, 152, 152, 0.5);
 }
 
 .details {
     flex-grow: 1;
 }
 
-@media screen and (max-width: 600px) {
+
+@media screen and (max-width: 767px) {
     .contain {
         display: contents;
     }

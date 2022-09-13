@@ -3,6 +3,11 @@ button {
     margin-inline: 7px;
 }
 
+.orderTotal{
+    margin-top: 3px;
+    font-weight: bold;
+}
+
 .cart {
     height: 100%;
     box-sizing: border-box;

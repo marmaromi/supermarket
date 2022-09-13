@@ -14,4 +14,9 @@ export class OrdersService {
         const ordersCount = await firstValueFrom(this.http.get<number>(environment.ordersUrl + '-count'));
         return ordersCount;
     }
+
+    public async addOrder(order: any): Promise<any> {
+        const newOrder = await firstValueFrom(this.http.post(environment.ordersUrl, order));
+        return newOrder;
+    }
 }
