@@ -33,7 +33,7 @@ export const ProductSchema = new mongoose.Schema<IProductModel>({
         type: String
     },
     image: {
-        type: Buffer, // **************************** probably won't work ***********************************
+        // type: Buffer, // **************************** probably won't work ***********************************
         // required: [true, "Missing product image"]
     },
     priceParameter: {

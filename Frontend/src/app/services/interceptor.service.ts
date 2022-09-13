@@ -13,8 +13,10 @@ export class InterceptorService implements HttpInterceptor {
         if (req.url.includes(environment.mainURL)) { // allows CORS from external APIs
             const token: string = localStorage.getItem('token');
             req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });// This clones HttpRequest and Authorization header with Bearer token added
-            req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
-            req = req.clone({ headers: req.headers.set('Accept', 'application/json') });
+            if (req.body?.toString() !== '[object FormData]') {
+                req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
+                req = req.clone({ headers: req.headers.set('Accept', 'application/json') });
+            }
         }
 
         return next.handle(req)

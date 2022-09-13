@@ -38,18 +38,18 @@ export class ProductsListComponent implements OnInit {
     ) { }
 
     async ngOnInit() {
-
+        
         try {
             this.store.dispatch(getAllProducts());
             this.userRole = (this.authService.getUserDetails()).role;
             if (this.userRole !== 'admin') {
                 const cartId = sessionStorage.getItem('cartId');
                 this.store.dispatch(getAllProductsInCart({ cartId: cartId }));
+                this.productsInCart = await this.cartService.getProductsInCart();
             }
-            this.productsInCart = await this.cartService.getProductsInCart();
-
 
             this.products$.subscribe(products => {
+                
                 this.products = products.products;
                 for (const product of this.products) {
                     if (this.categories.indexOf(product.category.name) === -1) {
@@ -57,8 +57,9 @@ export class ProductsListComponent implements OnInit {
                     }
                 }
                 this.productsToShow = [...this.products];
+                // sessionStorage.setItem('productToEdit', this.products[0]._id);
             });
-
+            
 
 
             // this.products = await this.productsService.getProducts();

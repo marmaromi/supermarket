@@ -6,6 +6,7 @@ import verifyLogIn from "../3-middleware/verify-log-in";
 import { ProductModel } from "../4-models/product-model";
 import productsLogic from "../5-logic/products-logic";
 import { RouteNotFoundError } from "../4-models/error-models";
+import { UploadedFile } from "express-fileupload";
 
 const router = express.Router();
 
@@ -42,10 +43,15 @@ router.post("/products", verifyAdmin, async (request: Request, response: Respons
 });
 
 router.put("/products/:_id", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
-    try {
+    try {        
         const _id = request.params._id;
+        request.body.image = request.files?.image;
+        // console.log(request.body.image);
+        
         const product = new ProductModel(request.body);
         product._id = _id;
+        // product.image = request.files?.image;
+        // console.log(product.image);
         const updatedProduct = await productsLogic.updateProduct(product);
         response.json(updatedProduct);
     }

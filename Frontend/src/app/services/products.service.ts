@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { firstValueFrom, Subject } from 'rxjs';
@@ -42,7 +42,23 @@ export class ProductsService {
     }
 
     public async updateProduct(product: ProductModel): Promise<ProductModel> {
-        const updatedProduct = await firstValueFrom(this.http.put<ProductModel>(environment.productsUrl + product._id, product));
+        const formData = new FormData();
+        formData.append('_id', product._id);
+        formData.append('productName', product.productName);
+        formData.append('productPrice', product.productPrice.toString());
+        formData.append('category', product.category._id);
+        formData.append('priceParameter', product.priceParameter);
+        formData.append('imageName', product.imageName);
+        if (product?.image) {
+            formData.append('image', product.image);
+        }
+        else{
+            formData.append('imageName', product.imageName);
+        }
+        // console.log(formData.get('image'));
+                
+        const updatedProduct = await firstValueFrom(this.http.put<ProductModel>(environment.productsUrl +'/' + product._id, formData));
+        
         return updatedProduct;
     }
 }

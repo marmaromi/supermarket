@@ -22,6 +22,7 @@ A supermarket site - training project.
 - NgRx store not updating correctly - current fix is setTimout to fetch cart after add/update
 - product amount in shopping list not updating after cart update
 - cart list box shadow in phone mode not looking good
+- product image not updating live
 
 ## things to add
 - add login message

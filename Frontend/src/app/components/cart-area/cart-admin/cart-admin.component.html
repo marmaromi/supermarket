@@ -1,13 +1,14 @@
-<div class="box productContainer">
+<div *ngIf="product" class="box productContainer">
     <h2>עדכון מוצר</h2>
     <img [src]="productImage" alt="תמונת המוצר"> <br>
 
     <form *ngIf="product" [formGroup]="productForm" (ngSubmit)="updateProduct()">
         <div class="form-group">
             <label for="name">שם המוצר</label>
-            <input type="text" class="form-control" name="productName" formControlName="productName" [value]="productName">
+            <input type="text" class="form-control" name="productName" formControlName="productName"
+                [value]="product.productName">
         </div>
-        <span *ngIf="productName.errors?.['required'] && productName.touched">תעודת זהות חסרה</span>
+        <span *ngIf="productName.errors?.['required'] && productName.touched">מוצר חסר</span>
 
         <div class="form-group">
             <label for="category">קטגוריה</label>
@@ -27,15 +28,76 @@
             <label for="price">מחיר</label>
             <input type="number" class="form-control" name="price" formControlName="price" placeholder="מחיר">
         </div>
+        <span *ngIf="productName.errors?.['required'] && productName.touched">מחיר חסר</span>
+
         <div class="form-group">
             <label for="image">תמונה</label>
-            <input type="text" class="form-control" name="image" formControlName="image" placeholder="תמונה">
+            <input type="file" class="form-control file-input" name="image" (change)="uploadImage($event)" #fileUpload>
+            <div class="file-upload">
+
+
+                <button type="button" mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                    <mat-icon>attach_file</mat-icon>
+                </button>
+                {{productForm.value.image.name || "העלה תמונה חדשה"}}
+            </div>
         </div>
+
         <div class="center">
-            <button type="submit" class="btn btn-primary">עדכן</button>
-            <button class="btn btn-danger">בטל</button>
+            <button type="submit" class="btn btn-primary">עדכון</button>
+            <button type="button" class="btn btn-danger" (click)="resetForm()">איפוס</button>
         </div>
 
     </form>
 
 </div>
+
+<!-- <a *ngIf="product" class="btn btn-primary m-3" href="#" >הוספת מוצר חדש</a>
+
+<div *ngIf="!product && products" class="box productContainer">
+    <h2>הוספת מוצר</h2>
+    <img [src]="productImage" alt="תמונת המוצר"> <br>
+
+    <form *ngIf="!product && products" [formGroup]="productForm" (ngSubmit)="addProduct()">
+        <div class="form-group">
+            <label for="name">שם המוצר</label>
+            <input type="text" class="form-control" id="productName" name="productName" formControlName="productName" [value]="productName">
+        </div>
+        <span *ngIf="productName.errors?.['required'] && productName.touched">מוצר חסר</span>
+
+        <div class="form-group">
+            <label for="category">קטגוריה</label>
+            <select class="form-control" name="category" formControlName="category">
+                <option *ngFor="let cat of categories" [value]="category">{{cat}}</option>
+            </select>
+        </div>
+        <span *ngIf="category.errors?.['required'] && category.touched">לא נבחרה קטגוריה</span>
+
+        <div class="form-group">
+            <label for="type">מידה</label>
+            <select class="form-control" name="type" formControlName="type">
+                <option *ngFor="let type of types" [value]="type">{{type}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="price">מחיר</label>
+            <input type="number" class="form-control" name="price" formControlName="price" placeholder="מחיר">
+        </div>
+        <span *ngIf="productName.errors?.['required'] && productName.touched">מחיר חסר</span>
+
+        <div class="form-group">
+            <label for="image">תמונה</label>
+            <input type="text" class="form-control" name="image" formControlName="image" placeholder="תמונה">
+        </div>
+        <div class="center">
+            <button type="submit" class="btn btn-primary">הוספה</button>
+        </div>
+
+    </form>
+
+</div>
+
+<div *ngIf="!product">
+    <br>
+    <h2>לחצו על מוצר לעריכה</h2>
+</div> -->

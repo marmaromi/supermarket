@@ -23,10 +23,7 @@ export class ProductCardAdminComponent implements OnInit {
     }
 
     editProduct() {
-        console.log(this.product.productName);
-        sessionStorage.setItem('productToEdit', this.product._id);
         this.productsService.getOneProduct(this.product._id);
-        
     }
 
 }

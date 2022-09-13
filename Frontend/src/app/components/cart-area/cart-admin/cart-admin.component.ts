@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { ProductModel } from 'src/app/models/product-model';
 import { NotifyService } from 'src/app/services/notify.service';
 import { ProductsService } from 'src/app/services/products.service';
-import { getAllProducts } from 'src/app/state/products/products.actions';
+import { getAllProducts, updateProduct } from 'src/app/state/products/products.actions';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -18,7 +18,6 @@ import { environment } from 'src/environments/environment';
 export class CartAdminComponent implements OnInit {
 
     public products$: Observable<any> = this.store.select(state => state.products);
-
     public product: ProductModel;
     public productImage: string;
     public productForm: FormGroup;
@@ -40,7 +39,6 @@ export class CartAdminComponent implements OnInit {
         this.store.dispatch(getAllProducts());
         this.products$.subscribe(products => {
             this.products = products.products;
-            this.product = this.products.find(p => p._id === sessionStorage.getItem('productToEdit'));
             for (const product of this.products) {
                 if (this.categories.indexOf(product.category.name) === -1) {
                     this.categories.push(product.category.name);
@@ -48,56 +46,109 @@ export class CartAdminComponent implements OnInit {
             }
         });
 
-        // this.product = this.products[0];
 
         this.productsService.productToEdit$.subscribe(async productToEdit => {
             if (!productToEdit) {
-                this.product = await this.productsService.getOneProduct(sessionStorage.getItem('productToEdit'));
+                this.product = this.products[0];
             }
-            else{
+            else {
                 this.product = productToEdit;
             }
-        });
+            if (this.product) {
+                this.productForm = this.fb.group({
+                    productName: [this.product.productName, [
+                        Validators.required,
+                        Validators.minLength(3),
+                        Validators.maxLength(30)
+                    ]],
+                    price: [this.product.productPrice, [
+                        Validators.required,
+                        Validators.pattern(/^\d{1,9}$/)
+                    ]],
+                    category: [this.product.category, [
+                        Validators.required,
+                    ]],
+                    type: [this.product.priceParameter, [
+                        Validators.required,
+                        Validators.minLength(3),
+                        Validators.maxLength(30)
+                    ]],
+                    image: [this.product.image, [
+                    ]]
+                });
+                // this.productForm.valueChanges.subscribe(console.log);
+                this.productImage = environment.productsImagesUrl + '/' + this.product.imageName;
 
-        for (const product of this.products) {
-            if (this.categories.indexOf(product.category.name) === -1) {
-                this.categories.push(product.category.name);
             }
-        }
+            else {
+                // this.productForm = this.fb.group({
+                //     productName: ['', [
+                //         Validators.required,
+                //         Validators.minLength(3),
+                //         Validators.maxLength(30)
+                //     ]],
+                //     price: ['', [
+                //         Validators.required,
+                //         Validators.pattern(/^\d{1,9}$/)
+                //     ]],
+                //     category: ['', [
+                //         Validators.required,
+                //     ]],
+                //     type: ['', [
+                //         Validators.required,
+                //         Validators.minLength(3),
+                //         Validators.maxLength(30)
+                //     ]],
+                //     image: [, [
+                //         Validators.required,
+                //         Validators.minLength(3),
+                //         Validators.maxLength(30)
+                //     ]]
+                // });
+                // this.productForm.valueChanges.subscribe(console.log);
 
-        if (this.product) {
-            this.productForm = this.fb.group({
-                productName: [this.product.productName, [
-                    Validators.required,
-                    Validators.minLength(3),
-                    Validators.maxLength(30)
-                ]],
-                price: [this.product.productPrice, [
-                    Validators.required,
-                    Validators.pattern(/^\d{1,9}$/)
-                ]],
-                category: [this.product.category, [
-                    Validators.required,
-                ]],
-                type: [this.product.priceParameter, [
-                    Validators.required,
-                    Validators.minLength(3),
-                    Validators.maxLength(30)
-                ]],
-                image: [this.product.image, [
-                    Validators.required,
-                    Validators.minLength(3),
-                    Validators.maxLength(30)
-                ]]
-            });
-            this.productForm.valueChanges.subscribe(console.log);
-            this.productImage = environment.productsImagesUrl + '/' + this.product.imageName;
 
-        }
-        // });
+            }
+        });
     }
 
-    updateProduct() {
+    async updateProduct() {
+        try {
+            const formValue = this.productForm.value;
+            const updatedProduct = new ProductModel();
+            updatedProduct._id = this.product._id;
+            updatedProduct.productName = formValue.productName;
+            updatedProduct.productPrice = formValue.price;
+            updatedProduct.category = formValue.category;
+            updatedProduct.priceParameter = formValue.type;
+            updatedProduct.imageName = this.product.imageName;
+            if (formValue.image) {
+                updatedProduct.image = formValue.image;
+            }
+            this.store.dispatch(updateProduct({ product: updatedProduct }));
+            this.notify.success('המוצר עודכן בהצלחה');
+        }
+        catch (err) {
+            this.notify.error(err);
+        }
+    }
+
+    uploadImage(event: any) {
+        const file = event.target.files[0];
+        this.productForm.value.image = file;     
+    }
+
+    addProduct() {
+    }
+
+    resetForm() {
+        this.productForm.reset({
+            productName: this.product.productName,
+            price: this.product.productPrice,
+            category: this.product.category,
+            type: this.product.priceParameter,
+            image: this.product.image
+        });
     }
 
 
