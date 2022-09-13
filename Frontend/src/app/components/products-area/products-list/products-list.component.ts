@@ -8,7 +8,6 @@ import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { ProductsService } from 'src/app/services/products.service';
 import { getAllProducts } from 'src/app/state/products/products.actions';
 import { getAllProductsInCart } from 'src/app/state/productsInCart/productsInCart.actions';
 
@@ -30,7 +29,6 @@ export class ProductsListComponent implements OnInit {
 
 
     constructor(
-        private productsService: ProductsService,
         private authService: AuthService,
         private notify: NotifyService,
         private cartService: CartService,
@@ -57,19 +55,7 @@ export class ProductsListComponent implements OnInit {
                     }
                 }
                 this.productsToShow = [...this.products];
-                // sessionStorage.setItem('productToEdit', this.products[0]._id);
             });
-            
-
-
-            // this.products = await this.productsService.getProducts();
-            // for (const product of this.products) {
-            //     if (this.categories.indexOf(product.category.name) === -1) {
-            //         this.categories.push(product.category.name);
-            //     }
-            // }
-
-            // this.productsToShow = [...this.products];
 
         } catch (error: any) {
             this.notify.error(error);

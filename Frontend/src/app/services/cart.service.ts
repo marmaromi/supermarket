@@ -1,22 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { firstValueFrom, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CartModel } from '../models/cart-model';
 import { ProductsInCartModel } from '../models/products-in-cart-model';
 import { UserModel } from '../models/user-model';
+import { getAllProductsInCart } from '../state/productsInCart/productsInCart.actions';
 import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CartService {
-    private user: UserModel;
+    private cartId: string = '';
 
     // private _productsInCartSource = new Subject<ProductsInCartModel[]>();
     // public productsInCart$ = this._productsInCartSource.asObservable();
 
-    constructor(private http: HttpClient, private authService: AuthService) { }
+    constructor(private http: HttpClient,
+        private authService: AuthService,
+        private store: Store
+    ) { }
 
     public async getLatestCartByUser(userId: string): Promise<CartModel> {
         try {
@@ -70,7 +75,8 @@ export class CartService {
 
             if (productIndex === -1) {
                 const product = await firstValueFrom(this.http.post<ProductsInCartModel>(environment.productsInCartUrl + `/${cartId}/${productId}`, { 'amount': amount }));
-                // this.store.dispatch(addProductToCart({product: product}));
+                this.cartId = sessionStorage.getItem('cartId');
+                this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));
                 return product;
 
             }
@@ -79,7 +85,9 @@ export class CartService {
                 const product = products[productIndex];
                 product.amount = amount;
                 await firstValueFrom(this.http.put<ProductsInCartModel>(environment.productsInCartUrl + `/${productInCartId}`, products[productIndex]));
-                // this.store.dispatch(updateProductInCart({product: product}));
+                this.cartId = sessionStorage.getItem('cartId');
+                this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));
+
                 return product;
             }
 
@@ -90,8 +98,7 @@ export class CartService {
 
     public async deleteProductFromCart(productInCartId: string) {
         try {
-            const res = await firstValueFrom(this.http.delete(environment.productsInCartUrl + `/${productInCartId}`));
-
+            await firstValueFrom(this.http.delete(environment.productsInCartUrl + `/${productInCartId}`));
         } catch (err: any) {
             throw err;
         }
