@@ -12,11 +12,22 @@ export const getOneProduct = createAction(
 
 export const getAllProductsSuccess = createAction(
     '[Products] Get All Products Success',
-    props<{ products: ProductModel[] }>());
+    props<{ products: ProductModel[] }>()
+);
 
 export const getAllProductsFailure = createAction(
     '[Products] Get All Products Failure',
     props<{ error: string }>()
+);
+
+export const getProductsBySearch = createAction(
+    '[Products] Get Some Products',
+    props<{ productName: string }>()
+);
+
+export const getProductsByCategory = createAction(
+    '[Products] Get Some Products',
+    props<{ categoryName: string }>()
 );
 
 export const updateProduct = createAction(

@@ -31,6 +31,16 @@ export const productsReducer = createReducer(
         status: 'error'
     })),
 
+    on(productsActions.getProductsBySearch, (state, action): ProductsState => ({
+        ...state,
+        products: state.products.filter(product => product.productName.includes(action.productName))
+    })),
+
+    on(productsActions.getProductsByCategory, (state, action): ProductsState => ({
+        ...state,
+        products: state.products.filter(product => product.category.name === action.categoryName)
+    })),
+
     on(productsActions.addProduct, (state, action): ProductsState => ({
         ...state,
         products: [...state.products, action.product]
