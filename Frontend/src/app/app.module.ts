@@ -36,6 +36,9 @@ import { ProductsEffects } from './state/products/products.effects';
 import { OrderDetailsComponent } from './components/order-area/order-details/order-details.component';
 import { OrderCartComponent } from './components/order-area/order-cart/order-cart.component';
 import { OrderLayoutComponent } from './components/order-area/order-layout/order-layout.component';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { ModalComponent } from './components/order-area/modal/modal.component';
+
 
 
 @NgModule({
@@ -58,6 +61,7 @@ import { OrderLayoutComponent } from './components/order-area/order-layout/order
         OrderDetailsComponent,
         OrderCartComponent,
         OrderLayoutComponent,
+        ModalComponent,
 
 
     ],
@@ -74,6 +78,7 @@ import { OrderLayoutComponent } from './components/order-area/order-layout/order
         MatButtonModule,
         MatIconModule,
         Ng2SearchPipeModule,
+        MdbModalModule,
         StoreModule.forRoot({ productsInCart: productsInCartReducer, products: productsReducer }),
         EffectsModule.forRoot([ProductsInCartEffects, ProductsEffects]),
         NotifierModule.withConfig({

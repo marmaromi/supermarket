@@ -52,6 +52,17 @@ router.delete("/carts/:_id", verifyLogIn, async (request: Request, response: Res
     }
 });
 
+router.delete("/carts/close/:_id", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const _id = request.params._id;
+        await cartLogic.closeCart(_id);
+        response.sendStatus(204);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
 router.post("/carts/products/:cartId/:productId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const productId: string = request.params.productId;

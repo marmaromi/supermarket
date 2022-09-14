@@ -34,17 +34,21 @@ export class CartService {
             sessionStorage.setItem('cartId', cart._id);
             return cart;
         }
-
     }
 
     public async getProductsInCart(): Promise<ProductsInCartModel[]> {
         try {
-            const cartId = sessionStorage.getItem('cartId');
+            let cartId = sessionStorage.getItem('cartId');
+            if (cartId === null) {
+                const user = this.authService.getUserDetails();
+                await this.getLatestCartByUser(user._id);
+                cartId = sessionStorage.getItem('cartId');
+            }
             const products = await firstValueFrom(this.http.get<ProductsInCartModel[]>(environment.productsInCartUrl + `/${cartId}`));
             // this._productsInCartSource.next(products);
             return products;
 
-        } catch (err: any) {
+        } catch (err: any) {            
             throw err;
         }
     }

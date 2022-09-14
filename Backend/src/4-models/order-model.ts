@@ -6,7 +6,6 @@ import { UserModel } from "./user-model";
 export interface IOrderModel extends mongoose.Document {
     userId: mongoose.Schema.Types.ObjectId;
     cartId: mongoose.Schema.Types.ObjectId;
-    amount: number;
     finalPrice: number;
     deliveryCity: string;
     deliveryStreet: string;

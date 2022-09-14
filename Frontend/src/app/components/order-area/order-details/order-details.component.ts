@@ -6,6 +6,14 @@ import { CitiesService } from 'src/app/services/cities.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { cityInList, dateValidator } from '../../auth-area/register/form-validations';
 import { AuthService } from 'src/app/services/auth.service';
+import { OrdersService } from 'src/app/services/orders.service';
+import { OrderModel } from 'src/app/models/order-model';
+import { Router } from '@angular/router';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { ModalComponent } from '../modal/modal.component';
+import { CartService } from 'src/app/services/cart.service';
+import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
+
 
 interface LooseObject {
     [key: string]: string[]
@@ -17,12 +25,24 @@ interface LooseObject {
 })
 export class OrderDetailsComponent implements OnInit {
 
+    modalRef: MdbModalRef<ModalComponent> | null = null;
     public orderForm: FormGroup;
     public cities: string[];
     public filteredCities: Observable<string[]>;
     public today = new Date();
+    public orderDetails = new OrderModel();
+    public productsInCart: ProductsInCartModel[] = [];
 
-    constructor(private fb: FormBuilder, private citiesService: CitiesService, private notify: NotifyService, private authService: AuthService) { }
+
+    constructor(private fb: FormBuilder,
+        private citiesService: CitiesService,
+        private notify: NotifyService,
+        private authService: AuthService,
+        private orderService: OrdersService,
+        private modalService: MdbModalService,
+        private cartService: CartService,
+        private router: Router
+    ) { }
 
     async ngOnInit(): Promise<void> {
         const user = this.authService.getUserDetails();
@@ -58,6 +78,7 @@ export class OrderDetailsComponent implements OnInit {
             startWith(''),
             map(value => this._citiesFilter(value || '')),
         );
+        this.productsInCart = await this.cartService.getProductsInCart();
     }
 
     private _citiesFilter(value: string): string[] {
@@ -76,8 +97,29 @@ export class OrderDetailsComponent implements OnInit {
         }
     }
 
-    public order() {
-        console.log(this.orderForm.value);
+    public async order() {
+        try {
+            this.orderDetails.deliveryCity = this.orderForm.value.city;
+            this.orderDetails.deliveryStreet = this.orderForm.value.street;
+            this.orderDetails.deliveryDate = this.orderForm.value.date;
+            this.orderDetails.fourLastDigits = this.orderForm.value.creditCard.slice(-4);
+            this.orderDetails = await this.orderService.addOrder(this.orderDetails);
+            this.notify.success('ההזמנה הושלמה בהצלחה');
+            this.openModal();
+        } catch (error: any) {
+            console.log(error);
+            this.notify.error(error);
+        }
+    }
+
+    openModal() {
+        this.modalRef = this.modalService.open(ModalComponent, {
+            data: { productsInCart: this.productsInCart },
+            backdrop: true,
+            ignoreBackdropClick: true,
+            keyboard: false,
+            modalClass: 'modal-dialog-centered',
+        });
     }
 
     //form values getters

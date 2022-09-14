@@ -32,3 +32,4 @@ A supermarket site - training project.
 - maybe better collapse: https://coreui.io/angular/docs/components/collapse
 - double click to update address in order page
 - credit card regex
+- add site icon
