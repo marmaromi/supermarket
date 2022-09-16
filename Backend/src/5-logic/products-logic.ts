@@ -4,8 +4,6 @@ import { v4 as uuid } from "uuid";
 import fs from "fs";
 import config from "../2-utils/config";
 
-
-
 async function getAllProducts(): Promise<IProductModel[]> {
     return ProductModel.find().populate("category", "-_id").exec();
 }
@@ -42,7 +40,7 @@ async function updateProduct(product: IProductModel): Promise<IProductModel> {
     }
     if (product.image) {
         // delete previous image
-        const imageToDelete = config.imagesPath + product.imageName;
+        const imageToDelete = config.imagesPath + product.imageName;        
         fs.unlink(imageToDelete, (err) => {
             if (err) {
                 console.log(`Image to delete not found in path: "${imageToDelete}"`);
@@ -68,8 +66,6 @@ async function updateProduct(product: IProductModel): Promise<IProductModel> {
 async function getProductsCount(): Promise<number> {
     return ProductModel.count().exec()
 }
-
-
 
 export default {
     getAllProducts,
