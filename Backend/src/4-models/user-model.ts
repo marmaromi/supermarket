@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import isIsraeliIdValid from 'israeli-id-validator';
-
 export interface IUserModel extends mongoose.Document {
     firstName: string;
     lastName: string;

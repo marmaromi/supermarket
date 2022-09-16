@@ -6,7 +6,6 @@ import verifyLogIn from "../3-middleware/verify-log-in";
 import { ProductModel } from "../4-models/product-model";
 import productsLogic from "../5-logic/products-logic";
 import { RouteNotFoundError } from "../4-models/error-models";
-import { UploadedFile } from "express-fileupload";
 
 const router = express.Router();
 

@@ -16,11 +16,6 @@ async function getLatestCartByUser(userId: string): Promise<ICartModel> {
 
 async function getCartWithItems(cartId: string): Promise<IProductInCartModel[]> {
     const cart = await ProductInCartModel.find({ cartId: cartId }).populate("product", "-_id").exec();
-    
-
-    // if (!cart) {
-    //     throw new ResourceNotFoundError(cartId);
-    // }
     return cart;
 }
 

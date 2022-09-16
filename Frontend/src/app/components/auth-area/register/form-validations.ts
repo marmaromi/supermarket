@@ -3,7 +3,6 @@ import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angu
 export function isIdValid(citizenId: number, validId: any): any {
 
     if (citizenId === undefined) {
-        //   this.validId = false;
         return false;
     }
 
@@ -17,7 +16,6 @@ export function isIdValid(citizenId: number, validId: any): any {
 
     if (validId) {
         return true;
-
     }
 }
 
@@ -27,12 +25,10 @@ export function controlValuesAreEqual(controlNameA: string, controlNameB: string
         const valueOfControlA = formGroup.get(controlNameA)?.value;
         const valueOfControlB = formGroup.get(controlNameB)?.value;
 
-
         if (valueOfControlA !== valueOfControlB) {
             return { valuesDoNotMatch: true };
         }
         return null;
-
     };
 }
 

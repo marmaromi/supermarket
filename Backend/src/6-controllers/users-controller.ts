@@ -27,7 +27,4 @@ router.post("/users/login", async (request: Request, response: Response, next: N
     }
 });
 
-
-
-
 export default router;

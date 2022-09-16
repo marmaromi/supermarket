@@ -27,8 +27,6 @@ export class LoginComponent implements OnInit {
             password: ''
         });
 
-        // this.loginForm.valueChanges.subscribe(console.log);
-
         this.loginForm = this.fb.group({
             email: ['', [
                 Validators.required

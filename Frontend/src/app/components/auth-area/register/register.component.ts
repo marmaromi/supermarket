@@ -106,8 +106,6 @@ export class RegisterComponent implements OnInit {
         return this.cities.filter(city => city.toLowerCase().includes(filterValue));
     }
 
-
-
     public movePage(n: number) {
         if (n === 1) {
             this.page = 2;
@@ -160,8 +158,6 @@ export class RegisterComponent implements OnInit {
 
         }
     }
-
-
 
     get citizenId() {
         return this.registerForm.get('citizenId');
