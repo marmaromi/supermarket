@@ -6,9 +6,10 @@ import { IUserModel } from "../4-models/user-model";
 
 
 async function register(user: IUserModel): Promise<string> {
+    
     const errors = user.validateSync();
     user.password = hash(user.password);
-
+    
     if (errors) {
         throw new ValidationError(errors.message);
     }
@@ -26,7 +27,7 @@ async function login(credentials: ICredentialsModel): Promise<string> {
     const user = await CredentialsModel.findOne({ email: credentials.email, password: credentials.password }).exec();
 
     if (!user) {
-        throw new ValidationError(`Incorrect username or password`);
+        throw new ValidationError(`שם משתמש או סיסמא שגויים`);
     }
 
     const userNoPassword: ICredentialsModel = user.toObject()

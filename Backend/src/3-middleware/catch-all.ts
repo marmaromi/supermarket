@@ -6,7 +6,7 @@ async function catchAll(err: any, request: Request, response: Response, next: Ne
     
     const status = err.status || 500;
     const message = err.message || "Unknown Error";
-
+        
     response.status(status).send(message);
 }
 

@@ -17,12 +17,15 @@ export class NotifyService {
     }
 
     public error(err: any): void {
+        
         this.notifier.notify('error',this.extractError(err));
     }
-
+    
     private extractError(err: any): string {
 
         if (typeof err === 'string') return err;
+
+        if (typeof err.error === 'string') return err.error;
 
         if (typeof err.response?.data === 'string') return err.response.data;
 

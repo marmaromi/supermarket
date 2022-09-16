@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
 import verifyLogIn from "../3-middleware/verify-log-in";
+import { ValidationError } from "../4-models/error-models";
 import { OrderModel } from "../4-models/order-model";
+import { ProductInCartModel } from "../4-models/product-in-cart-model";
 import ordersLogic from "../5-logic/orders-logic";
 
 const router = express.Router();
@@ -30,6 +32,11 @@ router.get("/orders/:userId", verifyLogIn, async (request: Request, response: Re
 router.post("/orders", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const order = new OrderModel(request.body);
+        const productsInCart = await ProductInCartModel.findOne({ cartId: order.cartId }).exec();
+        if (productsInCart === null) {
+            throw new ValidationError("לא ניתן לבצע הזמנה עם עגלה ריקה'");
+        }
+        
         const addedOrder = await ordersLogic.addOrder(order);
         response.status(201).json(addedOrder);
     }

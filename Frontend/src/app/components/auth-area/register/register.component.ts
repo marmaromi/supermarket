@@ -92,7 +92,6 @@ export class RegisterComponent implements OnInit {
                 cityInList('city', this.cities),
             ]
         });
-        // this.registerForm.valueChanges.subscribe(console.log);
 
         this.filteredCities = this.city.valueChanges.pipe(
             startWith(''),
@@ -152,10 +151,8 @@ export class RegisterComponent implements OnInit {
 
             this.router.navigate(['/home']);
 
-        } catch (err: any) {
+        } catch (err: any) {                        
             this.notify.error(err);
-
-
         }
     }
 

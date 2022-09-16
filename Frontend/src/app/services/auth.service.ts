@@ -27,7 +27,6 @@ export class AuthService {
 
         } catch (error: any) {
             throw error;
-            // this.notify.error(error);
         }
     }
 
@@ -38,10 +37,14 @@ export class AuthService {
             await this.login(credentials);
             this.getUserDetails();
 
-        } catch (error) {
-            throw error;
+        } catch (error: any) {            
+            if (error.error === 'UserModel validation failed: email: Invalid email address') {
+                throw new Error('כתובת אימייל לא תקינה');
+            }
 
-            // this.notify.error(error);
+            else {
+                throw error;
+            }
         }
     }
 

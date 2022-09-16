@@ -34,7 +34,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductsInCartEffects } from './state/productsInCart/productsInCart.effects';
 import { ProductsEffects } from './state/products/products.effects';
 import { OrderDetailsComponent } from './components/order-area/order-details/order-details.component';
-import { OrderCartComponent } from './components/order-area/order-cart/order-cart.component';
 import { OrderLayoutComponent } from './components/order-area/order-layout/order-layout.component';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { ModalComponent } from './components/order-area/modal/modal.component';
@@ -59,7 +58,6 @@ import { ModalComponent } from './components/order-area/modal/modal.component';
         SearchMainComponent,
         ProductCardAdminComponent,
         OrderDetailsComponent,
-        OrderCartComponent,
         OrderLayoutComponent,
         ModalComponent,
 

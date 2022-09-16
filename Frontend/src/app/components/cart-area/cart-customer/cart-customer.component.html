@@ -1,8 +1,15 @@
 <h2>עגלת קניות</h2>
 <div class="cart">
     <div class="items">
-        <app-cart-item *ngFor="let cartProduct of productsInCart" [cartProductInput]="cartProduct"></app-cart-item>
+        <ng-template [ngIf]="productsInCart.length > 0" [ngIfElse]="empty">
+            <app-cart-item *ngFor="let cartProduct of productsInCart" [cartProductInput]="cartProduct"></app-cart-item>
+        </ng-template>
+        <ng-template #empty>
+            <br>
+            <h3>העגלה ריקה</h3>
+        </ng-template>
     </div>
-    <button *ngIf="url !== '/order'" (click)="pay()" class="btn btn-outline-primary">לתשלום: ₪{{totalCartPrice}}</button>
+    <button *ngIf="url !== '/order'" (click)="pay()" class="btn btn-outline-primary">לתשלום:
+        ₪{{totalCartPrice}}</button>
     <div class="orderTotal" *ngIf="url === '/order'">סך הכל לתשלום: ₪{{totalCartPrice}}</div>
 </div>
