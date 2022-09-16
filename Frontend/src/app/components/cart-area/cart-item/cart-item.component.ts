@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { NotifyService } from 'src/app/services/notify.service';
+import { SearchService } from 'src/app/services/search.service';
 import { getAllProductsInCart, removeProductFromCart, updateProductInCart } from 'src/app/state/productsInCart/productsInCart.actions';
 import { environment } from 'src/environments/environment';
 
@@ -12,7 +13,7 @@ import { environment } from 'src/environments/environment';
     templateUrl: './cart-item.component.html',
     styleUrls: ['./cart-item.component.css']
 })
-export class CartItemComponent implements OnInit {
+export class CartItemComponent implements OnInit, AfterViewInit {
 
     public cartForm: FormGroup;
     @Input() cartProductInput: ProductsInCartModel;
@@ -22,26 +23,43 @@ export class CartItemComponent implements OnInit {
     public initialAmount: number;
     public totalProductPrice: number;
     public url = this.router.url;
+    // public searchValue: string = '';
+    @ViewChild('productNameHtml') productNameHtml: ElementRef;
 
-
-
-    constructor(private fb: FormBuilder, private store: Store, private notify: NotifyService, private router: Router) { }
-
-
+    constructor(
+        private fb: FormBuilder,
+        private store: Store,
+        private notify: NotifyService,
+        private router: Router,
+        private searchService: SearchService
+    ) { }
 
     ngOnInit(): void {
-        this.cartProduct = {...this.cartProductInput}; // can't use this.cartProductInput because it's a reference to the original object
+        this.cartProduct = { ...this.cartProductInput }; // can't use this.cartProductInput because it's a reference to the original object
         if (this.cartProduct.product.imageName) {
             this.productImage = environment.productsImagesUrl + '/' + this.cartProduct.product.imageName;
         }
 
         this.initialAmount = this.cartProduct.amount;
-        this.totalProductPrice = this.initialAmount*this.cartProduct.product.productPrice;
+        this.totalProductPrice = this.initialAmount * this.cartProduct.product.productPrice;
 
         this.cartForm = this.fb.group({
             productAmount: this.cartProduct.amount
         });
         this.cartId = sessionStorage.getItem('cartId');
+    }
+
+    ngAfterViewInit() {
+        this.searchService.searchValueSource.subscribe(searchValue => {
+            if (this.router.url === '/order') {
+                if (this.cartProduct.product.productName.includes(searchValue) && searchValue !== '') {
+                    this.productNameHtml.nativeElement.setAttribute('class', 'highlight');
+                }
+                else {
+                    this.productNameHtml.nativeElement.setAttribute('class', '');
+                }
+            }
+        });
     }
 
     get productAmount() {

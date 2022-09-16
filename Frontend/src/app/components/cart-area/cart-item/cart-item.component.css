@@ -60,3 +60,7 @@ input[type=number] {
     /* position: relative; */
     translate: 33px -75px;
 }
+
+.highlight {
+    background-color: #EEF43B;
+  }

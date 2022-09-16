@@ -38,7 +38,7 @@ export class ProductsService {
 
     public async getProductsBySearch(productName: string): Promise<ProductModel[]> {
         const products = await this.getProducts();
-        const filteredProducts = products.filter(p => p.productName.includes(productName));        
+        const filteredProducts = products.filter(p => p.productName.includes(productName));
         return filteredProducts;
     }
 
