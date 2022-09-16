@@ -26,7 +26,6 @@ async function getCartWithItems(cartId: string): Promise<IProductInCartModel[]> 
 
 async function createCart(userIdString: string): Promise<ICartModel> {
     const userId = (await UserModel.findById(userIdString).exec())._id;
-    console.log(await UserModel.findById(userIdString).exec());
 
     if (!userId) {
         throw new ResourceNotFoundError(userId);

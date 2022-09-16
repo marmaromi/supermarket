@@ -76,37 +76,7 @@ export class CartAdminComponent implements OnInit {
                     image: [this.product.image, [
                     ]]
                 });
-                // this.productForm.valueChanges.subscribe(console.log);
                 this.productImage = environment.productsImagesUrl + '/' + this.product.imageName;
-
-            }
-            else {
-                // this.productForm = this.fb.group({
-                //     productName: ['', [
-                //         Validators.required,
-                //         Validators.minLength(3),
-                //         Validators.maxLength(30)
-                //     ]],
-                //     price: ['', [
-                //         Validators.required,
-                //         Validators.pattern(/^\d{1,9}$/)
-                //     ]],
-                //     category: ['', [
-                //         Validators.required,
-                //     ]],
-                //     type: ['', [
-                //         Validators.required,
-                //         Validators.minLength(3),
-                //         Validators.maxLength(30)
-                //     ]],
-                //     image: [, [
-                //         Validators.required,
-                //         Validators.minLength(3),
-                //         Validators.maxLength(30)
-                //     ]]
-                // });
-                // this.productForm.valueChanges.subscribe(console.log);
-
 
             }
         });

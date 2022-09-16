@@ -62,8 +62,6 @@ export class OrderDetailsComponent implements OnInit {
             ]],
             creditCard: ['', [
                 Validators.required,
-                // Validators.minLength(15),
-                // Validators.maxLength(16),
             ]]
         }, {
             validators: [
@@ -71,7 +69,6 @@ export class OrderDetailsComponent implements OnInit {
                 dateValidator
             ]
         });
-        // this.orderForm.valueChanges.subscribe(console.log);
 
         this.filteredCities = this.city.valueChanges.pipe(
             startWith(''),
@@ -106,7 +103,6 @@ export class OrderDetailsComponent implements OnInit {
             this.notify.success('ההזמנה הושלמה בהצלחה');
             this.openModal();
         } catch (error: any) {
-            console.log(error);
             this.notify.error(error);
         }
     }

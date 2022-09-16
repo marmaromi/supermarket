@@ -67,7 +67,6 @@ export class ProductsService {
         else {
             formData.append('imageName', product.imageName);
         }
-        // console.log(formData.get('image'));
 
         const updatedProduct = await firstValueFrom(this.http.put<ProductModel>(environment.productsUrl + '/' + product._id, formData));
 

@@ -30,9 +30,7 @@ router.get("/carts/products/:cartId", verifyLogIn, async (request: Request, resp
 
 router.post("/carts/:userId", verifyLogIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
-        const userId = request.params.userId;
-        console.log(userId);
-        
+        const userId = request.params.userId;        
         const cart = await cartLogic.createCart(userId);
         response.status(201).json(cart);
     }

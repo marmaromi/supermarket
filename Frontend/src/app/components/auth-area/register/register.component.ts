@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit {
                 cityInList('city', this.cities),
             ]
         });
-        this.registerForm.valueChanges.subscribe(console.log);
+        // this.registerForm.valueChanges.subscribe(console.log);
 
         this.filteredCities = this.city.valueChanges.pipe(
             startWith(''),

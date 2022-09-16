@@ -16,8 +16,6 @@ async function addOrder(order: IOrderModel): Promise<IOrderModel> {
     if (errors) {
         throw new ValidationError(errors.message);
     }
-    console.log(order.cartId.toString());
-
     cartsLogic.closeCart(order.cartId.toString());
     return order.save();
 }

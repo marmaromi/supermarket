@@ -45,13 +45,9 @@ router.post("/products", verifyAdmin, async (request: Request, response: Respons
 router.put("/products/:_id", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {        
         const _id = request.params._id;
-        request.body.image = request.files?.image;
-        // console.log(request.body.image);
-        
+        request.body.image = request.files?.image;        
         const product = new ProductModel(request.body);
         product._id = _id;
-        // product.image = request.files?.image;
-        // console.log(product.image);
         const updatedProduct = await productsLogic.updateProduct(product);
         response.json(updatedProduct);
     }
