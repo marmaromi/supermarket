@@ -26,6 +26,7 @@ export class ProductsListComponent implements OnInit {
     public categories: string[] = [];
     public category: string = 'כל המוצרים';
     public userRole: string;
+    public totalProductsCount: number = null;
 
 
     constructor(
@@ -36,7 +37,7 @@ export class ProductsListComponent implements OnInit {
     ) { }
 
     async ngOnInit() {
-        
+
         try {
             this.store.dispatch(getAllProducts());
             this.userRole = (this.authService.getUserDetails()).role;
@@ -47,35 +48,47 @@ export class ProductsListComponent implements OnInit {
             }
 
             this.products$.subscribe(products => {
-                
                 this.products = products.products;
+                if (this.totalProductsCount === null) {
+                    this.totalProductsCount = this.products.length;
+                }
                 for (const product of this.products) {
                     if (this.categories.indexOf(product.category.name) === -1) {
                         this.categories.push(product.category.name);
                     }
                 }
                 this.productsToShow = [...this.products];
+
+
+                // decide what category to show
+                const uniqueCategories = [...new Set(this.products.map(p => p.category.name))];
+
+                if (uniqueCategories.length === this.categories.length && this.totalProductsCount === this.products.length) {
+                    this.category = 'כל המוצרים';
+                }
+
+                if (uniqueCategories.length !== this.categories.length && uniqueCategories.length > 1 && this.totalProductsCount !== this.products.length) {
+                    this.category = 'כללי';
+                }
+
+                if(uniqueCategories.length === 1 && this.totalProductsCount !== this.products.length && this.category !== 'כללי'){
+                    this.category = uniqueCategories[0];
+                }
+
             });
 
         } catch (error: any) {
             this.notify.error(error);
-
         }
-
     }
 
-    showCategory(category: string) {
+    async showCategory(category: string) {
         if (category === 'all') {
             this.store.dispatch(getAllProducts());
-            this.productsToShow = [...this.products];
         }
         else {
             this.store.dispatch(getProductsByCategory({ categoryName: category }));
-            console.log(this.products);
-            
             this.category = category;
-            this.productsToShow.length = 0;
-            this.productsToShow = this.products.filter(p => p.category.name === category);
         }
     }
 

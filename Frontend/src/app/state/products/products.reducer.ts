@@ -16,6 +16,8 @@ export const initialState: ProductsState = {
 
 export const productsReducer = createReducer(
     initialState,
+
+    // get all products
     on(productsActions.getAllProducts, (state): ProductsState => ({ ...state, status: 'loading' })),
 
     on(productsActions.getAllProductsSuccess, (state, { products }): ProductsState => ({
@@ -31,16 +33,45 @@ export const productsReducer = createReducer(
         status: 'error'
     })),
 
+    // get products by search
     on(productsActions.getProductsBySearch, (state, action): ProductsState => ({
         ...state,
         products: state.products.filter(product => product.productName.includes(action.productName))
     })),
 
-    on(productsActions.getProductsByCategory, (state, action): ProductsState => ({
+    on(productsActions.getProductsBySearchSuccess, (state, { products }): ProductsState => ({
         ...state,
-        products: state.products.filter(product => product.category.name === action.categoryName)
+        products: products,
+        error: null,
+        status: 'success'
     })),
 
+    on(productsActions.getProductsBySearchFailure, (state, { error }): ProductsState => ({
+        ...state,
+        error: error,
+        status: 'error'
+    })),
+
+    // get products by category
+    on(productsActions.getProductsByCategory, (state, action): ProductsState => ({
+        ...state,
+        products: state.products.filter(product => product.category.name.includes(action.categoryName))
+    })),
+
+    on(productsActions.getProductsByCategorySuccess, (state, { products }): ProductsState => ({
+        ...state,
+        products: products,
+        error: null,
+        status: 'success'
+    })),
+
+    on(productsActions.getProductsByCategoryFailure, (state, { error }): ProductsState => ({
+        ...state,
+        error: error,
+        status: 'error'
+    })),
+
+    // add and update product
     on(productsActions.addProduct, (state, action): ProductsState => ({
         ...state,
         products: [...state.products, action.product]

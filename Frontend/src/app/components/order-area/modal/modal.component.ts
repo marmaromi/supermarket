@@ -17,13 +17,13 @@ export class ModalComponent implements OnInit {
     public finalPrice: number;
     constructor(public modalRef: MdbModalRef<ModalComponent>, private authService: AuthService) { }
 
-    ngOnInit(): void {
+    ngOnInit(): void {        
         this.finalPrice = this.productsInCart?.reduce((acc, curr) => acc + curr.totalProductPrice, 0);            
     }
 
     public openPDF(): void {
         let DATA: any = document.getElementById('htmlData');
-        DATA.setAttribute('display', 'show');
+        // DATA.setAttribute('display', 'show');
         html2canvas(DATA).then((canvas) => {
             let fileWidth = 208;
             let fileHeight = (canvas.height * fileWidth) / canvas.width;
@@ -33,7 +33,7 @@ export class ModalComponent implements OnInit {
             PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
             PDF.save('receipt.pdf');
         });
-        DATA.setAttribute('display','hidden');
+        // DATA.setAttribute('display','hidden');
 
     }
 

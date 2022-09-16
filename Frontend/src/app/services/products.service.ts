@@ -10,7 +10,7 @@ import { ProductModel } from '../models/product-model';
 })
 export class ProductsService {
 
-    
+
     private _productToEditSource = new Subject<ProductModel>();
     public productToEdit$ = this._productToEditSource.asObservable();
 
@@ -30,8 +30,20 @@ export class ProductsService {
         }
     }
 
+    public async getProductsByCategory(categoryName: string): Promise<ProductModel[]> {
+        const products = await this.getProducts();
+        const filteredProducts = products.filter(p => p.category.name === categoryName);
+        return filteredProducts;
+    }
+
+    public async getProductsBySearch(productName: string): Promise<ProductModel[]> {
+        const products = await this.getProducts();
+        const filteredProducts = products.filter(p => p.productName.includes(productName));        
+        return filteredProducts;
+    }
+
     public async getOneProduct(id: string): Promise<ProductModel> {
-        const product = await firstValueFrom(this.http.get<ProductModel>(environment.productsUrl + '/' +id));
+        const product = await firstValueFrom(this.http.get<ProductModel>(environment.productsUrl + '/' + id));
         this._productToEditSource.next(product);
         return product;
     }
@@ -52,13 +64,13 @@ export class ProductsService {
         if (product?.image) {
             formData.append('image', product.image);
         }
-        else{
+        else {
             formData.append('imageName', product.imageName);
         }
         // console.log(formData.get('image'));
-                
-        const updatedProduct = await firstValueFrom(this.http.put<ProductModel>(environment.productsUrl +'/' + product._id, formData));
-        
+
+        const updatedProduct = await firstValueFrom(this.http.put<ProductModel>(environment.productsUrl + '/' + product._id, formData));
+
         return updatedProduct;
     }
 }

@@ -5,11 +5,11 @@ import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { controlValuesAreEqual, isIdValid, cityInList } from './form-validations';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
 import { NotifyService } from 'src/app/services/notify.service';
+import { Router } from '@angular/router';
 
 interface LooseObject {
-  [key: string]: string[]
+    [key: string]: string[]
 }
 
 @Component({
@@ -27,7 +27,13 @@ export class RegisterComponent implements OnInit {
     public filteredCities: Observable<string[]>;
 
 
-    constructor(private fb: FormBuilder, private citiesService: CitiesService, private authService: AuthService, private router: Router, private notify: NotifyService) { }
+    constructor(
+        private fb: FormBuilder,
+        private citiesService: CitiesService,
+        private authService: AuthService,
+        private router: Router,
+        private notify: NotifyService
+    ) { }
 
     async ngOnInit() {
         await this.getCitiesAndStreets();
@@ -43,7 +49,7 @@ export class RegisterComponent implements OnInit {
         //     lastName: '',
         // });
 
-        
+
         this.registerForm = this.fb.group({
             citizenId: ['', [
                 Validators.required,
@@ -129,7 +135,7 @@ export class RegisterComponent implements OnInit {
 
     public async getCitiesAndStreets() {
         try {
-            
+
             this.streetsByCities = await this.citiesService.getCitiesAndStreets();
             this.cities = Object.keys(this.streetsByCities);
 

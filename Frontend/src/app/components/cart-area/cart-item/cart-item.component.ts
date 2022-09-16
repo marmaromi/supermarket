@@ -1,10 +1,10 @@
-import { Component, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { NotifyService } from 'src/app/services/notify.service';
-import { addProductToCart, getAllProductsInCart, removeProductFromCart, updateProductInCart } from 'src/app/state/productsInCart/productsInCart.actions';
+import { getAllProductsInCart, removeProductFromCart, updateProductInCart } from 'src/app/state/productsInCart/productsInCart.actions';
 import { environment } from 'src/environments/environment';
 
 @Component({

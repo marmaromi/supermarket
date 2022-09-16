@@ -78,7 +78,7 @@ export class CartService {
             const productIndex = products.findIndex(p => p.productId === productId);
 
             if (productIndex === -1) {
-                const product = await firstValueFrom(this.http.post<ProductsInCartModel>(environment.productsInCartUrl + `/${cartId}/${productId}`, { 'amount': amount }));
+                const product = await firstValueFrom(this.http.post<ProductsInCartModel>(environment.productsInCartUrl + `/${cartId}/${productId}`, { 'amount': amount }));                
                 this.cartId = sessionStorage.getItem('cartId');
                 this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));
                 return product;

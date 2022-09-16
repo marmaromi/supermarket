@@ -8,7 +8,6 @@ import { cityInList, dateValidator } from '../../auth-area/register/form-validat
 import { AuthService } from 'src/app/services/auth.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { OrderModel } from 'src/app/models/order-model';
-import { Router } from '@angular/router';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ModalComponent } from '../modal/modal.component';
 import { CartService } from 'src/app/services/cart.service';
@@ -34,14 +33,14 @@ export class OrderDetailsComponent implements OnInit {
     public productsInCart: ProductsInCartModel[] = [];
 
 
-    constructor(private fb: FormBuilder,
+    constructor(
+        private fb: FormBuilder,
         private citiesService: CitiesService,
         private notify: NotifyService,
         private authService: AuthService,
         private orderService: OrdersService,
         private modalService: MdbModalService,
         private cartService: CartService,
-        private router: Router
     ) { }
 
     async ngOnInit(): Promise<void> {
@@ -78,7 +77,7 @@ export class OrderDetailsComponent implements OnInit {
             startWith(''),
             map(value => this._citiesFilter(value || '')),
         );
-        this.productsInCart = await this.cartService.getProductsInCart();
+        this.productsInCart = await this.cartService.getProductsInCart();        
     }
 
     private _citiesFilter(value: string): string[] {

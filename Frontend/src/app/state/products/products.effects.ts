@@ -7,7 +7,7 @@ import { from, of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { ProductsService } from 'src/app/services/products.service';
 import { AppState } from '../app.state';
-import { addProduct, getAllProducts, getAllProductsFailure, getAllProductsSuccess, updateProduct } from './products.actions';
+import { addProduct, getAllProducts, getAllProductsFailure, getAllProductsSuccess, getProductsByCategory, getProductsByCategoryFailure, getProductsByCategorySuccess, getProductsBySearch, getProductsBySearchFailure, getProductsBySearchSuccess, updateProduct } from './products.actions';
 
 @Injectable()
 export class ProductsEffects {
@@ -26,6 +26,28 @@ export class ProductsEffects {
                 from(this.productsService.getProducts()).pipe(
                     map(products => getAllProductsSuccess({ products: products })),
                     catchError((error) => of(getAllProductsFailure({ error: error })))
+                ))
+        );
+    });
+
+    loadProductsBySearch$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(getProductsBySearch),
+            switchMap((action) =>
+                from(this.productsService.getProductsBySearch(action.productName)).pipe(
+                    map(products => getProductsBySearchSuccess({ products: products })),
+                    catchError((error) => of(getProductsBySearchFailure({ error: error })))
+                ))
+        );
+    });
+
+    loadProductsByCategory$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(getProductsByCategory),
+            switchMap((action) =>
+                from(this.productsService.getProductsByCategory(action.categoryName)).pipe(
+                    map(products => getProductsByCategorySuccess({ products: products })),
+                    catchError((error) => of(getProductsByCategoryFailure({ error: error })))
                 ))
         );
     });
