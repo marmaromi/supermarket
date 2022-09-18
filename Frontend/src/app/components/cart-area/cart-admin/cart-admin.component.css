@@ -53,4 +53,8 @@ label {
 
 .file-input {
     display: none;
-  }
+}
+
+span {
+    color: red;
+}

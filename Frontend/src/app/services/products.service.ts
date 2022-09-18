@@ -49,7 +49,16 @@ export class ProductsService {
     }
 
     public async addProduct(product: ProductModel): Promise<ProductModel> {
-        const addedProduct = await firstValueFrom(this.http.post<ProductModel>(environment.productsUrl, product));
+        const formData = new FormData();
+        formData.append('productName', product.productName);
+        formData.append('productPrice', product.productPrice.toString());
+        formData.append('category', product.category.name);
+        formData.append('priceParameter', product.priceParameter);
+        if (product?.image) {
+            formData.append('image', product.image);
+        }
+        
+        const addedProduct = await firstValueFrom(this.http.post<ProductModel>(environment.productsUrl, formData));
         return addedProduct;
     }
 
@@ -58,16 +67,13 @@ export class ProductsService {
         formData.append('_id', product._id);
         formData.append('productName', product.productName);
         formData.append('productPrice', product.productPrice.toString());
-        formData.append('category', product.category._id);
+        formData.append('category', product.category.name);
         formData.append('priceParameter', product.priceParameter);
         formData.append('imageName', product.imageName);
         if (product?.image) {
             formData.append('image', product.image);
         }
-        else {
-            formData.append('imageName', product.imageName);
-        }
-
+        
         const updatedProduct = await firstValueFrom(this.http.put<ProductModel>(environment.productsUrl + '/' + product._id, formData));
 
         return updatedProduct;

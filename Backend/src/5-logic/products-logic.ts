@@ -22,13 +22,15 @@ async function addProduct(product: IProductModel): Promise<IProductModel> {
     if (errors) {
         throw new ValidationError(errors.message);
     }
-
+    if (product.image) {
     //save image to backend assets
     const dotIndex = product.image.name.lastIndexOf(".");
     const extension = product.image.name.substring(dotIndex);
     product.imageName = uuid() + extension;
     await product.image.mv(config.imagesPath + product.imageName);
     delete product.image;
+    }
+    // product.categoryId = await ProductModel.findById(product.).select("category").exec();
 
     return product.save();
 }
@@ -54,7 +56,6 @@ async function updateProduct(product: IProductModel): Promise<IProductModel> {
         await product.image.mv(config.imagesPath + product.imageName);
         delete product.image;
     }
-
 
     const updatedProduct = await ProductModel.findByIdAndUpdate(product._id, product, { returnOriginal: false });
     if (!updatedProduct) {

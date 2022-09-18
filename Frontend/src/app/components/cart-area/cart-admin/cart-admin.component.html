@@ -1,4 +1,4 @@
-<div *ngIf="product" class="box productContainer">
+<div *ngIf="product && addOrUpdateProduct === 'update'" class="box productContainer">
     <h2>עדכון מוצר</h2>
     <img [src]="productImage" alt="תמונת המוצר"> <br>
 
@@ -8,12 +8,14 @@
             <input type="text" class="form-control" name="productName" formControlName="productName"
                 [value]="product.productName">
         </div>
-        <span *ngIf="productName.errors?.['required'] && productName.touched">מוצר חסר</span>
+        <span *ngIf="productName.errors?.['required'] && productName.touched">חסר שם מוצר</span>
+        <span *ngIf="productName.errors?.['minLength'] && productName.touched">אורך שם מינימלי - 3 תווים</span>
+        <span *ngIf="productName.errors?.['maxLength'] && productName.touched">אורך שם מקסימלי - 30 תווים</span>
 
         <div class="form-group">
             <label for="category">קטגוריה</label>
             <select class="form-control" name="category" formControlName="category">
-                <option *ngFor="let cat of categories" [value]="category">{{cat}}</option>
+                <option *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
             </select>
         </div>
         <span *ngIf="category.errors?.['required'] && category.touched">לא נבחרה קטגוריה</span>
@@ -24,18 +26,19 @@
                 <option *ngFor="let type of types" [value]="type">{{type}}</option>
             </select>
         </div>
+        <span *ngIf="type.errors?.['required'] && type.touched">לא נבחרה מידה</span>
+
         <div class="form-group">
             <label for="price">מחיר</label>
-            <input type="number" class="form-control" name="price" formControlName="price" placeholder="מחיר">
+            <input type="number" class="form-control" name="price" formControlName="price">
         </div>
-        <span *ngIf="productName.errors?.['required'] && productName.touched">מחיר חסר</span>
+        <span *ngIf="price.errors?.['required'] && price.touched">מחיר חסר</span>
+        <span *ngIf="price.errors?.['pattern'] && price.touched">מחיר לא חוקי</span>
 
         <div class="form-group">
             <label for="image">תמונה</label>
             <input type="file" class="form-control file-input" name="image" (change)="uploadImage($event)" #fileUpload>
             <div class="file-upload">
-
-
                 <button type="button" mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
                     <mat-icon>attach_file</mat-icon>
                 </button>
@@ -44,7 +47,7 @@
         </div>
 
         <div class="center">
-            <button type="submit" class="btn btn-primary">עדכון</button>
+            <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">עדכון</button>
             <button type="button" class="btn btn-danger" (click)="resetForm()">איפוס</button>
         </div>
 
@@ -52,23 +55,26 @@
 
 </div>
 
-<!-- <a *ngIf="product" class="btn btn-primary m-3" href="#" >הוספת מוצר חדש</a>
+<button *ngIf="product && addOrUpdateProduct === 'update'" class="btn btn-primary m-3" style="width: auto;" (click)="changeAddOrUpdateProduct()">הוספת מוצר חדש</button>
 
-<div *ngIf="!product && products" class="box productContainer">
+<div *ngIf="!product && products && addOrUpdateProduct === 'add'" class="box productContainer">
     <h2>הוספת מוצר</h2>
-    <img [src]="productImage" alt="תמונת המוצר"> <br>
+    <img [src]="productImage"> <br>
 
     <form *ngIf="!product && products" [formGroup]="productForm" (ngSubmit)="addProduct()">
         <div class="form-group">
             <label for="name">שם המוצר</label>
-            <input type="text" class="form-control" id="productName" name="productName" formControlName="productName" [value]="productName">
+            <input type="text" class="form-control" id="productName" name="productName" formControlName="productName"
+                [value]="productName">
         </div>
-        <span *ngIf="productName.errors?.['required'] && productName.touched">מוצר חסר</span>
+        <span *ngIf="productName.errors?.['required'] && productName.touched">חסר שם מוצר</span>
+        <span *ngIf="productName.errors?.['minLength'] && productName.touched">אורך שם מינימלי - 3 תווים</span>
+        <span *ngIf="productName.errors?.['maxLength'] && productName.touched">אורך שם מקסימלי - 30 תווים</span>
 
         <div class="form-group">
             <label for="category">קטגוריה</label>
             <select class="form-control" name="category" formControlName="category">
-                <option *ngFor="let cat of categories" [value]="category">{{cat}}</option>
+                <option *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
             </select>
         </div>
         <span *ngIf="category.errors?.['required'] && category.touched">לא נבחרה קטגוריה</span>
@@ -79,18 +85,29 @@
                 <option *ngFor="let type of types" [value]="type">{{type}}</option>
             </select>
         </div>
+        <span *ngIf="type.errors?.['required'] && type.touched">לא נבחרה מידה</span>
+
         <div class="form-group">
             <label for="price">מחיר</label>
-            <input type="number" class="form-control" name="price" formControlName="price" placeholder="מחיר">
+            <input type="number" class="form-control" name="price" formControlName="price" min="0">
         </div>
-        <span *ngIf="productName.errors?.['required'] && productName.touched">מחיר חסר</span>
+        <span *ngIf="price.errors?.['required'] && price.touched">מחיר חסר</span>
+        <span *ngIf="price.errors?.['pattern'] && price.touched">מחיר לא חוקי</span>
 
         <div class="form-group">
             <label for="image">תמונה</label>
-            <input type="text" class="form-control" name="image" formControlName="image" placeholder="תמונה">
+            <input type="file" class="form-control file-input" name="image" (change)="uploadImage($event)" #fileUpload>
+            <div class="file-upload">
+                <button type="button" mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                    <mat-icon>attach_file</mat-icon>
+                </button>
+                {{"העלה תמונה חדשה"}}
+            </div>
         </div>
+
         <div class="center">
-            <button type="submit" class="btn btn-primary">הוספה</button>
+            <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">הוספה</button>
+
         </div>
 
     </form>
@@ -100,4 +117,4 @@
 <div *ngIf="!product">
     <br>
     <h2>לחצו על מוצר לעריכה</h2>
-</div> -->
+</div>

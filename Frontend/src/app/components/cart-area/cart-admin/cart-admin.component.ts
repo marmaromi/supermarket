@@ -4,10 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { CategoryModel } from 'src/app/models/category-model';
 import { ProductModel } from 'src/app/models/product-model';
 import { NotifyService } from 'src/app/services/notify.service';
 import { ProductsService } from 'src/app/services/products.service';
-import { getAllProducts, updateProduct } from 'src/app/state/products/products.actions';
+import { getAllProducts, updateProduct, addProduct } from 'src/app/state/products/products.actions';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -19,11 +20,12 @@ export class CartAdminComponent implements OnInit {
 
     public products$: Observable<any> = this.store.select(state => state.products);
     public product: ProductModel;
-    public productImage: string;
+    public productImage: string = '../../../assets/images/generic-product.png';
     public productForm: FormGroup;
     public products: ProductModel[];
     public categories: string[] = [];
     public types: string[] = ['יחידה', 'קילוגרם'];
+    public addOrUpdateProduct: string = 'add';
 
 
     constructor(private fb: FormBuilder,
@@ -34,7 +36,6 @@ export class CartAdminComponent implements OnInit {
     ) { }
 
     async ngOnInit(): Promise<void> {
-
         this.products = await this.productsService.getProducts();
         this.store.dispatch(getAllProducts());
         this.products$.subscribe(products => {
@@ -46,15 +47,31 @@ export class CartAdminComponent implements OnInit {
             }
         });
 
+        this.productForm = this.fb.group({
+            productName: ['', [
+                Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(30)
+            ]],
+            price: [0, [
+                Validators.required,
+                Validators.pattern(/^[1-9]\d*(\.\d+)?$/)
+            ]],
+            category: ['', [
+                Validators.required,
+            ]],
+            type: ['', [
+                Validators.required,
+            ]],
+            image: ['', [
+            ]]
+        });
 
         this.productsService.productToEdit$.subscribe(async productToEdit => {
-            if (!productToEdit) {
-                this.product = this.products[0];
-            }
-            else {
-                this.product = productToEdit;
-            }
-            if (this.product) {
+            this.addOrUpdateProduct = 'update';
+            this.product = productToEdit;
+
+            if (this.product) {                
                 this.productForm = this.fb.group({
                     productName: [this.product.productName, [
                         Validators.required,
@@ -63,15 +80,13 @@ export class CartAdminComponent implements OnInit {
                     ]],
                     price: [this.product.productPrice, [
                         Validators.required,
-                        Validators.pattern(/^\d{1,9}$/)
+                        Validators.pattern(/^[1-9]\d*(\.\d+)?$/)
                     ]],
-                    category: [this.product.category, [
+                    category: [this.product.category.name, [
                         Validators.required,
                     ]],
                     type: [this.product.priceParameter, [
                         Validators.required,
-                        Validators.minLength(3),
-                        Validators.maxLength(30)
                     ]],
                     image: [this.product.image, [
                     ]]
@@ -80,16 +95,24 @@ export class CartAdminComponent implements OnInit {
 
             }
         });
+
+    }
+
+    uploadImage(event: any) {
+        const file = event.target.files[0];
+        this.productForm.value.image = file;
     }
 
     async updateProduct() {
         try {
-            const formValue = this.productForm.value;
+            const formValue = this.productForm.value;            
             const updatedProduct = new ProductModel();
+            const cat = new CategoryModel();
+            cat.name = formValue.category;
             updatedProduct._id = this.product._id;
             updatedProduct.productName = formValue.productName;
             updatedProduct.productPrice = formValue.price;
-            updatedProduct.category = formValue.category;
+            updatedProduct.category = cat;
             updatedProduct.priceParameter = formValue.type;
             updatedProduct.imageName = this.product.imageName;
             if (formValue.image) {
@@ -103,12 +126,28 @@ export class CartAdminComponent implements OnInit {
         }
     }
 
-    uploadImage(event: any) {
-        const file = event.target.files[0];
-        this.productForm.value.image = file;     
-    }
-
     addProduct() {
+        try {
+
+            const formValue = this.productForm.value;
+            const newProduct = new ProductModel();
+            const cat = new CategoryModel();
+            cat.name = formValue.category;
+            newProduct.productName = formValue.productName;
+            newProduct.productPrice = formValue.price;
+            newProduct.category = cat;
+            newProduct.priceParameter = formValue.type;
+            if (formValue.image) {
+                newProduct.image = formValue.image;
+            }
+            
+            this.store.dispatch(addProduct({ product: newProduct }));
+            this.notify.success('המוצר התווסף בהצלחה');
+        }
+        catch (err) {
+            this.notify.error(err);
+        }
+
     }
 
     resetForm() {
@@ -119,6 +158,33 @@ export class CartAdminComponent implements OnInit {
             type: this.product.priceParameter,
             image: this.product.image
         });
+    }
+
+    changeAddOrUpdateProduct() {
+        this.addOrUpdateProduct = 'add';
+        this.product = null;
+        this.productImage = '../../../assets/images/generic-product.png';
+        this.productForm = this.fb.group({
+            productName: ['', [
+                Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(30)
+            ]],
+            price: [0, [
+                Validators.required,
+                Validators.pattern(/^[1-9]\d*(\.\d+)?$/)
+            ]],
+            category: ['', [
+                Validators.required,
+            ]],
+            type: ['', [
+                Validators.required,
+            ]],
+            image: ['', [
+            ]]
+        });
+
+
     }
 
 
