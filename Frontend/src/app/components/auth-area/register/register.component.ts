@@ -38,18 +38,6 @@ export class RegisterComponent implements OnInit {
     async ngOnInit() {
         await this.getCitiesAndStreets();
 
-        // this.registerForm = this.fb.group({
-        //     citizenId: '',
-        //     email: '',
-        //     password: '',
-        //     verifyPassword: '',
-        //     city: '',
-        //     street: '',
-        //     firstName: '',
-        //     lastName: '',
-        // });
-
-
         this.registerForm = this.fb.group({
             citizenId: ['', [
                 Validators.required,

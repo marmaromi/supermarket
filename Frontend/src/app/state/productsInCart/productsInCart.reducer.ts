@@ -44,6 +44,6 @@ export const productsInCartReducer = createReducer(
     on(productsInCartActions.removeProductFromCart, (state, { id }) => ({
         ...state,
         productsInCart: state.productsInCart.filter(product => product._id !== id)
-    }))
+    })),
 
 );

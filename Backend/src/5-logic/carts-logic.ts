@@ -7,7 +7,7 @@ import productsLogic from "./products-logic";
 
 async function getLatestCartByUser(userId: string): Promise<ICartModel> {
     const latestCart = (await CartModel.find({ userId: userId }, null, { sort: { creationDate: -1 } }).exec())[0];
-
+    
     if (!latestCart) {
         throw new ResourceNotFoundError(userId);
     }
@@ -93,6 +93,6 @@ export default {
     deleteCart,
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
 
 }

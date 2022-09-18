@@ -7,8 +7,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { NotifyService } from 'src/app/services/notify.service';
-import { SearchService } from 'src/app/services/search.service';
-import { getAllProductsInCart } from 'src/app/state/productsInCart/productsInCart.actions';
+import { getAllProductsInCart, removeProductFromCart } from 'src/app/state/productsInCart/productsInCart.actions';
 
 @Component({
     selector: 'app-cart-customer',
@@ -27,7 +26,6 @@ export class CartCustomerComponent implements OnInit {
         private notify: NotifyService,
         private store: Store<{ productsInCart: ProductsInCartModel[] }>,
         private router: Router,
-        private searchService: SearchService
     ) { }
 
     async ngOnInit(): Promise<void> {
@@ -46,6 +44,12 @@ export class CartCustomerComponent implements OnInit {
 
     pay = () => {
         this.router.navigateByUrl('/order');
+    };
+
+    emptyCart = () => {
+        for (const product of this.productsInCart) {
+            this.store.dispatch(removeProductFromCart({ id: product._id }));
+        }
     };
 
 }

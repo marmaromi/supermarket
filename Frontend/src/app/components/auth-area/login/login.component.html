@@ -1,27 +1,51 @@
-<div class="login">
-    <h2>כניסה</h2>
+<ng-template [ngIf]="loginStatus === false" [ngIfElse]="loggedIn">
+    <div class="login">
+        <h2>כניסה</h2>
 
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <mat-form-field class="full-width">
-            <mat-label>אימייל</mat-label>
-            <input type="email" name="email" matInput formControlName='email' />
-        </mat-form-field>
-        <span *ngIf="email.errors?.['required'] && email.touched">אימייל חסר</span>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <mat-form-field class="full-width">
+                <mat-label>אימייל</mat-label>
+                <input type="email" name="email" matInput formControlName='email' />
+            </mat-form-field>
+            <span *ngIf="email.errors?.['required'] && email.touched">אימייל חסר</span>
 
-        <br />
+            <br />
 
-        <mat-form-field class="full-width">
-        <mat-label>סיסמה</mat-label>
-        <input type="password" name="password" matInput formControlName='password' />
-        </mat-form-field>
-        <span *ngIf="password.errors?.['required'] && password.touched">סיסמה חסרה</span>
-        <br />
+            <mat-form-field class="full-width">
+                <mat-label>סיסמה</mat-label>
+                <input type="password" name="password" matInput formControlName='password' />
+            </mat-form-field>
+            <span *ngIf="password.errors?.['required'] && password.touched">סיסמה חסרה</span>
+            <br />
 
-        <button mat-raised-button [disabled]="loginForm.invalid">כניסה</button>
+            <button mat-raised-button [disabled]="loginForm.invalid">כניסה</button>
 
-    </form>
-    <div class="register">
-        אין לך משתמש?
-        <a routerLink="/register">הרשמה</a>
+        </form>
+        <div class="register">
+            אין לך משתמש?
+            <a routerLink="/register">הרשמה</a>
+        </div>
     </div>
-</div>
+</ng-template>
+<ng-template #loggedIn>
+
+    <ng-template [ngIf]="cartOpen === true" [ngIfElse]="cartClose">
+        <div *ngIf="cart?.creationDate">
+            <br>
+            <h2>יש לך עגלה פתוחה מתאריך {{cart.creationDate.toString().slice(0,10)}}</h2>
+            <h2>מחיר: {{price}}₪</h2>
+        </div>
+        <a routerLink="/home" class="btn btn-primary" >להמשך קנייה</a>
+    </ng-template>
+
+    <ng-template #cartClose>
+        <div *ngIf="cart?.creationDate">
+            <br>
+            <h2>הקניה האחרונה שלך היתה תאריך {{cart.creationDate.slice(0,10)}}</h2>
+            <h2>מחיר: {{price}}₪</h2>
+        </div>
+        <a routerLink="/home" class="btn btn-primary">להתחלת קנייה</a>
+    </ng-template>
+
+
+</ng-template>

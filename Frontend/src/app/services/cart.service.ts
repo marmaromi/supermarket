@@ -14,10 +14,7 @@ import { AuthService } from './auth.service';
 })
 export class CartService {
     private cartId: string = '';
-
-    // private _productsInCartSource = new Subject<ProductsInCartModel[]>();
-    // public productsInCart$ = this._productsInCartSource.asObservable();
-
+    
     constructor(private http: HttpClient,
         private authService: AuthService,
         private store: Store
@@ -45,22 +42,12 @@ export class CartService {
                 cartId = sessionStorage.getItem('cartId');
             }
             const products = await firstValueFrom(this.http.get<ProductsInCartModel[]>(environment.productsInCartUrl + `/${cartId}`));
-            // this._productsInCartSource.next(products);
             return products;
 
         } catch (err: any) {            
             throw err;
         }
     }
-
-    // public async getProductsInCart() {
-    //     try {
-    //         const cartId = sessionStorage.getItem('cartId');
-    //         return this.http.get<ProductsInCartModel[]>(environment.productsInCartUrl + `/${cartId}`);
-    //     } catch (err: any) {
-    //         throw err;
-    //     }
-    // }
 
     public async createCart(userId: string): Promise<CartModel> {
         try {
@@ -107,7 +94,5 @@ export class CartService {
             throw err;
         }
     }
-
-
 
 }
