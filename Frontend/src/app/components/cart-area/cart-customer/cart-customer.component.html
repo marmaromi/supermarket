@@ -2,7 +2,7 @@
 <div class="cart">
     <div class="items">
         <ng-template [ngIf]="productsInCart.length > 0" [ngIfElse]="empty">
-            <button class="btn btn-danger" (click)="emptyCart()">מחק את כל המוצרים מהעגלה</button>
+            <button *ngIf="url !== '/order'" class="btn btn-danger" (click)="emptyCart()">מחק את כל המוצרים מהעגלה</button>
             <app-cart-item *ngFor="let cartProduct of productsInCart" [cartProductInput]="cartProduct"></app-cart-item>
         </ng-template>
         <ng-template #empty>
