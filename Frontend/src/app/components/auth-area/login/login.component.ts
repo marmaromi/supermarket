@@ -59,9 +59,14 @@ export class LoginComponent implements OnInit {
             const fromValue = this.loginForm.value;
             await this.authService.login(fromValue);
             this.loginStatus = this.authService.isLoggedIn();
-            await this.getUserCart();
             this.notify.success('התחברת בהצלחה');
 
+            if (this.authService.getUserRole() === 'admin') {
+                this.router.navigateByUrl('/home');
+            }
+            else {
+                await this.getUserCart();
+            }
         } catch (err: any) {
             this.notify.error(err);
 
@@ -73,7 +78,7 @@ export class LoginComponent implements OnInit {
         this.cart = await this.cartService.getLatestCartByUser(this.user._id);
         this.cartOpen = this.cart.cartOpen ? true : false;
         const productsInCart = await this.cartService.getProductsInCart();
-        this.price = productsInCart.reduce((a, b) => a + (b.product.productPrice * b.amount), 0);        
-        
+        this.price = productsInCart.reduce((a, b) => a + (b.product.productPrice * b.amount), 0);
+
     }
 }
