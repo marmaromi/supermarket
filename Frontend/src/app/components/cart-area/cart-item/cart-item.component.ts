@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { NotifyService } from 'src/app/services/notify.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -13,8 +14,9 @@ import { environment } from 'src/environments/environment';
     templateUrl: './cart-item.component.html',
     styleUrls: ['./cart-item.component.css']
 })
-export class CartItemComponent implements OnInit, AfterViewInit {
+export class CartItemComponent implements OnInit, AfterViewInit, OnDestroy {
 
+    private sub = new Subscription();
     public cartForm: FormGroup;
     @Input() cartProductInput: ProductsInCartModel;
     public cartProduct: ProductsInCartModel;
@@ -50,7 +52,7 @@ export class CartItemComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.searchService.searchValueSource.subscribe(searchValue => {
+        const searchSub = this.searchService.searchValueSource.subscribe(searchValue => {
             if (this.router.url === '/order') {
                 if (this.cartProduct.product.productName.includes(searchValue) && searchValue !== '') {
                     this.productNameHtml.nativeElement.setAttribute('class', 'highlight');
@@ -60,6 +62,11 @@ export class CartItemComponent implements OnInit, AfterViewInit {
                 }
             }
         });
+        this.sub.add(searchSub);
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     get productAmount() {

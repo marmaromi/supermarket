@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/models/user-model';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -9,16 +10,23 @@ import { NotifyService } from 'src/app/services/notify.service';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
+    private sub = new Subscription();
     public loggedIn: boolean;
     public user: UserModel;
 
     constructor(private authService: AuthService, private router: Router, private notify: NotifyService) { }
 
     ngOnInit(): void {
-        this.authService.loginStatus$.subscribe(loginStatus => this.loggedIn = loginStatus);
-        this.authService.userDetails$.subscribe(user => this.user = user);
+        const loginSub = this.authService.loginStatus$.subscribe(loginStatus => this.loggedIn = loginStatus);
+        this.sub.add(loginSub);
+        const userSub = this.authService.userDetails$.subscribe(user => this.user = user);
+        this.sub.add(userSub);
+    }
+
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
     public logout() {    

@@ -1,9 +1,9 @@
 /* eslint-disable @ngrx/prefer-selector-in-select */
 /* eslint-disable @ngrx/no-typed-global-store */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CategoryModel } from 'src/app/models/category-model';
 import { ProductModel } from 'src/app/models/product-model';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -16,8 +16,9 @@ import { environment } from 'src/environments/environment';
     templateUrl: './cart-admin.component.html',
     styleUrls: ['./cart-admin.component.css']
 })
-export class CartAdminComponent implements OnInit {
+export class CartAdminComponent implements OnInit, OnDestroy {
 
+    private sub = new Subscription();
     public products$: Observable<any> = this.store.select(state => state.products);
     public product: ProductModel;
     public productImage: string = '../../../assets/images/generic-product.png';
@@ -38,7 +39,7 @@ export class CartAdminComponent implements OnInit {
     async ngOnInit(): Promise<void> {
         this.products = await this.productsService.getProducts();
         this.store.dispatch(getAllProducts());
-        this.products$.subscribe(products => {
+        const productsSub = this.products$.subscribe(products => {
             this.products = products.products;
             for (const product of this.products) {
                 if (this.categories.indexOf(product.category.name) === -1) {
@@ -46,6 +47,8 @@ export class CartAdminComponent implements OnInit {
                 }
             }
         });
+        this.sub.add(productsSub);
+
 
         this.productForm = this.fb.group({
             productName: ['', [
@@ -67,7 +70,7 @@ export class CartAdminComponent implements OnInit {
             ]]
         });
 
-        this.productsService.productToEdit$.subscribe(async productToEdit => {
+        const productsToEditSub = this.productsService.productToEdit$.subscribe(async productToEdit => {
             this.addOrUpdateProduct = 'update';
             this.product = productToEdit;
 
@@ -95,7 +98,11 @@ export class CartAdminComponent implements OnInit {
 
             }
         });
+        this.sub.add(productsToEditSub);
+    }
 
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
     uploadImage(event: any) {

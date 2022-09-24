@@ -1,8 +1,8 @@
 /* eslint-disable @ngrx/no-typed-global-store */
 /* eslint-disable @ngrx/prefer-selector-in-select */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ProductModel } from 'src/app/models/product-model';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,7 +17,9 @@ import { getAllProductsInCart } from 'src/app/state/productsInCart/productsInCar
     templateUrl: './products-list.component.html',
     styleUrls: ['./products-list.component.css']
 })
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent implements OnInit, OnDestroy {
+
+    private sub = new Subscription();
     public products$: Observable<any> = this.store.select(state => state.products);
     public productsInCart$: Observable<any> = this.store.select(state => state.productsInCart);
     public products: ProductModel[] = [];
@@ -47,7 +49,7 @@ export class ProductsListComponent implements OnInit {
                 this.productsInCart = await this.cartService.getProductsInCart();
             }
 
-            this.products$.subscribe(products => {
+            const productsSub = this.products$.subscribe(products => {
                 this.products = products.products;
                 if (this.totalProductsCount === null) {
                     this.totalProductsCount = this.products.length;
@@ -77,9 +79,15 @@ export class ProductsListComponent implements OnInit {
 
             });
 
+            this.sub.add(productsSub);
+
         } catch (error: any) {
             this.notify.error(error);
         }
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     async showCategory(category: string) {
