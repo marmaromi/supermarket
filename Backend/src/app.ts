@@ -15,7 +15,7 @@ import path from "path";
 
 const expressServer = express();
 
-expressServer.use(cors());
+expressServer.use(cors({origin: config.siteAddress}));
 
 expressServer.use("/api/", expressRateLimit({
     windowMs: 100,
