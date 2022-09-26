@@ -17,5 +17,5 @@ A supermarket site - training project.
 - fix horizontal collapse in user layout
 - cart list box shadow in phone mode not looking good
 - product image not updating live
-- improve page not found
+- improve page not found - greets guest instead of logged in user
 
