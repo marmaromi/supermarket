@@ -42,7 +42,7 @@
                 <button type="button" mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
                     <mat-icon>attach_file</mat-icon>
                 </button>
-                {{"העלה תמונה חדשה"}}
+                {{imageAdded ? "נוספה תמונה חדשה" : "העלה תמונה חדשה"}}
             </div>
         </div>
 
@@ -55,7 +55,8 @@
 
 </div>
 
-<button *ngIf="product && addOrUpdateProduct === 'update'" class="btn btn-primary m-3" style="width: auto;" (click)="changeAddOrUpdateProduct()">הוספת מוצר חדש</button>
+<button *ngIf="product && addOrUpdateProduct === 'update'" class="btn btn-primary m-3" style="width: auto;"
+    (click)="changeAddOrUpdateProduct()">הוספת מוצר חדש</button>
 
 <div *ngIf="!product && products && addOrUpdateProduct === 'add'" class="box productContainer">
     <h2>הוספת מוצר</h2>
@@ -101,7 +102,7 @@
                 <button type="button" mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
                     <mat-icon>attach_file</mat-icon>
                 </button>
-                {{"העלה תמונה חדשה"}}
+                {{imageAdded ? "נוספה תמונה חדשה" : "העלה תמונה חדשה"}}
             </div>
         </div>
 

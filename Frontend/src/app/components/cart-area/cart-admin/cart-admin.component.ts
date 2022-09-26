@@ -27,6 +27,7 @@ export class CartAdminComponent implements OnInit, OnDestroy {
     public categories: string[] = [];
     public types: string[] = ['יחידה', 'קילוגרם'];
     public addOrUpdateProduct: string = 'add';
+    public imageAdded: boolean = false;
 
 
     constructor(private fb: FormBuilder,
@@ -74,7 +75,7 @@ export class CartAdminComponent implements OnInit, OnDestroy {
             this.addOrUpdateProduct = 'update';
             this.product = productToEdit;
 
-            if (this.product) {                
+            if (this.product) {
                 this.productForm = this.fb.group({
                     productName: [this.product.productName, [
                         Validators.required,
@@ -106,13 +107,26 @@ export class CartAdminComponent implements OnInit, OnDestroy {
     }
 
     uploadImage(event: any) {
-        const file = event.target.files[0];
-        this.productForm.value.image = file;
+        const uploadedFile = event.target.files[0];
+        console.log(uploadedFile);
+        
+        if (uploadedFile?.type?.match(/image\/*/) == null) {
+            this.notify.error('בחר קובץ תמונה');
+            return;
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(uploadedFile);
+        reader.onload = (_event) => {
+            this.productForm.value.image = uploadedFile;
+            this.productImage = reader.result as string;
+            this.imageAdded = true;
+        };
     }
+
 
     async updateProduct() {
         try {
-            const formValue = this.productForm.value;            
+            const formValue = this.productForm.value;
             const updatedProduct = new ProductModel();
             const cat = new CategoryModel();
             cat.name = formValue.category;
@@ -135,7 +149,6 @@ export class CartAdminComponent implements OnInit, OnDestroy {
 
     addProduct() {
         try {
-
             const formValue = this.productForm.value;
             const newProduct = new ProductModel();
             const cat = new CategoryModel();
@@ -147,7 +160,7 @@ export class CartAdminComponent implements OnInit, OnDestroy {
             if (formValue.image) {
                 newProduct.image = formValue.image;
             }
-            
+
             this.store.dispatch(addProduct({ product: newProduct }));
             this.notify.success('המוצר התווסף בהצלחה');
         }
