@@ -94,9 +94,6 @@ export class CartItemComponent implements OnInit, AfterViewInit, OnDestroy {
 
     deleteProduct() {
         this.store.dispatch(removeProductFromCart({ id: this.cartProduct._id }));
-        setTimeout(() => { // wait for the store to update
-            this.store.dispatch(getAllProductsInCart({ cartId: this.cartId }));
-        }, 10);
     }
 
 
