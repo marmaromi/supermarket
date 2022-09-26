@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+/* eslint-disable @ngrx/prefer-selector-in-select */
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { ProductModel } from 'src/app/models/product-model';
 import { ProductsInCartModel } from 'src/app/models/products-in-cart-model';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -11,10 +13,12 @@ import { environment } from 'src/environments/environment';
     templateUrl: './product-card.component.html',
     styleUrls: ['./product-card.component.css']
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent implements OnInit, OnDestroy {
 
+    private sub = new Subscription();
     public addProductToCartForm: FormGroup;
-    @Input() productsInCart: ProductsInCartModel[];
+    public productsInCart: ProductsInCartModel[];
+    public productsInCart$: Observable<any> = this.store.select(state => (state as any).productsInCart);
     @Input() product: ProductModel;
     public productImage: string;
     public cartId: string;
@@ -24,18 +28,27 @@ export class ProductCardComponent implements OnInit {
     constructor(private fb: FormBuilder, private notify: NotifyService, private store: Store) { }
 
     async ngOnInit(): Promise<void> {
+        const productsInCartSub = this.productsInCart$.subscribe((data) => {
+            this.productsInCart = data.productsInCart;
+            this.initialAmount = this.productsInCart.find(p => p.productId === this.product._id)?.amount || 0;
+        });
+        this.sub.add(productsInCartSub);
+
+
 
         if (this.product.imageName) {
             this.productImage = environment.productsImagesUrl + '/' + this.product.imageName;
         }
 
-        
-        this.initialAmount = this.productsInCart.find(p => p.productId === this.product._id)?.amount || 0;        
+
         this.addProductToCartForm = this.fb.group({
             productAmount: this.initialAmount
         });
         this.cartId = sessionStorage.getItem('cartId');
 
+    }
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 
     get productAmount() {

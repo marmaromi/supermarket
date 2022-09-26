@@ -14,7 +14,7 @@
     <div class="products" >
         <h3>{{category}}</h3>
         <ng-template [ngIf]="userRole !== 'admin'" [ngIfElse]="admin" >
-            <app-product-card *ngFor=" let product of productsToShow" [product]="product" [productsInCart]="productsInCart"> </app-product-card>
+            <app-product-card *ngFor=" let product of productsToShow" [product]="product" > </app-product-card>
         </ng-template>
 
         <ng-template  #admin>
